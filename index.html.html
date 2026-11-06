@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" class=""><head><script>window.livecodes = window.livecodes || {};</script><title>Untitled Project</title><meta name="title" content="Untitled Project"><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><style id="__livecodes_styles__"></style><script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script><script type="importmap">{
-  "imports": {}
-}</script></head><body>
-
-
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I Love My Family</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;family=Outfit:wght@300;400;500&amp;family=Amiri:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --ivory: #FDF9F5;
@@ -479,6 +475,44 @@
             line-height: 1.65;
         }
 
+        .contact-num {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--terracotta);
+            letter-spacing: 0.3px;
+            opacity: 0.9;
+            background: rgba(192, 122, 90, 0.08);
+            padding: 5px 12px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-num:hover {
+            background: rgba(192, 122, 90, 0.15);
+            opacity: 1;
+        }
+
+        .contact-num .phone-icon {
+            font-size: 0.85rem;
+            opacity: 0.85;
+        }
+
+        .name-pair .contact-num {
+            margin-top: 6px;
+            font-size: 0.74rem;
+            padding: 4px 10px;
+        }
+
+        .child-card .contact-num {
+            margin-top: 8px;
+            font-size: 0.72rem;
+            padding: 4px 10px;
+        }
+
         .couple-photos {
             display: flex;
             gap: 6px;
@@ -507,7 +541,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
+            gap: 2px;
         }
 
         .name-pair .name {
@@ -816,8 +850,8 @@
             .child-card img { height: 180px; }
         }
     </style>
-
-
+</head>
+<body>
 
     <nav class="navbar" id="navbar">
         <a href="#" class="logo">I Love My Family</a>
@@ -913,6 +947,7 @@
                     <div class="family-card-content">
                         <h3>Maulana Sabir Qasmir</h3>
                         <p>The pillar of our family. His wisdom, strength, and quiet love guide us all.</p>
+                        <div class="contact-num"><span class="phone-icon">📞</span> +91 98831 61924</div>
                     </div>
                 </div>
                 <div class="family-card reveal">
@@ -920,6 +955,7 @@
                     <div class="family-card-content">
                         <h3>Gulshan Khatoon</h3>
                         <p>The heart of our home. Her warmth, care, and endless love hold us together.</p>
+                        <div class="contact-num"><span class="phone-icon">📞</span> +91 84200 85908</div>
                     </div>
                 </div>
             </div>
@@ -935,6 +971,7 @@
                     <div class="couple-content">
                         <div class="name-pair">
                             <div class="name">Atiqah Khatoon</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 62083 8902</div>
                             <div class="divider"></div>
                             <div class="name">Muhammad Juhi</div>
                         </div>
@@ -967,6 +1004,7 @@
                     <div class="couple-content">
                         <div class="name-pair">
                             <div class="name">Aqila Khatoon</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 80921 36491</div>
                             <div class="divider"></div>
                             <div class="name">Muhammad Ashraf</div>
                         </div>
@@ -983,6 +1021,7 @@
                     <div class="couple-content">
                         <div class="name-pair">
                             <div class="name">Nafisa Khatoon</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 87574 99830</div>
                             <div class="divider"></div>
                             <div class="name">Ikramul Hasan</div>
                         </div>
@@ -999,6 +1038,7 @@
                     <div class="couple-content">
                         <div class="name-pair">
                             <div class="name">Saqinah Khatoon</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 88252 41780</div>
                             <div class="divider"></div>
                             <div class="name">Kalimullah</div>
                         </div>
@@ -1015,6 +1055,7 @@
                     <div class="couple-content">
                         <div class="name-pair">
                             <div class="name">Khadija Khatoon</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 80778 08030</div>
                             <div class="divider"></div>
                             <div class="name">Mulana Ahlulah Qasmi</div>
                         </div>
@@ -1031,6 +1072,7 @@
                     <div class="couple-content">
                         <div class="name-pair">
                             <div class="name">Ruqaiya Khatoon</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 62000 12506</div>
                             <div class="divider"></div>
                             <div class="name">Md Ali</div>
                         </div>
@@ -1047,6 +1089,7 @@
                     <div class="couple-content">
                         <div class="name-pair">
                             <div class="name">Afifah Khatoon</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 81692 24356</div>
                             <div class="divider"></div>
                             <div class="name">Ikram</div>
                         </div>
@@ -1066,8 +1109,10 @@
                     <div class="couple-content">
                         <div class="name-pair">
                             <div class="name">MD Mahmud</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 88200 06933</div>
                             <div class="divider"></div>
                             <div class="name">Zainab Khatoon</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 86036 46448</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -1082,8 +1127,10 @@
                     <div class="couple-content">
                         <div class="name-pair">
                             <div class="name">Mahfuz Alam</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 70031 60919</div>
                             <div class="divider"></div>
                             <div class="name">Moshina Khatton</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 70443 41391</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -1098,8 +1145,10 @@
                     <div class="couple-content">
                         <div class="name-pair">
                             <div class="name">Mushin Alam Hudawi</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 98832 86924</div>
                             <div class="divider"></div>
                             <div class="name">Irfana Khatoon</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 92625 13273</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -1114,8 +1163,10 @@
                     <div class="couple-content">
                         <div class="name-pair">
                             <div class="name">Maqbool Alam Hudawi</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 80893 61711</div>
                             <div class="divider"></div>
                             <div class="name">Maimuna</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 98340 52826</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -1130,8 +1181,10 @@
                     <div class="couple-content">
                         <div class="name-pair">
                             <div class="name">Mahboob Alam Hudawi</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 70245 42208</div>
                             <div class="divider"></div>
                             <div class="name">Nishat Anjum</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 98017 11024</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -1296,7 +1349,7 @@
                     { name: "Ziyaullah", relation: "", img: "" },
                     { name: "Sanaullah", relation: "", img: "" },
                     { name: "Amanullah", relation: "", img: "" },
-                    { name: "Sadiqah Yasmeen", relation: "https://i.ibb.co/b5q58XyW/IMG-20260910-WA0048-removebg-preview.png", img: "" },
+                    { name: "Sadiqah Yasmeen", relation: "", img: "https://i.ibb.co/b5q58XyW/IMG-20260910-WA0048-removebg-preview.png" },
                     { name: "Arifah", relation: "", img: "" }
                 ]
             },
@@ -1373,7 +1426,6 @@
             if (e.key === 'Escape') closeModal();
         });
     </script>
+</body>
+</html>
 
-
-
-<script></script></body></html>
