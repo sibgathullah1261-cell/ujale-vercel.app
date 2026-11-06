@@ -945,7 +945,7 @@
                 <div class="family-card reveal">
                     <img src="" alt="Grandfather">
                     <div class="family-card-content">
-                        <h3>Maulana Sabir Qasemi </h3>
+                        <h3>Maulana Sabir Qasmir</h3>
                         <p>The pillar of our family. His wisdom, strength, and quiet love guide us all.</p>
                         <div class="contact-num"><span class="phone-icon">📞</span> +91 98831 61924</div>
                     </div>
@@ -974,6 +974,7 @@
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 62083 8902</div>
                             <div class="divider"></div>
                             <div class="name">Muhammad Juhi</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -988,8 +989,10 @@
                     <div class="couple-content">
                         <div class="name-pair">
                             <div class="name">Rabiyah Khatoon</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
                             <div class="divider"></div>
                             <div class="name">Muhammad Nurul Huda</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -1007,6 +1010,7 @@
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 80921 36491</div>
                             <div class="divider"></div>
                             <div class="name">Muhammad Ashraf</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -1024,6 +1028,7 @@
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 87574 99830</div>
                             <div class="divider"></div>
                             <div class="name">Ikramul Hasan</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -1041,6 +1046,7 @@
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 88252 41780</div>
                             <div class="divider"></div>
                             <div class="name">Kalimullah</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -1057,7 +1063,8 @@
                             <div class="name">Khadija Khatoon</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 80778 08030</div>
                             <div class="divider"></div>
-                            <div class="name">Mulana Ahlulah Qasemi </div>
+                            <div class="name">Mulana Ahlulah Qasmi</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -1075,6 +1082,7 @@
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 62000 12506</div>
                             <div class="divider"></div>
                             <div class="name">Md Ali</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -1092,6 +1100,7 @@
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 81692 24356</div>
                             <div class="divider"></div>
                             <div class="name">Ikram</div>
+                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -1403,7 +1412,8 @@
                     <div class="child-card">
                         <img src="${c.img}" alt="${c.name}">
                         <div class="name">${c.name}</div>
-                        <div class="relation">${c.relation}</div>
+                        ${c.relation ? `<div class="relation">${c.relation}</div>` : ''}
+                        ${c.contact ? `<div class="contact-num"><span class="phone-icon">📞</span> ${c.contact}</div>` : ''}
                     </div>
                 `).join('');
 
@@ -1428,4 +1438,5 @@
     </script>
 </body>
 </html>
+
 
