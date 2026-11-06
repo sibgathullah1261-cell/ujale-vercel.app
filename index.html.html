@@ -1,877 +1,1379 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="google-site-verification" content="GKK8YxOErvZPd1gtSSJR92ZftshPrH1o9Y08-Z7g1p4" />
-  <title>Ujale Family</title>
-  <meta name="title" content="Ujale Family">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --ivory: #FDF9F5;
-      --warm-white: #FFFCFA;
-      --sand: #F4EBE3;
-      --terracotta: #C07A5A;
-      --terracotta-soft: #D4A08A;
-      --espresso: #3A281C;
-      --brown: #6B4A36;
-      --gold: #C9A06C;
-      --gold-soft: #E8D4B8;
-      --shadow: 0 14px 45px rgba(58, 40, 28, 0.08);
-      --shadow-hover: 0 24px 60px rgba(58, 40, 28, 0.13);
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Outfit', sans-serif;
-      background: var(--ivory);
-      color: var(--espresso);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-    h1, h2, h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-    }
-    /* ========== NAVBAR ========== */
-    .navbar {
-      position: fixed;
-      top: 0; left: 0; width: 100%;
-      padding: 24px 52px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-      background: transparent;
-    }
-    .navbar.scrolled {
-      background: rgba(253, 249, 245, 0.94);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 4px 30px rgba(58, 40, 28, 0.06);
-      padding: 16px 52px;
-    }
-    .logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.75rem;
-      font-weight: 600;
-      color: white;
-      text-decoration: none;
-      letter-spacing: 0.4px;
-      transition: color 0.4s;
-    }
-    .navbar.scrolled .logo { color: var(--espresso); }
-    .nav-links {
-      display: flex;
-      gap: 42px;
-      list-style: none;
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: rgba(255,255,255,0.88);
-      font-size: 0.9rem;
-      font-weight: 400;
-      letter-spacing: 0.4px;
-      position: relative;
-      transition: color 0.3s;
-    }
-    .navbar.scrolled .nav-links a { color: var(--brown); }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -7px; left: 50%;
-      width: 0; height: 1.5px;
-      background: var(--terracotta);
-      transition: all 0.35s ease;
-      transform: translateX(-50%);
-    }
-    .nav-links a:hover::after { width: 100%; }
-    /* ========== HERO ========== */
-    .hero {
-      height: 100vh;
-      min-height: 820px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background: url('https://images.unsplash.com/photo-1511895426328-dc8714eba2e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=90') center/cover no-repeat;
-      transform: scale(1.08);
-      animation: slowZoom 28s ease-in-out infinite alternate;
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(160deg, 
-        rgba(42, 28, 20, 0.55) 0%, 
-        rgba(55, 38, 26, 0.68) 40%, 
-        rgba(42, 28, 20, 0.75) 100%);
-    }
-    .hero-vignette {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, transparent 15%, rgba(25, 16, 12, 0.5) 100%);
-      pointer-events: none;
-    }
-    .hero-glow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 700px;
-      height: 700px;
-      background: radial-gradient(circle, rgba(201, 160, 108, 0.08) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 1;
-    }
-    .hero-frame {
-      position: absolute;
-      width: 90px;
-      height: 90px;
-      border: 1px solid rgba(255,255,255,0.2);
-      pointer-events: none;
-      opacity: 0;
-      animation: fadeIn 2s 0.8s forwards;
-      z-index: 3;
-    }
-    .hero-frame.top-left { top: 100px; left: 70px; border-right: none; border-bottom: none; }
-    .hero-frame.top-right { top: 100px; right: 70px; border-left: none; border-bottom: none; }
-    .hero-frame.bottom-left { bottom: 100px; left: 70px; border-right: none; border-top: none; }
-    .hero-frame.bottom-right { bottom: 100px; right: 70px; border-left: none; border-top: none; }
-    .hero-content {
-      position: relative;
-      z-index: 5;
-      max-width: 900px;
-      padding: 0 28px;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 11px 30px;
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 50px;
-      font-size: 0.74rem;
-      letter-spacing: 3.8px;
-      text-transform: uppercase;
-      margin-bottom: 38px;
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(10px);
-      opacity: 0;
-      animation: fadeUp 1.3s 0.3s forwards;
-    }
-    .hero-badge .dot {
-      width: 5px;
-      height: 5px;
-      background: var(--gold-soft);
-      border-radius: 50%;
-      box-shadow: 0 0 12px rgba(232, 212, 184, 0.7);
-    }
-    .hero h1 {
-      font-size: clamp(3.4rem, 8.5vw, 6.2rem);
-      line-height: 1.05;
-      margin-bottom: 8px;
-      font-weight: 500;
-      letter-spacing: -1.2px;
-      text-shadow: 0 12px 70px rgba(0,0,0,0.4);
-      opacity: 0;
-      animation: fadeUp 1.3s 0.5s forwards;
-    }
-    .hero h1 .line2 {
-      display: block;
-      font-style: italic;
-      font-weight: 400;
-    }
-    .hero h1 .heart {
-      display: inline-block;
-      font-size: 0.55em;
-      vertical-align: middle;
-      margin: 0 6px;
-      opacity: 0.7;
-      animation: pulseHeart 3s infinite ease-in-out;
-    }
-    .hero-divider {
-      width: 48px;
-      height: 1.5px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-      margin: 26px auto 28px;
-      opacity: 0;
-      animation: fadeUp 1.3s 0.7s forwards;
-    }
-    .hero p {
-      font-size: 1.22rem;
-      font-weight: 300;
-      max-width: 480px;
-      margin: 0 auto 28px;
-      letter-spacing: 0.25px;
-      line-height: 1.75;
-      opacity: 0;
-      animation: fadeUp 1.3s 0.85s forwards;
-      color: rgba(255,255,255,0.9);
-    }
-    /* ========== DUA STYLING ========== */
-    .hero-dua {
-      font-family: 'Amiri', 'Cormorant Garamond', serif;
-      font-size: clamp(1.15rem, 2.8vw, 1.55rem);
-      line-height: 2;
-      color: rgba(255, 255, 255, 0.92);
-      max-width: 720px;
-      margin: 0 auto 42px;
-      direction: rtl;
-      letter-spacing: 0.5px;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.25);
-      opacity: 0;
-      animation: fadeUp 1.3s 1s forwards;
-      font-weight: 400;
-    }
-    .hero-btn {
-      display: inline-block;
-      padding: 16px 48px;
-      background: rgba(255,255,255,0.09);
-      border: 1.5px solid rgba(255,255,255,0.32);
-      color: white;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 400;
-      letter-spacing: 1.1px;
-      font-size: 0.9rem;
-      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-      opacity: 0;
-      animation: fadeUp 1.3s 1.15s forwards;
-      backdrop-filter: blur(12px);
-    }
-    .hero-btn:hover {
-      background: white;
-      color: var(--espresso);
-      border-color: white;
-      transform: translateY(-4px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-    }
-    .floating-heart {
-      position: absolute;
-      color: rgba(255,255,255,0.12);
-      font-size: 1.3rem;
-      animation: float 14s infinite ease-in-out;
-      pointer-events: none;
-      z-index: 2;
-    }
-    .floating-heart:nth-child(1) { top: 16%; left: 9%; font-size: 1.5rem; }
-    .floating-heart:nth-child(2) { top: 27%; right: 11%; animation-delay: 2.8s; font-size: 2rem; }
-    .floating-heart:nth-child(3) { bottom: 24%; left: 13%; animation-delay: 5.5s; }
-    .floating-heart:nth-child(4) { top: 60%; right: 8%; animation-delay: 1.6s; font-size: 1.2rem; }
-    .floating-heart:nth-child(5) { bottom: 36%; right: 15%; animation-delay: 4s; font-size: 1rem; }
-    .floating-heart:nth-child(6) { top: 40%; left: 7%; animation-delay: 7s; font-size: 1.15rem; }
-    /* ========== SECTIONS ========== */
-    section { padding: 120px 28px; }
-    .container { max-width: 1180px; margin: 0 auto; }
-    .section-header { text-align: center; margin-bottom: 70px; }
-    .section-title {
-      font-size: clamp(2.4rem, 5vw, 3.3rem);
-      color: var(--espresso);
-      margin-bottom: 16px;
-      letter-spacing: -0.5px;
-    }
-    .section-line {
-      width: 52px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--terracotta), var(--gold));
-      margin: 0 auto 20px;
-      border-radius: 2px;
-    }
-    .section-subtitle {
-      color: var(--brown);
-      font-size: 1.12rem;
-      font-weight: 300;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-    .subsection-title {
-      text-align: center;
-      font-size: 1.85rem;
-      color: var(--espresso);
-      margin: 95px 0 48px;
-    }
-    .subsection-title::after {
-      content: '';
-      display: block;
-      width: 38px;
-      height: 1.5px;
-      background: var(--terracotta-soft);
-      margin: 14px auto 0;
-      opacity: 0.8;
-    }
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .intro { background: var(--sand); }
-    .intro-content {
-      max-width: 680px;
-      margin: 0 auto;
-      text-align: center;
-      font-size: 1.2rem;
-      line-height: 1.95;
-      font-weight: 300;
-      color: var(--brown);
-    }
-    .intro-content p { margin-bottom: 26px; }
-    .intro-content .highlight {
-      color: var(--terracotta);
-      font-weight: 500;
-    }
-    .family-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
-      gap: 28px;
-    }
-    .family-grid.grandparents {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      max-width: 700px;
-      margin: 0 auto;
-      gap: 36px;
-    }
-    .family-card, .couple-card {
-      background: var(--warm-white);
-      border-radius: 22px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-      border: 1px solid rgba(192, 122, 90, 0.05);
-    }
-    .family-card:hover, .couple-card:hover {
-      transform: translateY(-10px);
-      box-shadow: var(--shadow-hover);
-    }
-    .family-card img {
-      width: 100%;
-      height: 290px;
-      object-fit: cover;
-      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .family-card:hover img { transform: scale(1.06); }
-    .family-card-content {
-      padding: 28px 22px 30px;
-      text-align: center;
-    }
-    .family-card h3 {
-      font-size: 1.6rem;
-      margin-bottom: 6px;
-      color: var(--espresso);
-    }
-    .family-card h3::after {
-      content: '';
-      display: block;
-      width: 30px;
-      height: 1.5px;
-      background: var(--terracotta);
-      margin: 12px auto 12px;
-      opacity: 0.7;
-    }
-    .family-card p {
-      color: var(--brown);
-      font-size: 0.94rem;
-      font-weight: 300;
-      line-height: 1.65;
-    }
-    .couple-photos {
-      display: flex;
-      gap: 6px;
-      padding: 14px 14px 0;
-    }
-    .couple-photos img {
-      width: 50%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 15px;
-      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .couple-card:hover .couple-photos img {
-      transform: scale(1.04);
-    }
-    .couple-content {
-      padding: 24px 16px 28px;
-      text-align: center;
-    }
-    .name-pair {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-    }
-    .name-pair .name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--espresso);
-    }
-    .name-pair .divider {
-      width: 22px;
-      height: 1.5px;
-      background: var(--terracotta);
-      opacity: 0.65;
-      margin: 5px 0;
-    }
-    .memories { background: var(--sand); }
-    .memories-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
-      gap: 24px;
-    }
-    .memory-item {
-      position: relative;
-      border-radius: 18px;
-      overflow: hidden;
-      height: 290px;
-      box-shadow: var(--shadow);
-    }
-    .memory-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .memory-item:hover img { transform: scale(1.1); }
-    .memory-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(58, 40, 28, 0.88) 0%, transparent 55%);
-      display: flex;
-      align-items: flex-end;
-      padding: 26px 22px;
-      color: white;
-      font-size: 1.1rem;
-    }
-    .thank-you {
-      background: linear-gradient(150deg, #C07A5A 0%, #A86B4F 50%, #8B5A3C 100%);
-      color: white;
-      text-align: center;
-      padding: 145px 28px;
-      position: relative;
-      overflow: hidden;
-    }
-    .thank-you::before {
-      content: '♥';
-      position: absolute;
-      font-size: 30rem;
-      opacity: 0.03;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-    .thank-you .heart-big {
-      font-size: 3.6rem;
-      display: block;
-      margin-bottom: 20px;
-      animation: pulse 2.8s infinite ease-in-out;
-    }
-    .thank-you h2 {
-      font-size: clamp(2.5rem, 5.2vw, 3.5rem);
-      margin-bottom: 26px;
-    }
-    .thank-you p {
-      font-size: 1.22rem;
-      max-width: 600px;
-      margin: 0 auto 18px;
-      opacity: 0.95;
-      font-weight: 300;
-      line-height: 1.8;
-    }
-    .thank-you .final-line {
-      font-size: 1.5rem;
-      font-weight: 500;
-      margin-top: 34px;
-    }
-    footer {
-      background: var(--espresso);
-      color: rgba(255,255,255,0.55);
-      text-align: center;
-      padding: 30px;
-      font-size: 0.93rem;
-    }
-    footer span { color: var(--gold-soft); }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-28px) rotate(8deg); }
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.12); }
-    }
-    @keyframes pulseHeart {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.15); opacity: 1; }
-    }
-    @keyframes slowZoom {
-      from { transform: scale(1.08); }
-      to { transform: scale(1.15); }
-    }
-    @media (max-width: 900px) {
-      .navbar { padding: 18px 28px; }
-      .nav-links { display: none; }
-      .navbar.scrolled { padding: 14px 28px; }
-      .hero-frame { display: none; }
-    }
-    @media (max-width: 768px) {
-      section { padding: 90px 20px; }
-      .couple-photos img { height: 170px; }
-      .family-card img { height: 250px; }
-      .name-pair .name { font-size: 1.3rem; }
-      .subsection-title { margin: 75px 0 38px; }
-      .thank-you { padding: 110px 20px; }
-      .hero-dua { font-size: 1.15rem; }
-    }
-  </style>
-</head>
-<body>
-  <nav class="navbar" id="navbar">
-    <a href="#" class="logo">Ujale Family</a>
-    <ul class="nav-links">
-      <li><a href="#intro">Message</a></li>
-      <li><a href="#family">Family</a></li>
-      <li><a href="#memories">Memories</a></li>
-    </ul>
-  </nav>
+<html lang="en" class=""><head><script>window.livecodes = window.livecodes || {};</script><title>Untitled Project</title><meta name="title" content="Untitled Project"><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><style id="__livecodes_styles__"></style><script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script><script type="importmap">{
+  "imports": {}
+}</script></head><body>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-vignette"></div>
-    <div class="hero-glow"></div>
-    <div class="hero-frame top-left"></div>
-    <div class="hero-frame top-right"></div>
-    <div class="hero-frame bottom-left"></div>
-    <div class="hero-frame bottom-right"></div>
-    <div class="floating-heart">♥</div>
-    <div class="floating-heart">♥</div>
-    <div class="floating-heart">♥</div>
-    <div class="floating-heart">♥</div>
-    <div class="floating-heart">♥</div>
-    <div class="floating-heart">♥</div>
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="dot"></span>
-        With All My Heart
-      </div>
-      <h1>
-        Welcome to the
-        <span class="line2">Ujale <span class="heart">♥</span> Family</span>
-      </h1>
-      <div class="hero-divider"></div>
-      <p>The people who turn ordinary days into the most beautiful memories</p>
-      <!-- DUA -->
-      <div class="hero-dua">
-        رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا
-      </div>
-      <a href="#intro" class="hero-btn">Read My Message</a>
-    </div>
-  </section>
 
-  <!-- MESSAGE -->
-  <section class="intro" id="intro">
-    <div class="container">
-      <div class="section-header reveal">
-        <h2 class="section-title">A Message from My Heart</h2>
-        <div class="section-line"></div>
-      </div>
-      <div class="intro-content reveal">
-        <p>
-          Family is not just who we share blood with — they are the ones who share our laughter, our tears, our dreams, and our everyday moments.
-        </p>
-        <p>
-          This page is dedicated to the beloved <span class="highlight">Ujale Family</span> — my Grandfather &amp; Grandmother, their daughters and sons, and their respected partners. Thank you for the love that never runs out.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAMILY -->
-  <section id="family">
-    <div class="container">
-      <div class="section-header reveal">
-        <h2 class="section-title">Meet the Ujale Family</h2>
-        <div class="section-line"></div>
-        <p class="section-subtitle">The roots and the branches of my heart</p>
-      </div>
-
-      <h3 class="subsection-title reveal">My Grandfather &amp; Grandmother</h3>
-      <div class="family-grid grandparents">
-        <div class="family-card reveal">
-          <img src="" alt="Grandfather">
-          <div class="family-card-content">
-            <h3>Maulana Sabir Qasmir</h3>
-            <p>The pillar of our family. His wisdom, strength, and quiet love guide us all.</p>
-          </div>
-        </div>
-        <div class="family-card reveal">
-          <img src="" alt="Grandmother">
-          <div class="family-card-content">
-            <h3>Gulshan Khatoon</h3>
-            <p>The heart of our home. Her warmth, care, and endless love hold us together.</p>
-          </div>
-        </div>
-      </div>
-
-      <h3 class="subsection-title reveal">Our Beloved Phophis &amp; Their Husbands</h3>
-      <div class="family-grid">
-        <div class="couple-card reveal">
-          <div class="couple-photos">
-            <img src="" alt="Atiqah Khatoon">
-            <img src="" alt="DHS">
-          </div>
-          <div class="couple-content">
-            <div class="name-pair">
-              <div class="name">Atiqah Khatoon</div>
-              <div class="divider"></div>
-              <div class="name">DHS</div>
-            </div>
-          </div>
-        </div>
-        <div class="couple-card reveal">
-          <div class="couple-photos">
-            <img src="" alt="Munni Khatoon">
-            <img src="" alt="Papo">
-          </div>
-          <div class="couple-content">
-            <div class="name-pair">
-              <div class="name">Munni Khatoon</div>
-              <div class="divider"></div>
-              <div class="name">Papo</div>
-            </div>
-          </div>
-        </div>
-        <div class="couple-card reveal">
-          <div class="couple-photos">
-            <img src="" alt="Aqila Khatoon">
-            <img src="" alt="DF">
-          </div>
-          <div class="couple-content">
-            <div class="name-pair">
-              <div class="name">Aqila Khatoon</div>
-              <div class="divider"></div>
-              <div class="name">DF</div>
-            </div>
-          </div>
-        </div>
-        <div class="couple-card reveal">
-          <div class="couple-photos">
-            <img src="" alt="Nafisa Khatoon">
-            <img src="" alt="Ikram ul Hasan">
-          </div>
-          <div class="couple-content">
-            <div class="name-pair">
-              <div class="name">Nafiash</div>
-              <div class="divider"></div>
-              <div class="name">Ikramul Hasan</div>
-            </div>
-          </div>
-        </div>
-        <div class="couple-card reveal">
-          <div class="couple-photos">
-            <img src="" alt="Baby Khatoon">
-            <img src="" alt="DD">
-          </div>
-          <div class="couple-content">
-            <div class="name-pair">
-              <div class="name">Baby Khatoon</div>
-              <div class="divider"></div>
-              <div class="name">DD</div>
-            </div>
-          </div>
-        </div>
-        <div class="couple-card reveal">
-          <div class="couple-photos">
-            <img src="" alt="Khadija Khatoon">
-            <img src="" alt="Mulana Ahlulah Qasmi">
-          </div>
-          <div class="couple-content">
-            <div class="name-pair">
-              <div class="name">Khadija Khatoon</div>
-              <div class="divider"></div>
-              <div class="name">Mulana Ahlulah Qasmi</div>
-            </div>
-          </div>
-        </div>
-        <div class="couple-card reveal">
-          <div class="couple-photos">
-            <img src="" alt="Ruqiya">
-            <img src="" alt="Md Ali">
-          </div>
-          <div class="couple-content">
-            <div class="name-pair">
-              <div class="name">Ruqaiya Khatoon</div>
-              <div class="divider"></div>
-              <div class="name">Md Ali</div>
-            </div>
-          </div>
-        </div>
-        <div class="couple-card reveal">
-          <div class="couple-photos">
-            <img src="" alt="Afifah">
-            <img src="" alt="Ikram">
-          </div>
-          <div class="couple-content">
-            <div class="name-pair">
-              <div class="name">Afifah Khatoon</div>
-              <div class="divider"></div>
-              <div class="name">Ikram</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <h3 class="subsection-title reveal">Our Beloved Uncles &amp; Aunties</h3>
-      <div class="family-grid">
-        <div class="couple-card reveal">
-          <div class="couple-photos">
-            <img src="" alt="MD Mahmud">
-            <img src="" alt="Zainab Khatoon">
-          </div>
-          <div class="couple-content">
-            <div class="name-pair">
-              <div class="name">MD Mahmud</div>
-              <div class="divider"></div>
-              <div class="name">Zainab Khatoon</div>
-            </div>
-          </div>
-        </div>
-        <div class="couple-card reveal">
-          <div class="couple-photos">
-            <img src="" alt="Mahfuz Alam">
-            <img src="" alt="Moshina Khatton">
-          </div>
-          <div class="couple-content">
-            <div class="name-pair">
-              <div class="name">Mahfuz Alam</div>
-              <div class="divider"></div>
-              <div class="name">Moshina Khatton</div>
-            </div>
-          </div>
-        </div>
-        <div class="couple-card reveal">
-          <div class="couple-photos">
-            <img src="" alt="Mushin Alam Hudawi">
-            <img src="" alt="Irfana Khatoon">
-          </div>
-          <div class="couple-content">
-            <div class="name-pair">
-              <div class="name">Mushin Alam Hudawi</div>
-              <div class="divider"></div>
-              <div class="name">Irfana Khatoon</div>
-            </div>
-          </div>
-        </div>
-        <div class="couple-card reveal">
-          <div class="couple-photos">
-            <img src="" alt="Maqbool Alam Hudawi">
-            <img src="" alt="Maimuna">
-          </div>
-          <div class="couple-content">
-            <div class="name-pair">
-              <div class="name">Maqbool Alam Hudawi</div>
-              <div class="divider"></div>
-              <div class="name">Maimuna</div>
-            </div>
-          </div>
-        </div>
-        <div class="couple-card reveal">
-          <div class="couple-photos">
-            <img src="" alt="Mahboob Alam Hudawi">
-            <img src="" alt="Nishat Anjum">
-          </div>
-          <div class="couple-content">
-            <div class="name-pair">
-              <div class="name">Mahboob Alam Hudawi</div>
-              <div class="divider"></div>
-              <div class="name">Nishat Anjum</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MEMORIES -->
-  <section class="memories" id="memories">
-    <div class="container">
-      <div class="section-header reveal">
-        <h2 class="section-title">Our Favorite Memories</h2>
-        <div class="section-line"></div>
-        <p class="section-subtitle">Moments that will live in my heart forever</p>
-      </div>
-      <div class="memories-grid">
-        <div class="memory-item reveal">
-          <img src="" alt="Family">
-          <div class="memory-overlay">Big family gatherings full of love</div>
-        </div>
-        <div class="memory-item reveal">
-          <img src="" alt="Travel">
-          <div class="memory-overlay">Adventures we shared together</div>
-        </div>
-        <div class="memory-item reveal">
-          <img src="" alt="Celebration">
-          <div class="memory-overlay">Celebrations &amp; special days</div>
-        </div>
-        <div class="memory-item reveal">
-          <img src="" alt="Everyday">
-          <div class="memory-overlay">Simple everyday moments</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- THANK YOU -->
-  <section class="thank-you">
-    <span class="heart-big">♥</span>
-    <h2>Thank You, Ujale Family</h2>
-    <p>
-      To my Grandfather, Grandmother, all the Phophis with their husbands, and all the Uncles &amp; Aunties — thank you for the love, the sacrifices, and the beautiful life we share.
-    </p>
-    <p class="final-line">You are my greatest blessing.</p>
-  </section>
-
-  <footer>
-    Made with <span>♥</span> for the Ujale Family
-  </footer>
-
-  <script>
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 50);
-    });
-    const reveals = document.querySelectorAll('.reveal');
-    const revealOnScroll = () => {
-      const windowHeight = window.innerHeight;
-      reveals.forEach(el => {
-        if (el.getBoundingClientRect().top < windowHeight - 100) {
-          el.classList.add('active');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Love My Family</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;family=Outfit:wght@300;400;500&amp;family=Amiri:wght@400;700&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ivory: #FDF9F5;
+            --warm-white: #FFFCFA;
+            --sand: #F4EBE3;
+            --terracotta: #C07A5A;
+            --terracotta-soft: #D4A08A;
+            --espresso: #3A281C;
+            --brown: #6B4A36;
+            --gold: #C9A06C;
+            --gold-soft: #E8D4B8;
+            --shadow: 0 14px 45px rgba(58, 40, 28, 0.08);
+            --shadow-hover: 0 24px 60px rgba(58, 40, 28, 0.13);
         }
-      });
-    };
-    window.addEventListener('scroll', revealOnScroll);
-    window.addEventListener('load', revealOnScroll);
-  </script>
-</body>
-</html>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--ivory);
+            color: var(--espresso);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+        }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 24px 52px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(253, 249, 245, 0.94);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(58, 40, 28, 0.06);
+            padding: 16px 52px;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 0.4px;
+            transition: color 0.4s;
+        }
+
+        .navbar.scrolled .logo { color: var(--espresso); }
+
+        .nav-links {
+            display: flex;
+            gap: 42px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.88);
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.4px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .navbar.scrolled .nav-links a { color: var(--brown); }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -7px; left: 50%;
+            width: 0; height: 1.5px;
+            background: var(--terracotta);
+            transition: all 0.35s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ========== HERO ========== */
+        .hero {
+            height: 100vh;
+            min-height: 860px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1511895426328-dc8714eba2e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=90') center/cover no-repeat;
+            transform: scale(1.1);
+            animation: slowZoom 32s ease-in-out infinite alternate;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(165deg, 
+                rgba(35, 22, 16, 0.58) 0%, 
+                rgba(48, 32, 22, 0.72) 45%, 
+                rgba(32, 20, 14, 0.82) 100%);
+        }
+
+        .hero-vignette {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 10%, rgba(18, 12, 8, 0.55) 100%);
+            pointer-events: none;
+        }
+
+        .hero-aura {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(201, 160, 108, 0.13) 0%, transparent 68%);
+            pointer-events: none;
+            z-index: 1;
+            animation: auraPulse 8s ease-in-out infinite;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(232, 212, 184, 0.18), transparent 70%);
+            pointer-events: none;
+            z-index: 2;
+            animation: floatOrb 18s infinite ease-in-out;
+        }
+        .orb:nth-child(1) { width: 180px; height: 180px; top: 12%; left: 8%; animation-delay: 0s; }
+        .orb:nth-child(2) { width: 120px; height: 120px; top: 25%; right: 10%; animation-delay: 3s; }
+        .orb:nth-child(3) { width: 90px; height: 90px; bottom: 20%; left: 15%; animation-delay: 6s; }
+        .orb:nth-child(4) { width: 140px; height: 140px; bottom: 15%; right: 12%; animation-delay: 2s; }
+
+        .floating-heart {
+            position: absolute;
+            color: rgba(255,255,255,0.13);
+            font-size: 1.4rem;
+            animation: float 16s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .floating-heart:nth-child(5) { top: 18%; left: 12%; font-size: 1.1rem; }
+        .floating-heart:nth-child(6) { top: 30%; right: 14%; animation-delay: 2.5s; font-size: 1.8rem; }
+        .floating-heart:nth-child(7) { bottom: 28%; left: 9%; animation-delay: 5s; font-size: 1.3rem; }
+        .floating-heart:nth-child(8) { top: 55%; right: 7%; animation-delay: 1.2s; font-size: 1rem; }
+        .floating-heart:nth-child(9) { bottom: 18%; right: 18%; animation-delay: 4s; font-size: 1.5rem; }
+        .floating-heart:nth-child(10) { top: 42%; left: 6%; animation-delay: 7s; font-size: 1.2rem; }
+
+        .hero-frame {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 1px solid rgba(255,255,255,0.18);
+            pointer-events: none;
+            opacity: 0;
+            animation: fadeIn 2.2s 1s forwards;
+            z-index: 3;
+        }
+        .hero-frame.top-left { top: 90px; left: 60px; border-right: none; border-bottom: none; }
+        .hero-frame.top-right { top: 90px; right: 60px; border-left: none; border-bottom: none; }
+        .hero-frame.bottom-left { bottom: 90px; left: 60px; border-right: none; border-top: none; }
+        .hero-frame.bottom-right { bottom: 90px; right: 60px; border-left: none; border-top: none; }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            max-width: 920px;
+            padding: 0 28px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 32px;
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 50px;
+            font-size: 0.72rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 36px;
+            background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            animation: fadeUp 1.4s 0.3s forwards;
+            box-shadow: 0 0 30px rgba(201, 160, 108, 0.1);
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--gold-soft);
+            border-radius: 50%;
+            box-shadow: 0 0 14px rgba(232, 212, 184, 0.9);
+            animation: pulseDot 2.5s infinite ease-in-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(3.5rem, 9vw, 6.5rem);
+            line-height: 1.08;
+            margin-bottom: 6px;
+            font-weight: 500;
+            letter-spacing: -1.4px;
+            text-shadow: 0 14px 60px rgba(0,0,0,0.45);
+            opacity: 0;
+            animation: fadeUp 1.4s 0.5s forwards;
+        }
+
+        .hero h1 .line2 {
+            display: block;
+            font-style: italic;
+            font-weight: 400;
+            margin-top: 6px;
+        }
+
+        .hero h1 .heart {
+            display: inline-block;
+            font-size: 0.52em;
+            vertical-align: middle;
+            margin: 0 8px;
+            opacity: 0.85;
+            animation: pulseHeart 2.8s infinite ease-in-out;
+            color: #E8D4B8;
+        }
+
+        .hero-ornament {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 28px auto 26px;
+            opacity: 0;
+            animation: fadeUp 1.4s 0.7s forwards;
+        }
+
+        .hero-ornament .line {
+            width: 48px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+        }
+
+        .hero-ornament .diamond {
+            width: 7px;
+            height: 7px;
+            background: rgba(232, 212, 184, 0.7);
+            transform: rotate(45deg);
+            box-shadow: 0 0 12px rgba(232, 212, 184, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.28rem;
+            font-weight: 300;
+            max-width: 520px;
+            margin: 0 auto 32px;
+            letter-spacing: 0.3px;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeUp 1.4s 0.85s forwards;
+            color: rgba(255,255,255,0.92);
+        }
+
+        .hero-dua {
+            font-family: 'Amiri', 'Cormorant Garamond', serif;
+            font-size: clamp(1.2rem, 2.9vw, 1.6rem);
+            line-height: 2.1;
+            color: rgba(255, 255, 255, 0.94);
+            max-width: 740px;
+            margin: 0 auto 44px;
+            direction: rtl;
+            letter-spacing: 0.6px;
+            text-shadow: 0 6px 25px rgba(0,0,0,0.3);
+            opacity: 0;
+            animation: fadeUp 1.4s 1s forwards;
+            font-weight: 400;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 17px 52px;
+            background: rgba(255,255,255,0.08);
+            border: 1.5px solid rgba(255,255,255,0.35);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 400;
+            letter-spacing: 1.2px;
+            font-size: 0.92rem;
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            opacity: 0;
+            animation: fadeUp 1.4s 1.15s forwards;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .hero-btn:hover {
+            background: white;
+            color: var(--espresso);
+            border-color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 22px 50px rgba(0,0,0,0.28);
+        }
+
+        /* ========== SECTIONS ========== */
+        section { padding: 120px 28px; }
+        .container { max-width: 1180px; margin: 0 auto; }
+
+        .section-header { text-align: center; margin-bottom: 70px; }
+
+        .section-title {
+            font-size: clamp(2.4rem, 5vw, 3.3rem);
+            color: var(--espresso);
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-line {
+            width: 52px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--terracotta), var(--gold));
+            margin: 0 auto 20px;
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            color: var(--brown);
+            font-size: 1.12rem;
+            font-weight: 300;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .subsection-title {
+            text-align: center;
+            font-size: 1.85rem;
+            color: var(--espresso);
+            margin: 95px 0 48px;
+        }
+
+        .subsection-title::after {
+            content: '';
+            display: block;
+            width: 38px;
+            height: 1.5px;
+            background: var(--terracotta-soft);
+            margin: 14px auto 0;
+            opacity: 0.8;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .intro { background: var(--sand); }
+
+        .intro-content {
+            max-width: 680px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 1.95;
+            font-weight: 300;
+            color: var(--brown);
+        }
+
+        .intro-content p { margin-bottom: 26px; }
+        .intro-content .highlight {
+            color: var(--terracotta);
+            font-weight: 500;
+        }
+
+        .family-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+            gap: 28px;
+        }
+
+        .family-grid.grandparents {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            max-width: 700px;
+            margin: 0 auto;
+            gap: 36px;
+        }
+
+        .family-card, .couple-card {
+            background: var(--warm-white);
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            border: 1px solid rgba(192, 122, 90, 0.05);
+            cursor: pointer;
+        }
+
+        .family-card:hover, .couple-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .family-card img {
+            width: 100%;
+            height: 290px;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            background: var(--sand);
+        }
+
+        .family-card:hover img { transform: scale(1.06); }
+
+        .family-card-content {
+            padding: 28px 22px 30px;
+            text-align: center;
+        }
+
+        .family-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+            color: var(--espresso);
+        }
+
+        .family-card h3::after {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 1.5px;
+            background: var(--terracotta);
+            margin: 12px auto 12px;
+            opacity: 0.7;
+        }
+
+        .family-card p {
+            color: var(--brown);
+            font-size: 0.94rem;
+            font-weight: 300;
+            line-height: 1.65;
+        }
+
+        .couple-photos {
+            display: flex;
+            gap: 6px;
+            padding: 14px 14px 0;
+        }
+
+        .couple-photos img {
+            width: 50%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            background: var(--sand);
+        }
+
+        .couple-card:hover .couple-photos img {
+            transform: scale(1.04);
+        }
+
+        .couple-content {
+            padding: 24px 16px 28px;
+            text-align: center;
+        }
+
+        .name-pair {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .name-pair .name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--espresso);
+        }
+
+        .name-pair .divider {
+            width: 22px;
+            height: 1.5px;
+            background: var(--terracotta);
+            opacity: 0.65;
+            margin: 5px 0;
+        }
+
+        .click-hint {
+            font-size: 0.78rem;
+            color: var(--terracotta);
+            margin-top: 12px;
+            opacity: 0.85;
+            letter-spacing: 0.3px;
+        }
+
+        .memories { background: var(--sand); }
+
+        .memories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+            gap: 24px;
+        }
+
+        .memory-item {
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            height: 290px;
+            box-shadow: var(--shadow);
+        }
+
+        .memory-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+            background: var(--sand);
+        }
+
+        .memory-item:hover img { transform: scale(1.1); }
+
+        .memory-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(58, 40, 28, 0.88) 0%, transparent 55%);
+            display: flex;
+            align-items: flex-end;
+            padding: 26px 22px;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .thank-you {
+            background: linear-gradient(150deg, #C07A5A 0%, #A86B4F 50%, #8B5A3C 100%);
+            color: white;
+            text-align: center;
+            padding: 145px 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thank-you::before {
+            content: '♥';
+            position: absolute;
+            font-size: 30rem;
+            opacity: 0.03;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .thank-you .heart-big {
+            font-size: 3.6rem;
+            display: block;
+            margin-bottom: 20px;
+            animation: pulse 2.8s infinite ease-in-out;
+        }
+
+        .thank-you h2 {
+            font-size: clamp(2.5rem, 5.2vw, 3.5rem);
+            margin-bottom: 26px;
+        }
+
+        .thank-you p {
+            font-size: 1.22rem;
+            max-width: 600px;
+            margin: 0 auto 18px;
+            opacity: 0.95;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .thank-you .final-line {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-top: 34px;
+        }
+
+        footer {
+            background: var(--espresso);
+            color: rgba(255,255,255,0.55);
+            text-align: center;
+            padding: 30px;
+            font-size: 0.93rem;
+        }
+
+        footer span { color: var(--gold-soft); }
+
+        /* ========== MODAL ========== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(42, 28, 20, 0.72);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--warm-white);
+            border-radius: 28px;
+            width: 100%;
+            max-width: 780px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+            transform: translateY(40px) scale(0.96);
+            transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--sand);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--brown);
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: var(--terracotta);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            padding: 42px 40px 25px;
+            text-align: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.9rem;
+            color: var(--espresso);
+            margin-bottom: 6px;
+        }
+
+        .modal-header p {
+            color: var(--brown);
+            font-size: 1.05rem;
+            font-weight: 300;
+        }
+
+        .children-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 28px;
+            padding: 10px 40px 50px;
+            justify-items: center;
+        }
+
+        .child-card {
+            text-align: center;
+            transition: transform 0.3s;
+            width: 100%;
+            max-width: 180px;
+        }
+
+        .child-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .child-card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(58,40,28,0.12);
+            background: var(--sand);
+            border: 1px solid rgba(192, 122, 90, 0.08);
+        }
+
+        .child-card .name {
+            margin-top: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--espresso);
+        }
+
+        .child-card .relation {
+            font-size: 0.82rem;
+            color: var(--brown);
+            margin-top: 3px;
+            letter-spacing: 0.3px;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(8deg); }
+        }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -25px); }
+        }
+
+        @keyframes auraPulse {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+
+        @keyframes pulseHeart {
+            0%, 100% { transform: scale(1); opacity: 0.85; }
+            50% { transform: scale(1.18); opacity: 1; }
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.4); opacity: 1; }
+        }
+
+        @keyframes slowZoom {
+            from { transform: scale(1.1); }
+            to { transform: scale(1.18); }
+        }
+
+        @media (max-width: 900px) {
+            .navbar { padding: 18px 28px; }
+            .nav-links { display: none; }
+            .navbar.scrolled { padding: 14px 28px; }
+            .hero-frame { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            section { padding: 90px 20px; }
+            .couple-photos img { height: 170px; }
+            .family-card img { height: 250px; }
+            .name-pair .name { font-size: 1.3rem; }
+            .subsection-title { margin: 75px 0 38px; }
+            .thank-you { padding: 110px 20px; }
+            .hero-dua { font-size: 1.15rem; }
+            .modal-header { padding: 32px 20px 15px; }
+            .children-grid { padding: 10px 20px 40px; gap: 22px; }
+            .child-card img { height: 180px; }
+        }
+    </style>
+
+
+
+    <nav class="navbar" id="navbar">
+        <a href="#" class="logo">I Love My Family</a>
+        <ul class="nav-links">
+            <li><a href="#intro">Message</a></li>
+            <li><a href="#family">Family</a></li>
+            <li><a href="#memories">Memories</a></li>
+        </ul>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-vignette"></div>
+        <div class="hero-aura"></div>
+
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+
+        <div class="floating-heart">♥</div>
+        <div class="floating-heart">♥</div>
+        <div class="floating-heart">♥</div>
+        <div class="floating-heart">♥</div>
+        <div class="floating-heart">♥</div>
+        <div class="floating-heart">♥</div>
+
+        <div class="hero-frame top-left"></div>
+        <div class="hero-frame top-right"></div>
+        <div class="hero-frame bottom-left"></div>
+        <div class="hero-frame bottom-right"></div>
+
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                With All My Heart
+            </div>
+
+            <h1>
+                My Heart Belongs
+                <span class="line2">to My <span class="heart">♥</span> Family</span>
+            </h1>
+
+            <div class="hero-ornament">
+                <div class="line"></div>
+                <div class="diamond"></div>
+                <div class="line"></div>
+            </div>
+
+            <p>The people who turn ordinary days into the most beautiful memories</p>
+
+            <div class="hero-dua">
+                رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا
+            </div>
+
+            <a href="#intro" class="hero-btn">Read My Message</a>
+        </div>
+    </section>
+
+    <!-- MESSAGE -->
+    <section class="intro" id="intro">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">A Message from My Heart</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="intro-content reveal">
+                <p>
+                    Family is not just who we share blood with — they are the ones who share our laughter, our tears, our dreams, and our everyday moments.
+                </p>
+                <p>
+                    This page is dedicated to my beloved <span class="highlight">Grandfather &amp; Grandmother</span>, their daughters and sons, and their respected partners. Thank you for the love that never runs out.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAMILY -->
+    <section id="family">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">Meet My Beautiful Family</h2>
+                <div class="section-line"></div>
+                <p class="section-subtitle">The roots and the branches of my heart</p>
+            </div>
+
+            <h3 class="subsection-title reveal">My Grandfather &amp; Grandmother</h3>
+            <div class="family-grid grandparents">
+                <div class="family-card reveal">
+                    <img src="" alt="Grandfather">
+                    <div class="family-card-content">
+                        <h3>Maulana Sabir Qasmir</h3>
+                        <p>The pillar of our family. His wisdom, strength, and quiet love guide us all.</p>
+                    </div>
+                </div>
+                <div class="family-card reveal">
+                    <img src="" alt="Grandmother">
+                    <div class="family-card-content">
+                        <h3>Gulshan Khatoon</h3>
+                        <p>The heart of our home. Her warmth, care, and endless love hold us together.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title reveal">Our Beloved Phophis &amp; Their Husbands</h3>
+            <div class="family-grid">
+                <!-- 1. Atiqah -->
+                <div class="couple-card reveal" data-couple="atiqah">
+                    <div class="couple-photos">
+                        <img src="" alt="Atiqah Khatoon">
+                        <img src="" alt="Muhammad Juhi">
+                    </div>
+                    <div class="couple-content">
+                        <div class="name-pair">
+                            <div class="name">Atiqah Khatoon</div>
+                            <div class="divider"></div>
+                            <div class="name">Muhammad Juhi</div>
+                        </div>
+                        <div class="click-hint">Click to see their children ♥</div>
+                    </div>
+                </div>
+
+                <!-- 2. Rabiyah -->
+                <div class="couple-card reveal" data-couple="rabiyah">
+                    <div class="couple-photos">
+                        <img src="" alt="Rabiyah Khatoon">
+                        <img src="" alt="Muhammad Nurul Huda">
+                    </div>
+                    <div class="couple-content">
+                        <div class="name-pair">
+                            <div class="name">Rabiyah Khatoon</div>
+                            <div class="divider"></div>
+                            <div class="name">Muhammad Nurul Huda</div>
+                        </div>
+                        <div class="click-hint">Click to see their children ♥</div>
+                    </div>
+                </div>
+
+                <!-- 3. Aqila -->
+                <div class="couple-card reveal" data-couple="aqila">
+                    <div class="couple-photos">
+                        <img src="" alt="Aqila Khatoon">
+                        <img src="" alt="Muhammad Ashraf">
+                    </div>
+                    <div class="couple-content">
+                        <div class="name-pair">
+                            <div class="name">Aqila Khatoon</div>
+                            <div class="divider"></div>
+                            <div class="name">Muhammad Ashraf</div>
+                        </div>
+                        <div class="click-hint">Click to see their children ♥</div>
+                    </div>
+                </div>
+
+                <!-- 4. Nafisa -->
+                <div class="couple-card reveal" data-couple="nafisa">
+                    <div class="couple-photos">
+                        <img src="" alt="Nafisa Khatoon">
+                        <img src="" alt="Ikramul Hasan">
+                    </div>
+                    <div class="couple-content">
+                        <div class="name-pair">
+                            <div class="name">Nafisa Khatoon</div>
+                            <div class="divider"></div>
+                            <div class="name">Ikramul Hasan</div>
+                        </div>
+                        <div class="click-hint">Click to see their children ♥</div>
+                    </div>
+                </div>
+
+                <!-- 5. Saqinah -->
+                <div class="couple-card reveal" data-couple="saqinah">
+                    <div class="couple-photos">
+                        <img src="" alt="Saqinah Khatoon">
+                        <img src="" alt="Kalimullah">
+                    </div>
+                    <div class="couple-content">
+                        <div class="name-pair">
+                            <div class="name">Saqinah Khatoon</div>
+                            <div class="divider"></div>
+                            <div class="name">Kalimullah</div>
+                        </div>
+                        <div class="click-hint">Click to see their children ♥</div>
+                    </div>
+                </div>
+
+                <!-- 6. Khadija -->
+                <div class="couple-card reveal" data-couple="khadija">
+                    <div class="couple-photos">
+                        <img src="" alt="Khadija Khatoon">
+                        <img src="" alt="Mulana Ahlulah Qasmi">
+                    </div>
+                    <div class="couple-content">
+                        <div class="name-pair">
+                            <div class="name">Khadija Khatoon</div>
+                            <div class="divider"></div>
+                            <div class="name">Mulana Ahlulah Qasmi</div>
+                        </div>
+                        <div class="click-hint">Click to see their children ♥</div>
+                    </div>
+                </div>
+
+                <!-- 7. Ruqaiya -->
+                <div class="couple-card reveal" data-couple="ruqaiya">
+                    <div class="couple-photos">
+                        <img src="" alt="Ruqaiya Khatoon">
+                        <img src="" alt="Md Ali">
+                    </div>
+                    <div class="couple-content">
+                        <div class="name-pair">
+                            <div class="name">Ruqaiya Khatoon</div>
+                            <div class="divider"></div>
+                            <div class="name">Md Ali</div>
+                        </div>
+                        <div class="click-hint">Click to see their children ♥</div>
+                    </div>
+                </div>
+
+                <!-- 8. Afifah -->
+                <div class="couple-card reveal" data-couple="afifah">
+                    <div class="couple-photos">
+                        <img src="" alt="Afifah Khatoon">
+                        <img src="" alt="Ikram">
+                    </div>
+                    <div class="couple-content">
+                        <div class="name-pair">
+                            <div class="name">Afifah Khatoon</div>
+                            <div class="divider"></div>
+                            <div class="name">Ikram</div>
+                        </div>
+                        <div class="click-hint">Click to see their children ♥</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title reveal">Our Beloved Uncles &amp; Aunties</h3>
+            <div class="family-grid">
+                <!-- Mahmud -->
+                <div class="couple-card reveal" data-couple="mahmud">
+                    <div class="couple-photos">
+                        <img src="" alt="MD Mahmud">
+                        <img src="" alt="Zainab Khatoon">
+                    </div>
+                    <div class="couple-content">
+                        <div class="name-pair">
+                            <div class="name">MD Mahmud</div>
+                            <div class="divider"></div>
+                            <div class="name">Zainab Khatoon</div>
+                        </div>
+                        <div class="click-hint">Click to see their children ♥</div>
+                    </div>
+                </div>
+
+                <!-- Mahfuz -->
+                <div class="couple-card reveal" data-couple="mahfuz">
+                    <div class="couple-photos">
+                        <img src="" alt="Mahfuz Alam">
+                        <img src="" alt="Moshina Khatton">
+                    </div>
+                    <div class="couple-content">
+                        <div class="name-pair">
+                            <div class="name">Mahfuz Alam</div>
+                            <div class="divider"></div>
+                            <div class="name">Moshina Khatton</div>
+                        </div>
+                        <div class="click-hint">Click to see their children ♥</div>
+                    </div>
+                </div>
+
+                <!-- Mushin -->
+                <div class="couple-card reveal" data-couple="mushin">
+                    <div class="couple-photos">
+                        <img src="" alt="Mushin Alam Hudawi">
+                        <img src="" alt="Irfana Khatoon">
+                    </div>
+                    <div class="couple-content">
+                        <div class="name-pair">
+                            <div class="name">Mushin Alam Hudawi</div>
+                            <div class="divider"></div>
+                            <div class="name">Irfana Khatoon</div>
+                        </div>
+                        <div class="click-hint">Click to see their children ♥</div>
+                    </div>
+                </div>
+
+                <!-- Maqbool -->
+                <div class="couple-card reveal" data-couple="maqbool">
+                    <div class="couple-photos">
+                        <img src="" alt="Maqbool Alam Hudawi">
+                        <img src="" alt="Maimuna">
+                    </div>
+                    <div class="couple-content">
+                        <div class="name-pair">
+                            <div class="name">Maqbool Alam Hudawi</div>
+                            <div class="divider"></div>
+                            <div class="name">Maimuna</div>
+                        </div>
+                        <div class="click-hint">Click to see their children ♥</div>
+                    </div>
+                </div>
+
+                <!-- Mahboob -->
+                <div class="couple-card reveal" data-couple="mahboob">
+                    <div class="couple-photos">
+                        <img src="" alt="Mahboob Alam Hudawi">
+                        <img src="" alt="Nishat Anjum">
+                    </div>
+                    <div class="couple-content">
+                        <div class="name-pair">
+                            <div class="name">Mahboob Alam Hudawi</div>
+                            <div class="divider"></div>
+                            <div class="name">Nishat Anjum</div>
+                        </div>
+                        <div class="click-hint">Click to see their children ♥</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEMORIES -->
+    <section class="memories" id="memories">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">Our Favorite Memories</h2>
+                <div class="section-line"></div>
+                <p class="section-subtitle">Moments that will live in my heart forever</p>
+            </div>
+
+            <div class="memories-grid">
+                <div class="memory-item reveal">
+                    <img src="https://i.ibb.co/yFLfPvgw/Chat-GPT-Image-Sep-26-2026-10-51-03-AM.png" alt="Family">
+                    <div class="memory-overlay">Big family gatherings full of love</div>
+                </div>
+                <div class="memory-item reveal">
+                    <img src="https://i.ibb.co/vxWn3jjG/IMG-20240621-WA0008-2-removebg-preview.png" alt="Marriage">
+                    <div class="memory-overlay">Adventures we shared together</div>
+                </div>
+                <div class="memory-item reveal">
+                    <img src="https://i.ibb.co/xtPy2KwJ/IMG-20260405-130215-removebg-preview.png" alt="Home">
+                    <div class="memory-overlay">Celebrations &amp; special days</div>
+                </div>
+                <div class="memory-item reveal">
+                    <img src="https://i.ibb.co/p6zK3R1k/IMG-20260402-175233.jpg" alt="Everyday">
+                    <div class="memory-overlay">Simple everyday moments</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THANK YOU -->
+    <section class="thank-you">
+        <span class="heart-big">♥</span>
+        <h2>Thank You, My Family</h2>
+        <p>
+            To my Grandfather, Grandmother, all the Phophis with their husbands, and all the Uncles &amp; Aunties — thank you for the love, the sacrifices, and the beautiful life we share.
+        </p>
+        <p class="final-line">You are my greatest blessing.</p>
+    </section>
+
+    <footer>
+        Made with <span>♥</span> for the people I love most
+    </footer>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="childrenModal">
+        <div class="modal">
+            <button class="modal-close" id="closeModal">×</button>
+            
+            <div class="modal-header">
+                <h2 id="modalTitle">Family</h2>
+                <p>Their beloved children</p>
+            </div>
+
+            <div class="children-grid" id="childrenGrid"></div>
+        </div>
+    </div>
+
+    <script>
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            reveals.forEach(el => {
+                if (el.getBoundingClientRect().top < windowHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        const familyData = {
+            // ========== PHOPHIS ==========
+            atiqah: {
+                title: "Atiqah Khatoon & Muhammad Juhi",
+                children: [
+                    { name: "Rashid", relation: "", img: "" },
+                    { name: "Adnan", relation: "", img: "" },
+                    { name: "Zishan", relation: "", img: "" },
+                    { name: "Faizan", relation: "", img: "" },
+                    { name: "Naseema Jareen", relation: "", img: "" },
+                    { name: "Kashifa Jareen", relation: "", img: "" }
+                ]
+            },
+            rabiyah: {
+                title: "Rabiyah Khatoon & Muhammad Nurul Huda",
+                children: [
+                    { name: "Nahid", relation: "", img: "" },
+                    { name: "Rafiya", relation: "", img: "" },
+                    { name: "Sadiya", relation: "", img: "" },
+                    { name: "Ali", relation: "", img: "" },
+                    { name: "Asghar Ali", relation: "", img: "" }
+                ]
+            },
+            aqila: {
+                title: "Aqila Khatoon & Muhammad Ashraf",
+                children: [
+                    { name: "Nikhat", relation: "", img: "" },
+                    { name: "Nusrat", relation: "", img: "" },
+                    { name: "Asiyah", relation: "", img: "" }
+                ]
+            },
+            nafisa: {
+                title: "Nafisa Khatoon & Ikramul Hasan",
+                children: [
+                    { name: "Zafar Imam", relation: "", img: "" },
+                    { name: "Nasar", relation: "", img: "" },
+                    { name: "Asad", relation: "", img: "" },
+                    { name: "Aujmah", relation: "", img: "" },
+                    { name: "Saima", relation: "", img: "" },
+                    { name: "Asifa", relation: "", img: "" }
+                ]
+            },
+            saqinah: {
+                title: "Saqinah Khatoon & Kalimullah",
+                children: [
+                    { name: "Husain", relation: "", img: "" },
+                    { name: "Hassnain", relation: "", img: "" },
+                    { name: "Nourain", relation: "", img: "" },
+                    { name: "Safiyah", relation: "", img: "" }
+                ]
+            },
+            khadija: {
+                title: "Khadija Khatoon & Mulana Ahlulah Qasmi",
+                children: [
+                    { name: "Affan", relation: "", img: "" },
+                    { name: "Madiha", relation: "", img: "" }
+                ]
+            },
+            ruqaiya: {
+                title: "Ruqaiya Khatoon & Md Ali",
+                children: [
+                    { name: "Faiqah Ali", relation: "", img: "https://i.ibb.co/wZ3KmGGY/IMG-20260405-WA0002-2-removebg-preview.png" },
+                    { name: "Faiza", relation: "", img: "" }
+                ]
+            },
+            afifah: {
+                title: "Afifah Khatoon & Ikram",
+                children: [
+                    { name: "Asim", relation: "", img: "" }
+                ]
+            },
+
+            // ========== UNCLES ==========
+            mahmud: {
+                title: "MD Mahmud & Zainab Khatoon",
+                children: [
+                    { name: "Muhammad Sibgathullah", relation: "", img: "" },
+                    { name: "Ziyaullah", relation: "", img: "" },
+                    { name: "Sanaullah", relation: "", img: "" },
+                    { name: "Amanullah", relation: "", img: "" },
+                    { name: "Sadiqah Yasmeen", relation: "https://i.ibb.co/b5q58XyW/IMG-20260910-WA0048-removebg-preview.png", img: "" },
+                    { name: "Arifah", relation: "", img: "" }
+                ]
+            },
+            mahfuz: {
+                title: "Mahfuz Alam & Moshina Khatton",
+                children: [
+                    { name: "Esmatullah", relation: "", img: "" },
+                    { name: "Safiullah", relation: "", img: "" },
+                    { name: "Noorullah", relation: "", img: "" },
+                    { name: "Faizullah", relation: "", img: "https://i.ibb.co/rK8SMrsf/IMG-20260401-WA0006-2.jpg" },
+                    { name: "Saima Sanaa", relation: "", img: "" },
+                    { name: "Tahirah", relation: "", img: "" },
+                    { name: "Mahirah", relation: "", img: "" }
+                ]
+            },
+            mushin: {
+                title: "Mushin Alam Hudawi & Irfana Khatoon",
+                children: [
+                    { name: "Arqam", relation: "", img: "" },
+                    { name: "Anaam", relation: "", img: "" }
+                ]
+            },
+            maqbool: {
+                title: "Maqbool Alam Hudawi & Maimuna",
+                children: [
+                    { name: "Hnazalah", relation: "", img: "" }
+                ]
+            },
+            mahboob: {
+                title: "Mahboob Alam Hudawi & Nishat Anjum",
+                children: [
+                    { name: "Rayyan", relation: "", img: "https://i.ibb.co/fV7KR0Ld/IMG-20260325-WA0012-removebg-preview-removebg-preview.png" }
+                ]
+            }
+        };
+
+        const modal = document.getElementById('childrenModal');
+        const closeBtn = document.getElementById('closeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const childrenGrid = document.getElementById('childrenGrid');
+
+        document.querySelectorAll('.couple-card[data-couple]').forEach(card => {
+            card.addEventListener('click', () => {
+                const key = card.getAttribute('data-couple');
+                const data = familyData[key];
+                if (!data) return;
+
+                modalTitle.textContent = data.title;
+
+                childrenGrid.innerHTML = data.children.map(c => `
+                    <div class="child-card">
+                        <img src="${c.img}" alt="${c.name}">
+                        <div class="name">${c.name}</div>
+                        <div class="relation">${c.relation}</div>
+                    </div>
+                `).join('');
+
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+
+
+
+<script></script></body></html>
