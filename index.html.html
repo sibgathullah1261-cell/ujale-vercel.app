@@ -9,17 +9,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ivory: #FDF9F5;
-            --warm-white: #FFFCFA;
+            --ivory: #FCF8F4;
+            --warm-white: #FFFFFF;
             --sand: #F4EBE3;
-            --terracotta: #C07A5A;
+            --terracotta: #C77B61;
             --terracotta-soft: #D4A08A;
-            --espresso: #3A281C;
-            --brown: #6B4A36;
+            --espresso: #604536;
+            --brown: #927B6B;
             --gold: #C9A06C;
             --gold-soft: #E8D4B8;
-            --shadow: 0 14px 45px rgba(58, 40, 28, 0.08);
-            --shadow-hover: 0 24px 60px rgba(58, 40, 28, 0.13);
+            --shadow: 0 12px 40px rgba(96, 69, 54, 0.08);
+            --shadow-hover: 0 20px 50px rgba(96, 69, 54, 0.14);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -422,149 +422,197 @@
             gap: 36px;
         }
 
+        /* ========== FAMILY / COUPLE CARDS – Premium Dual Portrait ========== */
+        .family-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
+        }
+
+        @media (max-width: 1100px) {
+            .family-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .family-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .family-grid.grandparents {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            max-width: 640px;
+            margin: 0 auto;
+            gap: 32px;
+        }
+
         .family-card, .couple-card {
             background: var(--warm-white);
-            border-radius: 22px;
+            border-radius: 20px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-            border: 1px solid rgba(192, 122, 90, 0.05);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            border: 1px solid rgba(199, 123, 97, 0.08);
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
         }
 
         .family-card:hover, .couple-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             box-shadow: var(--shadow-hover);
         }
 
+        /* Single person card (roots, grandparents) */
         .family-card img {
             width: 100%;
-            height: 290px;
+            height: 260px;
             object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
             background: var(--sand);
+            display: block;
         }
 
-        .family-card:hover img { transform: scale(1.06); }
-
         .family-card-content {
-            padding: 28px 22px 30px;
+            padding: 22px 20px 26px;
             text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .family-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 6px;
+            font-size: 1.45rem;
+            margin-bottom: 4px;
             color: var(--espresso);
+            font-weight: 600;
         }
 
         .family-card h3::after {
             content: '';
             display: block;
-            width: 30px;
+            width: 28px;
             height: 1.5px;
             background: var(--terracotta);
-            margin: 12px auto 12px;
+            margin: 10px auto 12px;
             opacity: 0.7;
         }
 
         .family-card p {
             color: var(--brown);
-            font-size: 0.94rem;
+            font-size: 0.9rem;
             font-weight: 300;
-            line-height: 1.65;
+            line-height: 1.6;
+        }
+
+        /* Dual portrait couple card */
+        .couple-photos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding: 14px 14px 0;
+        }
+
+        .couple-photos .photo-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1.15;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--sand);
+        }
+
+        .couple-photos .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .couple-card:hover .couple-photos .photo-frame img {
+            transform: scale(1.05);
+        }
+
+        /* Placeholder avatar when no photo */
+        .couple-photos .photo-frame img[src=""],
+        .couple-photos .photo-frame img:not([src]),
+        .family-card img[src=""] {
+            object-fit: none;
+            background: linear-gradient(145deg, #F0E6DC 0%, #E8D9CB 100%);
+        }
+
+        .couple-content {
+            padding: 18px 16px 22px;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .person-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .person-block .name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.28rem;
+            font-weight: 600;
+            color: var(--espresso);
+            line-height: 1.3;
+            margin-bottom: 4px;
+        }
+
+        .card-divider {
+            width: 36px;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent, var(--terracotta), transparent);
+            margin: 12px 0;
+            opacity: 0.75;
         }
 
         .contact-num {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            margin-top: 10px;
-            font-size: 0.78rem;
+            gap: 5px;
+            margin-top: 5px;
+            font-size: 0.74rem;
             font-weight: 400;
             color: var(--terracotta);
-            letter-spacing: 0.3px;
-            opacity: 0.9;
-            background: rgba(192, 122, 90, 0.08);
-            padding: 5px 12px;
+            letter-spacing: 0.2px;
+            background: rgba(199, 123, 97, 0.09);
+            padding: 4px 11px;
             border-radius: 20px;
             transition: all 0.3s ease;
         }
 
         .contact-num:hover {
-            background: rgba(192, 122, 90, 0.15);
-            opacity: 1;
+            background: rgba(199, 123, 97, 0.16);
         }
 
         .contact-num .phone-icon {
-            font-size: 0.85rem;
-            opacity: 0.85;
-        }
-
-        .name-pair .contact-num {
-            margin-top: 6px;
-            font-size: 0.74rem;
-            padding: 4px 10px;
-        }
-
-        .child-card .contact-num {
-            margin-top: 8px;
-            font-size: 0.72rem;
-            padding: 4px 10px;
-        }
-
-        .couple-photos {
-            display: flex;
-            gap: 6px;
-            padding: 14px 14px 0;
-        }
-
-        .couple-photos img {
-            width: 50%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 15px;
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            background: var(--sand);
-        }
-
-        .couple-card:hover .couple-photos img {
-            transform: scale(1.04);
-        }
-
-        .couple-content {
-            padding: 24px 16px 28px;
-            text-align: center;
-        }
-
-        .name-pair {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-        }
-
-        .name-pair .name {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--espresso);
-        }
-
-        .name-pair .divider {
-            width: 22px;
-            height: 1.5px;
-            background: var(--terracotta);
-            opacity: 0.65;
-            margin: 5px 0;
+            font-size: 0.8rem;
+            opacity: 0.9;
         }
 
         .click-hint {
             font-size: 0.78rem;
             color: var(--terracotta);
-            margin-top: 12px;
+            margin-top: 16px;
             opacity: 0.85;
             letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+        }
+
+        .couple-card:hover .click-hint {
+            opacity: 1;
+            transform: translateY(-2px);
         }
 
         .memories { background: var(--sand); }
@@ -676,7 +724,16 @@
             padding: 20px;
         }
 
-        .modal-overlay.active {
+        
+        #childrenModal {
+            z-index: 2100;
+        }
+
+        #rootModal {
+            z-index: 2000;
+        }
+
+.modal-overlay.active {
             opacity: 1;
             visibility: visible;
         }
@@ -830,6 +887,32 @@
             to { transform: scale(1.18); }
         }
 
+        
+        /* Placeholder when no photo */
+        .photo-frame {
+            background: linear-gradient(145deg, #F0E6DC 0%, #E5D5C5 100%);
+            position: relative;
+        }
+        .photo-frame::before {
+            content: "👤";
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            opacity: 0.22;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .photo-frame img {
+            position: relative;
+            z-index: 1;
+        }
+        .photo-frame img[src=""] {
+            opacity: 0;
+        }
+
         @media (max-width: 900px) {
             .navbar { padding: 18px 28px; }
             .nav-links { display: none; }
@@ -849,6 +932,11 @@
             .children-grid { padding: 10px 20px 40px; gap: 22px; }
             .child-card img { height: 180px; }
         }
+    
+        
+            .child-card 
+        }
+
     </style>
 </head>
 <body>
@@ -925,7 +1013,7 @@
                     Family is not just who we share blood with — they are the ones who share our laughter, our tears, our dreams, and our everyday moments.
                 </p>
                 <p>
-                    This page is dedicated to my beloved <span class="highlight">Grandfather &amp; Grandmother</span>, their daughters and sons, and their respected partners. Thank you for the love that never runs out.
+                    This page is dedicated to the roots of our family — starting from <span class="highlight">Meiyan Jii</span>, my beloved <span class="highlight">Grandfather &amp; Grandmother</span>, their daughters and sons, and their respected partners. Thank you for the love that never runs out.
                 </p>
             </div>
         </div>
@@ -940,12 +1028,96 @@
                 <p class="section-subtitle">The roots and the branches of my heart</p>
             </div>
 
+            <!-- ========== FAMILY ROOTS ========== -->
+            <h3 class="subsection-title reveal">Our Family Roots</h3>
+            
+            <!-- Meiyan Jii & Wife -->
+            <div class="family-grid grandparents reveal" style="max-width:700px; margin:0 auto 40px; gap:28px;">
+                <div class="family-card" style="cursor:default;">
+                    <img src="" alt="Meiyan Jii">
+                    <div class="family-card-content">
+                        <h3>Meiyan Jii</h3>
+                        <p>The foundation of our family</p>
+                    </div>
+                </div>
+                <div class="family-card" style="cursor:default;">
+                    <img src="" alt="Anamuamuna Khatoon">
+                    <div class="family-card-content">
+                        <h3>Anamuamuna Khatoon</h3>
+                        <p>Wife of Meiyan Jii</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="section-subtitle reveal" style="text-align:center; margin-bottom: 40px; font-size: 1.05rem;">
+                Meiyan Jii &amp; Anamuamuna Khatoon had <strong>2 Sons</strong> and <strong>3 Daughters</strong><br>
+                <span style="font-size:0.95rem; opacity:0.85;">Click any card to see their full family</span>
+            </p>
+
+            <div class="family-grid">
+                <!-- A. Maulana Sabir Qasmir -->
+                <div class="family-card reveal root-card" data-root="sabir" style="cursor:pointer;">
+                    <img src="" alt="Maulana Sabir Qasmir">
+                    <div class="family-card-content">
+                        <h3>Maulana Sabir Qasmir</h3>
+                        <p style="font-size:0.85rem; color:var(--terracotta); margin-bottom:6px;">1st Son • My Grandfather</p>
+                        <p>Wife: Gulshan Khatoon<br>8 Daughters + 5 Sons</p>
+                        <div class="contact-num"><span class="phone-icon">📞</span> +91 98831 61924</div>
+                        <div class="click-hint" style="margin-top:10px;">Click to see his full family ♥</div>
+                    </div>
+                </div>
+
+                <!-- B. Maulana Sabar -->
+                <div class="family-card reveal root-card" data-root="sabar" style="cursor:pointer;">
+                    <img src="" alt="Maulana Sabar">
+                    <div class="family-card-content">
+                        <h3>Maulana Sabar</h3>
+                        <p style="font-size:0.85rem; color:var(--terracotta); margin-bottom:6px;">2nd Son</p>
+                        <p>3 Sons + 5 Daughters</p>
+                        <div class="click-hint" style="margin-top:10px;">Click to see his family ♥</div>
+                    </div>
+                </div>
+
+                <!-- D. Ujemah -->
+                <div class="family-card reveal root-card" data-root="ujemah" style="cursor:pointer;">
+                    <img src="" alt="Ujemah">
+                    <div class="family-card-content">
+                        <h3>Ujemah</h3>
+                        <p style="font-size:0.85rem; color:var(--terracotta); margin-bottom:6px;">1st Daughter</p>
+                        <p>5 Children</p>
+                        <div class="click-hint" style="margin-top:10px;">Click to see her family ♥</div>
+                    </div>
+                </div>
+
+                <!-- E. Fatimah -->
+                <div class="family-card reveal root-card" data-root="fatimah" style="cursor:pointer;">
+                    <img src="" alt="Fatimah">
+                    <div class="family-card-content">
+                        <h3>Fatimah</h3>
+                        <p style="font-size:0.85rem; color:var(--terracotta); margin-bottom:6px;">2nd Daughter</p>
+                        <p>6 Children</p>
+                        <div class="click-hint" style="margin-top:10px;">Click to see her family ♥</div>
+                    </div>
+                </div>
+
+                <!-- F. Rashidah -->
+                <div class="family-card reveal root-card" data-root="rashidah" style="cursor:pointer;">
+                    <img src="" alt="Rashidah">
+                    <div class="family-card-content">
+                        <h3>Rashidah</h3>
+                        <p style="font-size:0.85rem; color:var(--terracotta); margin-bottom:6px;">3rd Daughter</p>
+                        <p>4 Children</p>
+                        <div class="click-hint" style="margin-top:10px;">Click to see her family ♥</div>
+                    </div>
+                </div>
+            </div>
+
             <h3 class="subsection-title reveal">My Grandfather &amp; Grandmother</h3>
             <div class="family-grid grandparents">
                 <div class="family-card reveal">
                     <img src="" alt="Grandfather">
                     <div class="family-card-content">
-                        <h3>Maulana Sabir Qasemi </h3>
+                        <h3>Maulana Sabir Qasmir</h3>
                         <p>The pillar of our family. His wisdom, strength, and quiet love guide us all.</p>
                         <div class="contact-num"><span class="phone-icon">📞</span> +91 98831 61924</div>
                     </div>
@@ -962,145 +1134,178 @@
 
             <h3 class="subsection-title reveal">Our Beloved Phophis &amp; Their Husbands</h3>
             <div class="family-grid">
-                <!-- 1. Atiqah -->
                 <div class="couple-card reveal" data-couple="atiqah">
                     <div class="couple-photos">
-                        <img src="" alt="Atiqah Khatoon">
-                        <img src="" alt="Muhammad Juhi">
+                        <div class="photo-frame">
+                            <img src="" alt="Atiqah Khatoon" onerror="this.style.display='none'">
+                        </div>
+                        <div class="photo-frame">
+                            <img src="" alt="Muhammad Juhi" onerror="this.style.display='none'">
+                        </div>
                     </div>
                     <div class="couple-content">
-                        <div class="name-pair">
+                        <div class="person-block">
                             <div class="name">Atiqah Khatoon</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 62083 8902</div>
-                            <div class="divider"></div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="person-block">
                             <div class="name">Muhammad Juhi</div>
-                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
+                            
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
-
-                <!-- 2. Rabiyah -->
                 <div class="couple-card reveal" data-couple="rabiyah">
                     <div class="couple-photos">
-                        <img src="" alt="Rabiyah Khatoon">
-                        <img src="" alt="Muhammad Nurul Huda">
+                        <div class="photo-frame">
+                            <img src="" alt="Rabiyah Khatoon" onerror="this.style.display='none'">
+                        </div>
+                        <div class="photo-frame">
+                            <img src="" alt="Muhammad Nurul Huda" onerror="this.style.display='none'">
+                        </div>
                     </div>
                     <div class="couple-content">
-                        <div class="name-pair">
+                        <div class="person-block">
                             <div class="name">Rabiyah Khatoon</div>
-                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
-                            <div class="divider"></div>
+                            
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="person-block">
                             <div class="name">Muhammad Nurul Huda</div>
-                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
+                            
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
-
-                <!-- 3. Aqila -->
                 <div class="couple-card reveal" data-couple="aqila">
                     <div class="couple-photos">
-                        <img src="" alt="Aqila Khatoon">
-                        <img src="" alt="Muhammad Ashraf">
+                        <div class="photo-frame">
+                            <img src="" alt="Aqila Khatoon" onerror="this.style.display='none'">
+                        </div>
+                        <div class="photo-frame">
+                            <img src="" alt="Muhammad Ashraf" onerror="this.style.display='none'">
+                        </div>
                     </div>
                     <div class="couple-content">
-                        <div class="name-pair">
+                        <div class="person-block">
                             <div class="name">Aqila Khatoon</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 80921 36491</div>
-                            <div class="divider"></div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="person-block">
                             <div class="name">Muhammad Ashraf</div>
-                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
+                            
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
-
-                <!-- 4. Nafisa -->
                 <div class="couple-card reveal" data-couple="nafisa">
                     <div class="couple-photos">
-                        <img src="" alt="Nafisa Khatoon">
-                        <img src="" alt="Ikramul Hasan">
+                        <div class="photo-frame">
+                            <img src="" alt="Nafisa Khatoon" onerror="this.style.display='none'">
+                        </div>
+                        <div class="photo-frame">
+                            <img src="" alt="Ikramul Hasan" onerror="this.style.display='none'">
+                        </div>
                     </div>
                     <div class="couple-content">
-                        <div class="name-pair">
+                        <div class="person-block">
                             <div class="name">Nafisa Khatoon</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 87574 99830</div>
-                            <div class="divider"></div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="person-block">
                             <div class="name">Ikramul Hasan</div>
-                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
+                            
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
-
-                <!-- 5. Saqinah -->
                 <div class="couple-card reveal" data-couple="saqinah">
                     <div class="couple-photos">
-                        <img src="" alt="Saqinah Khatoon">
-                        <img src="" alt="Kalimullah">
+                        <div class="photo-frame">
+                            <img src="" alt="Saqinah Khatoon" onerror="this.style.display='none'">
+                        </div>
+                        <div class="photo-frame">
+                            <img src="" alt="Kalimullah" onerror="this.style.display='none'">
+                        </div>
                     </div>
                     <div class="couple-content">
-                        <div class="name-pair">
+                        <div class="person-block">
                             <div class="name">Saqinah Khatoon</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 88252 41780</div>
-                            <div class="divider"></div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="person-block">
                             <div class="name">Kalimullah</div>
-                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
+                            
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
-
-                <!-- 6. Khadija -->
                 <div class="couple-card reveal" data-couple="khadija">
                     <div class="couple-photos">
-                        <img src="" alt="Khadija Khatoon">
-                        <img src="" alt="Mulana Ahlulah Qasmi">
+                        <div class="photo-frame">
+                            <img src="" alt="Khadija Khatoon" onerror="this.style.display='none'">
+                        </div>
+                        <div class="photo-frame">
+                            <img src="" alt="Mulana Ahlulah Qasmi" onerror="this.style.display='none'">
+                        </div>
                     </div>
                     <div class="couple-content">
-                        <div class="name-pair">
+                        <div class="person-block">
                             <div class="name">Khadija Khatoon</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 80778 08030</div>
-                            <div class="divider"></div>
-                            <div class="name">Mulana Ahlulah Qasemi </div>
-                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="person-block">
+                            <div class="name">Mulana Ahlulah Qasmi</div>
+                            
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
-
-                <!-- 7. Ruqaiya -->
                 <div class="couple-card reveal" data-couple="ruqaiya">
                     <div class="couple-photos">
-                        <img src="" alt="Ruqaiya Khatoon">
-                        <img src="" alt="Md Ali">
+                        <div class="photo-frame">
+                            <img src="" alt="Ruqaiya Khatoon" onerror="this.style.display='none'">
+                        </div>
+                        <div class="photo-frame">
+                            <img src="" alt="Md Ali" onerror="this.style.display='none'">
+                        </div>
                     </div>
                     <div class="couple-content">
-                        <div class="name-pair">
+                        <div class="person-block">
                             <div class="name">Ruqaiya Khatoon</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 62000 12506</div>
-                            <div class="divider"></div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="person-block">
                             <div class="name">Md Ali</div>
-                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
+                            
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
-
-                <!-- 8. Afifah -->
                 <div class="couple-card reveal" data-couple="afifah">
                     <div class="couple-photos">
-                        <img src="" alt="Afifah Khatoon">
-                        <img src="" alt="Ikram">
+                        <div class="photo-frame">
+                            <img src="" alt="Afifah Khatoon" onerror="this.style.display='none'">
+                        </div>
+                        <div class="photo-frame">
+                            <img src="" alt="Ikram" onerror="this.style.display='none'">
+                        </div>
                     </div>
                     <div class="couple-content">
-                        <div class="name-pair">
+                        <div class="person-block">
                             <div class="name">Afifah Khatoon</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 81692 24356</div>
-                            <div class="divider"></div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="person-block">
                             <div class="name">Ikram</div>
-                            <div class="contact-num"><span class="phone-icon">📞</span> +91 ••••• •••••</div>
+                            
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
@@ -1109,89 +1314,110 @@
 
             <h3 class="subsection-title reveal">Our Beloved Uncles &amp; Aunties</h3>
             <div class="family-grid">
-                <!-- Mahmud -->
                 <div class="couple-card reveal" data-couple="mahmud">
                     <div class="couple-photos">
-                        <img src="" alt="MD Mahmud">
-                        <img src="" alt="Zainab Khatoon">
+                        <div class="photo-frame">
+                            <img src="" alt="MD Mahmud" onerror="this.style.display='none'">
+                        </div>
+                        <div class="photo-frame">
+                            <img src="" alt="Zainab Khatoon" onerror="this.style.display='none'">
+                        </div>
                     </div>
                     <div class="couple-content">
-                        <div class="name-pair">
+                        <div class="person-block">
                             <div class="name">MD Mahmud</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 88200 06933</div>
-                            <div class="divider"></div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="person-block">
                             <div class="name">Zainab Khatoon</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 86036 46448</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
-
-                <!-- Mahfuz -->
                 <div class="couple-card reveal" data-couple="mahfuz">
                     <div class="couple-photos">
-                        <img src="" alt="Mahfuz Alam">
-                        <img src="" alt="Moshina Khatton">
+                        <div class="photo-frame">
+                            <img src="" alt="Mahfuz Alam" onerror="this.style.display='none'">
+                        </div>
+                        <div class="photo-frame">
+                            <img src="" alt="Moshina Khatton" onerror="this.style.display='none'">
+                        </div>
                     </div>
                     <div class="couple-content">
-                        <div class="name-pair">
+                        <div class="person-block">
                             <div class="name">Mahfuz Alam</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 70031 60919</div>
-                            <div class="divider"></div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="person-block">
                             <div class="name">Moshina Khatton</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 70443 41391</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
-
-                <!-- Mushin -->
                 <div class="couple-card reveal" data-couple="mushin">
                     <div class="couple-photos">
-                        <img src="" alt="Mushin Alam Hudawi">
-                        <img src="" alt="Irfana Khatoon">
+                        <div class="photo-frame">
+                            <img src="" alt="Mushin Alam Hudawi" onerror="this.style.display='none'">
+                        </div>
+                        <div class="photo-frame">
+                            <img src="" alt="Irfana Khatoon" onerror="this.style.display='none'">
+                        </div>
                     </div>
                     <div class="couple-content">
-                        <div class="name-pair">
+                        <div class="person-block">
                             <div class="name">Mushin Alam Hudawi</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 98832 86924</div>
-                            <div class="divider"></div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="person-block">
                             <div class="name">Irfana Khatoon</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 92625 13273</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
-
-                <!-- Maqbool -->
                 <div class="couple-card reveal" data-couple="maqbool">
                     <div class="couple-photos">
-                        <img src="" alt="Maqbool Alam Hudawi">
-                        <img src="" alt="Maimuna">
+                        <div class="photo-frame">
+                            <img src="" alt="Maqbool Alam Hudawi" onerror="this.style.display='none'">
+                        </div>
+                        <div class="photo-frame">
+                            <img src="" alt="Maimuna" onerror="this.style.display='none'">
+                        </div>
                     </div>
                     <div class="couple-content">
-                        <div class="name-pair">
+                        <div class="person-block">
                             <div class="name">Maqbool Alam Hudawi</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 80893 61711</div>
-                            <div class="divider"></div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="person-block">
                             <div class="name">Maimuna</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 98340 52826</div>
                         </div>
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
-
-                <!-- Mahboob -->
                 <div class="couple-card reveal" data-couple="mahboob">
                     <div class="couple-photos">
-                        <img src="" alt="Mahboob Alam Hudawi">
-                        <img src="" alt="Nishat Anjum">
+                        <div class="photo-frame">
+                            <img src="" alt="Mahboob Alam Hudawi" onerror="this.style.display='none'">
+                        </div>
+                        <div class="photo-frame">
+                            <img src="" alt="Nishat Anjum" onerror="this.style.display='none'">
+                        </div>
                     </div>
                     <div class="couple-content">
-                        <div class="name-pair">
+                        <div class="person-block">
                             <div class="name">Mahboob Alam Hudawi</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 70245 42208</div>
-                            <div class="divider"></div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="person-block">
                             <div class="name">Nishat Anjum</div>
                             <div class="contact-num"><span class="phone-icon">📞</span> +91 98017 11024</div>
                         </div>
@@ -1202,7 +1428,7 @@
         </div>
     </section>
 
-    <!-- MEMORIES -->
+<!-- MEMORIES -->
     <section class="memories" id="memories">
         <div class="container">
             <div class="section-header reveal">
@@ -1246,7 +1472,7 @@
         Made with <span>♥</span> for the people I love most
     </footer>
 
-    <!-- MODAL -->
+    <!-- CHILDREN MODAL -->
     <div class="modal-overlay" id="childrenModal">
         <div class="modal">
             <button class="modal-close" id="closeModal">×</button>
@@ -1257,6 +1483,20 @@
             </div>
 
             <div class="children-grid" id="childrenGrid"></div>
+        </div>
+    </div>
+
+    <!-- ROOT FAMILY MODAL -->
+    <div class="modal-overlay" id="rootModal">
+        <div class="modal" style="max-width:1000px; max-height:92vh;">
+            <button class="modal-close" id="closeRootModal">×</button>
+            
+            <div class="modal-header" style="padding-bottom:10px;">
+                <h2 id="rootModalTitle">Family Branch</h2>
+                <p id="rootModalSubtitle">Family members</p>
+            </div>
+
+            <div id="rootModalBody" style="padding: 5px 32px 45px;"></div>
         </div>
     </div>
 
@@ -1384,7 +1624,8 @@
             maqbool: {
                 title: "Maqbool Alam Hudawi & Maimuna",
                 children: [
-                    { name: "Hnazalah", relation: "", img: "" }
+                    { name: "Hnazalah", relation: "", img: "" },
+                    { name: "Mairam", relation: "", img: "" }
                 ]
             },
             mahboob: {
@@ -1400,26 +1641,35 @@
         const modalTitle = document.getElementById('modalTitle');
         const childrenGrid = document.getElementById('childrenGrid');
 
-        document.querySelectorAll('.couple-card[data-couple]').forEach(card => {
-            card.addEventListener('click', () => {
-                const key = card.getAttribute('data-couple');
-                const data = familyData[key];
-                if (!data) return;
+        // Event delegation so it works for couples on main page AND inside root modal
+        document.addEventListener('click', (e) => {
+            const card = e.target.closest('.couple-card[data-couple]');
+            if (!card) return;
 
-                modalTitle.textContent = data.title;
+            e.preventDefault();
+            e.stopPropagation();
 
-                childrenGrid.innerHTML = data.children.map(c => `
-                    <div class="child-card">
-                        <img src="${c.img}" alt="${c.name}">
-                        <div class="name">${c.name}</div>
-                        ${c.relation ? `<div class="relation">${c.relation}</div>` : ''}
-                        ${c.contact ? `<div class="contact-num"><span class="phone-icon">📞</span> ${c.contact}</div>` : ''}
-                    </div>
-                `).join('');
+            const key = card.getAttribute('data-couple');
+            const data = familyData[key];
+            if (!data) return;
 
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
+            modalTitle.textContent = data.title;
+
+            childrenGrid.innerHTML = data.children.map(c => `
+                <div class="child-card">
+                    <img src="" alt="${c.name}">
+                    <div class="name">${c.name}</div>
+                    ${c.relation ? `<div class="relation">${c.relation}</div>` : ''}
+                    ${c.contact ? `<div class="contact-num"><span class="phone-icon">📞</span> ${c.contact}</div>` : ''}
+                </div>
+            `).join('');
+
+            
+
+            // Make sure children modal appears on top
+            modal.style.zIndex = '2200';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
 
         closeBtn.addEventListener('click', closeModal);
@@ -1429,12 +1679,407 @@
 
         function closeModal() {
             modal.classList.remove('active');
-            document.body.style.overflow = '';
+            // Only restore scroll if root modal is also closed
+            if (!rootModal.classList.contains('active')) {
+                document.body.style.overflow = '';
+            }
         }
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
+            if (e.key === 'Escape') {
+                closeModal();
+                closeRootModal();
+            }
         });
+
+        // ========== ROOT FAMILY BRANCHES ==========
+        const rootData = {
+            sabir: {
+                title: "Maulana Sabir Qasmir & Family",
+                subtitle: "My Grandfather — Full Family Tree",
+                html: `
+                    <!-- Grandparents -->
+                    <h3 style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--espresso); margin:10px 0 28px;">My Grandfather &amp; Grandmother</h3>
+                    <div class="family-grid grandparents" style="max-width:700px; margin:0 auto 40px; gap:24px;">
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:22px 18px;">
+                                <h3 style="font-size:1.4rem;">Maulana Sabir Qasmir</h3>
+                                <p style="font-size:0.9rem;">The pillar of our family</p>
+                                <div class="contact-num"><span class="phone-icon">📞</span> +91 98831 61924</div>
+                            </div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:22px 18px;">
+                                <h3 style="font-size:1.4rem;">Gulshan Khatoon</h3>
+                                <p style="font-size:0.9rem;">The heart of our home</p>
+                                <div class="contact-num"><span class="phone-icon">📞</span> +91 84200 85908</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phophis -->
+                    <h3 style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--espresso); margin:40px 0 24px;">Our Beloved Phophis &amp; Their Husbands</h3>
+                    <div class="family-grid" style="gap:18px;">
+                        <div class="couple-card" data-couple="atiqah" style="cursor:pointer;">
+                            <div class="couple-content" style="padding:18px 12px;">
+                                <div class="name-pair">
+                                    <div class="name" style="font-size:1.2rem;">Atiqah Khatoon</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 62083 8902</div>
+                                    <div class="divider"></div>
+                                    <div class="name" style="font-size:1.2rem;">Muhammad Juhi</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                        <div class="couple-card" data-couple="rabiyah" style="cursor:pointer;">
+                            <div class="couple-content" style="padding:18px 12px;">
+                                <div class="name-pair">
+                                    <div class="name" style="font-size:1.2rem;">Rabiyah Khatoon</div>
+                                    <div class="divider"></div>
+                                    <div class="name" style="font-size:1.2rem;">Muhammad Nurul Huda</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                        <div class="couple-card" data-couple="aqila" style="cursor:pointer;">
+                            <div class="couple-content" style="padding:18px 12px;">
+                                <div class="name-pair">
+                                    <div class="name" style="font-size:1.2rem;">Aqila Khatoon</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 80921 36491</div>
+                                    <div class="divider"></div>
+                                    <div class="name" style="font-size:1.2rem;">Muhammad Ashraf</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                        <div class="couple-card" data-couple="nafisa" style="cursor:pointer;">
+                            <div class="couple-content" style="padding:18px 12px;">
+                                <div class="name-pair">
+                                    <div class="name" style="font-size:1.2rem;">Nafisa Khatoon</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 87574 99830</div>
+                                    <div class="divider"></div>
+                                    <div class="name" style="font-size:1.2rem;">Ikramul Hasan</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                        <div class="couple-card" data-couple="saqinah" style="cursor:pointer;">
+                            <div class="couple-content" style="padding:18px 12px;">
+                                <div class="name-pair">
+                                    <div class="name" style="font-size:1.2rem;">Saqinah Khatoon</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 88252 41780</div>
+                                    <div class="divider"></div>
+                                    <div class="name" style="font-size:1.2rem;">Kalimullah</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                        <div class="couple-card" data-couple="khadija" style="cursor:pointer;">
+                            <div class="couple-content" style="padding:18px 12px;">
+                                <div class="name-pair">
+                                    <div class="name" style="font-size:1.2rem;">Khadija Khatoon</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 80778 08030</div>
+                                    <div class="divider"></div>
+                                    <div class="name" style="font-size:1.2rem;">Mulana Ahlulah Qasmi</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                        <div class="couple-card" data-couple="ruqaiya" style="cursor:pointer;">
+                            <div class="couple-content" style="padding:18px 12px;">
+                                <div class="name-pair">
+                                    <div class="name" style="font-size:1.2rem;">Ruqaiya Khatoon</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 62000 12506</div>
+                                    <div class="divider"></div>
+                                    <div class="name" style="font-size:1.2rem;">Md Ali</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                        <div class="couple-card" data-couple="afifah" style="cursor:pointer;">
+                            <div class="couple-content" style="padding:18px 12px;">
+                                <div class="name-pair">
+                                    <div class="name" style="font-size:1.2rem;">Afifah Khatoon</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 81692 24356</div>
+                                    <div class="divider"></div>
+                                    <div class="name" style="font-size:1.2rem;">Ikram</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Uncles -->
+                    <h3 style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--espresso); margin:45px 0 24px;">Our Beloved Uncles &amp; Aunties</h3>
+                    <div class="family-grid" style="gap:18px;">
+                        <div class="couple-card" data-couple="mahmud" style="cursor:pointer;">
+                            <div class="couple-content" style="padding:18px 12px;">
+                                <div class="name-pair">
+                                    <div class="name" style="font-size:1.2rem;">MD Mahmud</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 88200 06933</div>
+                                    <div class="divider"></div>
+                                    <div class="name" style="font-size:1.2rem;">Zainab Khatoon</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 86036 46448</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                        <div class="couple-card" data-couple="mahfuz" style="cursor:pointer;">
+                            <div class="couple-content" style="padding:18px 12px;">
+                                <div class="name-pair">
+                                    <div class="name" style="font-size:1.2rem;">Mahfuz Alam</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 70031 60919</div>
+                                    <div class="divider"></div>
+                                    <div class="name" style="font-size:1.2rem;">Moshina Khatton</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 70443 41391</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                        <div class="couple-card" data-couple="mushin" style="cursor:pointer;">
+                            <div class="couple-content" style="padding:18px 12px;">
+                                <div class="name-pair">
+                                    <div class="name" style="font-size:1.2rem;">Mushin Alam Hudawi</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 98832 86924</div>
+                                    <div class="divider"></div>
+                                    <div class="name" style="font-size:1.2rem;">Irfana Khatoon</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 92625 13273</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                        <div class="couple-card" data-couple="maqbool" style="cursor:pointer;">
+                            <div class="couple-content" style="padding:18px 12px;">
+                                <div class="name-pair">
+                                    <div class="name" style="font-size:1.2rem;">Maqbool Alam Hudawi</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 80893 61711</div>
+                                    <div class="divider"></div>
+                                    <div class="name" style="font-size:1.2rem;">Maimuna</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 98340 52826</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                        <div class="couple-card" data-couple="mahboob" style="cursor:pointer;">
+                            <div class="couple-content" style="padding:18px 12px;">
+                                <div class="name-pair">
+                                    <div class="name" style="font-size:1.2rem;">Mahboob Alam Hudawi</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 70245 42208</div>
+                                    <div class="divider"></div>
+                                    <div class="name" style="font-size:1.2rem;">Nishat Anjum</div>
+                                    <div class="contact-num" style="margin-top:4px;"><span class="phone-icon">📞</span> +91 98017 11024</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            sabar: {
+                title: "Maulana Sabar & Family",
+                subtitle: "2nd Son of Meiyan Jii",
+                html: `
+                    <div style="text-align:center; margin-bottom:30px;">
+                        <p style="color:var(--brown); font-size:1.05rem;">3 Sons &nbsp;•&nbsp; 5 Daughters</p>
+                    </div>
+
+                    <h3 style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--espresso); margin:20px 0 20px;">Sons</h3>
+                    <div class="family-grid" style="gap:18px; margin-bottom:35px;">
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;">
+                                <h3 style="font-size:1.3rem;">Rehan</h3>
+                            </div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;">
+                                <h3 style="font-size:1.3rem;">Abdal</h3>
+                            </div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;">
+                                <h3 style="font-size:1.3rem;">Waled</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--espresso); margin:10px 0 20px;">Daughters</h3>
+                    <div class="family-grid" style="gap:18px;">
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;">
+                                <h3 style="font-size:1.3rem;">Sadaf</h3>
+                            </div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;">
+                                <h3 style="font-size:1.3rem;">Sadiyan</h3>
+                            </div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;">
+                                <h3 style="font-size:1.3rem;">Saniya</h3>
+                            </div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;">
+                                <h3 style="font-size:1.3rem;">Summaiya</h3>
+                            </div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;">
+                                <h3 style="font-size:1.3rem;">Tubah</h3>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            ujemah: {
+                title: "Ujemah & Family",
+                subtitle: "1st Daughter of Meiyan Jii",
+                html: `
+                    <div style="text-align:center; margin-bottom:30px;">
+                        <p style="color:var(--brown); font-size:1.05rem;">Her Beloved Children</p>
+                    </div>
+                    <div class="family-grid" style="gap:18px;">
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Atif</h3></div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Zaid</h3></div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Niyaz</h3></div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Khalid</h3></div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Ikram Meyan</h3></div>
+                        </div>
+                    </div>
+                `
+            },
+            fatimah: {
+                title: "Fatimah & Family",
+                subtitle: "2nd Daughter of Meiyan Jii",
+                html: `
+                    <div style="text-align:center; margin-bottom:30px;">
+                        <p style="color:var(--brown); font-size:1.05rem;">Her Beloved Children</p>
+                    </div>
+                    <div class="family-grid" style="gap:18px;">
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Ayesh</h3></div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Ronaq</h3></div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Karimah</h3></div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Nummiyagndg</h3></div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Kikshl</h3></div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Shshan</h3></div>
+                        </div>
+                    </div>
+                `
+            },
+            rashidah: {
+                title: "Rashidah & Family",
+                subtitle: "3rd Daughter of Meiyan Jii",
+                html: `
+                    <div style="text-align:center; margin-bottom:30px;">
+                        <p style="color:var(--brown); font-size:1.05rem;">Her Beloved Children</p>
+                    </div>
+                    <div class="family-grid" style="gap:18px;">
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Sdam</h3></div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Lahluh</h3></div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Nasrullah</h3></div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Ummati</h3></div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+const rootModal = document.getElementById('rootModal');
+        const closeRootBtn = document.getElementById('closeRootModal');
+        const rootModalTitle = document.getElementById('rootModalTitle');
+        const rootModalSubtitle = document.getElementById('rootModalSubtitle');
+        const rootModalBody = document.getElementById('rootModalBody');
+
+        document.querySelectorAll('.root-card[data-root]').forEach(card => {
+            card.addEventListener('click', () => {
+                const key = card.getAttribute('data-root');
+                const data = rootData[key];
+                if (!data) return;
+
+                rootModalTitle.textContent = data.title;
+                rootModalSubtitle.textContent = data.subtitle;
+                rootModalBody.innerHTML = data.html;
+
+                rootModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                // Setup image uploads inside the modal
+                
+
+                // Re-bind children click for the newly injected couple cards
+                rootModalBody.querySelectorAll('.couple-card[data-couple]').forEach(coupleCard => {
+                    coupleCard.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        const ckey = coupleCard.getAttribute('data-couple');
+                        const cdata = familyData[ckey];
+                        if (!cdata) return;
+
+                        modalTitle.textContent = cdata.title;
+
+                        childrenGrid.innerHTML = cdata.children.map(c => `
+                            <div class="child-card">
+                                <img src="" alt="${c.name}">
+                                <div class="name">${c.name}</div>
+                                ${c.relation ? `<div class="relation">${c.relation}</div>` : ''}
+                                ${c.contact ? `<div class="contact-num"><span class="phone-icon">📞</span> ${c.contact}</div>` : ''}
+                            </div>
+                        `).join('');
+
+                        // Setup uploads for the newly created children cards
+                        
+
+                        modal.style.zIndex = '2200';
+                        modal.classList.add('active');
+                    });
+                });
+            });
+        });
+
+        function closeRootModal() {
+            rootModal.classList.remove('active');
+            // Also close children modal if open
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeRootBtn.addEventListener('click', closeRootModal);
+        rootModal.addEventListener('click', (e) => {
+            if (e.target === rootModal) closeRootModal();
+        });
+
+        
+
     </script>
 </body>
 </html>
+
