@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -507,21 +506,24 @@
             line-height: 1.6;
         }
 
-        /* Dual portrait couple card */
+        /* Dual portrait couple card – clean rectangular style */
         .couple-photos {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            padding: 14px 14px 0;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            padding: 18px 16px 8px;
         }
 
         .couple-photos .photo-frame {
             position: relative;
-            width: 100%;
-            aspect-ratio: 1 / 1.15;
-            border-radius: 12px;
+            width: 110px;
+            height: 135px;
+            border-radius: 14px;
             overflow: hidden;
-            background: var(--sand);
+            background: linear-gradient(145deg, #F0E6DC 0%, #E8D9CB 100%);
+            border: 1px solid rgba(199, 123, 97, 0.12);
+            box-shadow: 0 6px 18px rgba(96, 69, 54, 0.09);
+            flex-shrink: 0;
         }
 
         .couple-photos .photo-frame img {
@@ -529,23 +531,37 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            z-index: 1;
         }
 
         .couple-card:hover .couple-photos .photo-frame img {
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
 
         /* Placeholder avatar when no photo */
-        .couple-photos .photo-frame img[src=""],
-        .couple-photos .photo-frame img:not([src]),
-        .family-card img[src=""] {
-            object-fit: none;
+        .couple-photos .photo-frame::before {
+            content: "👤";
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            opacity: 0.2;
+            z-index: 0;
+            pointer-events: none;
             background: linear-gradient(145deg, #F0E6DC 0%, #E8D9CB 100%);
         }
 
+        .couple-photos .photo-frame img[src=""],
+        .couple-photos .photo-frame img:not([src]) {
+            opacity: 0;
+        }
+
         .couple-content {
-            padding: 18px 16px 22px;
+            padding: 10px 16px 22px;
             text-align: center;
             flex: 1;
             display: flex;
@@ -562,19 +578,19 @@
 
         .person-block .name {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.28rem;
+            font-size: 1.22rem;
             font-weight: 600;
             color: var(--espresso);
             line-height: 1.3;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .card-divider {
-            width: 36px;
+            width: 28px;
             height: 1.5px;
             background: linear-gradient(90deg, transparent, var(--terracotta), transparent);
-            margin: 12px 0;
-            opacity: 0.75;
+            margin: 10px 0;
+            opacity: 0.7;
         }
 
         .contact-num {
@@ -922,7 +938,10 @@
 
         @media (max-width: 768px) {
             section { padding: 90px 20px; }
-            .couple-photos img { height: 170px; }
+            .couple-photos .photo-frame {
+                width: 100px;
+                height: 122px;
+            }
             .family-card img { height: 250px; }
             .name-pair .name { font-size: 1.3rem; }
             .subsection-title { margin: 75px 0 38px; }
@@ -932,11 +951,8 @@
             .children-grid { padding: 10px 20px 40px; gap: 22px; }
             .child-card img { height: 180px; }
         }
-    
-        
-            .child-card 
-        }
 
+        
     </style>
 </head>
 <body>
@@ -1133,14 +1149,23 @@
             </div>
 
             <h3 class="subsection-title reveal">Our Beloved Phophis &amp; Their Husbands</h3>
+            <!-- 
+                HOW TO ADD PHOTOS:
+                Just paste the image URL inside src="" 
+                Left image = Phophi   |   Right image = Husband
+            -->
             <div class="family-grid">
+
+                <!-- ========== 1. Atiqah Khatoon & Muhammad Juhi ========== -->
                 <div class="couple-card reveal" data-couple="atiqah">
                     <div class="couple-photos">
+                        <!-- Atiqah Khatoon (Phophi) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Atiqah Khatoon" onerror="this.style.display='none'">
+                            <img src="" alt="Atiqah Khatoon">
                         </div>
+                        <!-- Muhammad Juhi (Husband) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Muhammad Juhi" onerror="this.style.display='none'">
+                            <img src="" alt="Muhammad Juhi">
                         </div>
                     </div>
                     <div class="couple-content">
@@ -1156,13 +1181,16 @@
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
+                <!-- ========== 2. Rabiyah Khatoon & Muhammad Nurul Huda ========== -->
                 <div class="couple-card reveal" data-couple="rabiyah">
                     <div class="couple-photos">
+                        <!-- Rabiyah Khatoon (Phophi) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Rabiyah Khatoon" onerror="this.style.display='none'">
+                            <img src="" alt="Rabiyah Khatoon">
                         </div>
+                        <!-- Muhammad Nurul Huda (Husband) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Muhammad Nurul Huda" onerror="this.style.display='none'">
+                            <img src="" alt="Muhammad Nurul Huda">
                         </div>
                     </div>
                     <div class="couple-content">
@@ -1178,13 +1206,16 @@
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
+                <!-- ========== 3. Aqila Khatoon & Muhammad Ashraf ========== -->
                 <div class="couple-card reveal" data-couple="aqila">
                     <div class="couple-photos">
+                        <!-- Aqila Khatoon (Phophi) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Aqila Khatoon" onerror="this.style.display='none'">
+                            <img src="https://i.ibb.co/fV7KR0Ld/IMG-20260325-WA0012-removebg-preview-removebg-preview.png" alt="Aqila Khatoon">
                         </div>
+                        <!-- Muhammad Ashraf (Husband) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Muhammad Ashraf" onerror="this.style.display='none'">
+                            <img src="" alt="Muhammad Ashraf">
                         </div>
                     </div>
                     <div class="couple-content">
@@ -1200,13 +1231,16 @@
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
+                <!-- ========== 4. Nafisa Khatoon & Ikramul Hasan ========== -->
                 <div class="couple-card reveal" data-couple="nafisa">
                     <div class="couple-photos">
+                        <!-- Nafisa Khatoon (Phophi) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Nafisa Khatoon" onerror="this.style.display='none'">
+                            <img src="" alt="Nafisa Khatoon">
                         </div>
+                        <!-- Ikramul Hasan (Husband) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Ikramul Hasan" onerror="this.style.display='none'">
+                            <img src="" alt="Ikramul Hasan">
                         </div>
                     </div>
                     <div class="couple-content">
@@ -1222,13 +1256,16 @@
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
+                <!-- ========== 5. Saqinah Khatoon & Kalimullah ========== -->
                 <div class="couple-card reveal" data-couple="saqinah">
                     <div class="couple-photos">
+                        <!-- Saqinah Khatoon (Phophi) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Saqinah Khatoon" onerror="this.style.display='none'">
+                            <img src="" alt="Saqinah Khatoon">
                         </div>
+                        <!-- Kalimullah (Husband) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Kalimullah" onerror="this.style.display='none'">
+                            <img src="" alt="Kalimullah">
                         </div>
                     </div>
                     <div class="couple-content">
@@ -1244,13 +1281,16 @@
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
+                <!-- ========== 6. Khadija Khatoon & Mulana Ahlulah Qasmi ========== -->
                 <div class="couple-card reveal" data-couple="khadija">
                     <div class="couple-photos">
+                        <!-- Khadija Khatoon (Phophi) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Khadija Khatoon" onerror="this.style.display='none'">
+                            <img src="" alt="Khadija Khatoon">
                         </div>
+                        <!-- Mulana Ahlulah Qasmi (Husband) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Mulana Ahlulah Qasmi" onerror="this.style.display='none'">
+                            <img src="" alt="Mulana Ahlulah Qasmi">
                         </div>
                     </div>
                     <div class="couple-content">
@@ -1266,13 +1306,16 @@
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
+                <!-- ========== 7. Ruqaiya Khatoon & Md Ali ========== -->
                 <div class="couple-card reveal" data-couple="ruqaiya">
                     <div class="couple-photos">
+                        <!-- Ruqaiya Khatoon (Phophi) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Ruqaiya Khatoon" onerror="this.style.display='none'">
+                            <img src="" alt="Ruqaiya Khatoon">
                         </div>
+                        <!-- Md Ali (Husband) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Md Ali" onerror="this.style.display='none'">
+                            <img src="" alt="Md Ali">
                         </div>
                     </div>
                     <div class="couple-content">
@@ -1288,13 +1331,16 @@
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
+                <!-- ========== 8. Afifah Khatoon & Ikram ========== -->
                 <div class="couple-card reveal" data-couple="afifah">
                     <div class="couple-photos">
+                        <!-- Afifah Khatoon (Phophi) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Afifah Khatoon" onerror="this.style.display='none'">
+                            <img src="" alt="Afifah Khatoon">
                         </div>
+                        <!-- Ikram (Husband) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Ikram" onerror="this.style.display='none'">
+                            <img src="" alt="Ikram">
                         </div>
                     </div>
                     <div class="couple-content">
@@ -1313,14 +1359,23 @@
             </div>
 
             <h3 class="subsection-title reveal">Our Beloved Uncles &amp; Aunties</h3>
+            <!-- 
+                HOW TO ADD PHOTOS:
+                Just paste the image URL inside src="" 
+                Left image = Uncle   |   Right image = Auntie
+            -->
             <div class="family-grid">
+
+                <!-- ========== 1. MD Mahmud & Zainab Khatoon ========== -->
                 <div class="couple-card reveal" data-couple="mahmud">
                     <div class="couple-photos">
+                        <!-- MD Mahmud (Uncle) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="MD Mahmud" onerror="this.style.display='none'">
+                            <img src="" alt="MD Mahmud">
                         </div>
+                        <!-- Zainab Khatoon (Auntie) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Zainab Khatoon" onerror="this.style.display='none'">
+                            <img src="" alt="Zainab Khatoon">
                         </div>
                     </div>
                     <div class="couple-content">
@@ -1336,13 +1391,16 @@
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
+                <!-- ========== 2. Mahfuz Alam & Moshina Khatton ========== -->
                 <div class="couple-card reveal" data-couple="mahfuz">
                     <div class="couple-photos">
+                        <!-- Mahfuz Alam (Uncle) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Mahfuz Alam" onerror="this.style.display='none'">
+                            <img src="" alt="Mahfuz Alam">
                         </div>
+                        <!-- Moshina Khatton (Auntie) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Moshina Khatton" onerror="this.style.display='none'">
+                            <img src="" alt="Moshina Khatton">
                         </div>
                     </div>
                     <div class="couple-content">
@@ -1358,13 +1416,16 @@
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
+                <!-- ========== 3. Mushin Alam Hudawi & Irfana Khatoon ========== -->
                 <div class="couple-card reveal" data-couple="mushin">
                     <div class="couple-photos">
+                        <!-- Mushin Alam Hudawi (Uncle) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Mushin Alam Hudawi" onerror="this.style.display='none'">
+                            <img src="" alt="Mushin Alam Hudawi">
                         </div>
+                        <!-- Irfana Khatoon (Auntie) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Irfana Khatoon" onerror="this.style.display='none'">
+                            <img src="" alt="Irfana Khatoon">
                         </div>
                     </div>
                     <div class="couple-content">
@@ -1380,13 +1441,16 @@
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
+                <!-- ========== 4. Maqbool Alam Hudawi & Maimuna ========== -->
                 <div class="couple-card reveal" data-couple="maqbool">
                     <div class="couple-photos">
+                        <!-- Maqbool Alam Hudawi (Uncle) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Maqbool Alam Hudawi" onerror="this.style.display='none'">
+                            <img src="" alt="Maqbool Alam Hudawi">
                         </div>
+                        <!-- Maimuna (Auntie) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Maimuna" onerror="this.style.display='none'">
+                            <img src="" alt="Maimuna">
                         </div>
                     </div>
                     <div class="couple-content">
@@ -1402,13 +1466,16 @@
                         <div class="click-hint">Click to see their children ♥</div>
                     </div>
                 </div>
+                <!-- ========== 5. Mahboob Alam Hudawi & Nishat Anjum ========== -->
                 <div class="couple-card reveal" data-couple="mahboob">
                     <div class="couple-photos">
+                        <!-- Mahboob Alam Hudawi (Uncle) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Mahboob Alam Hudawi" onerror="this.style.display='none'">
+                            <img src="" alt="Mahboob Alam Hudawi">
                         </div>
+                        <!-- Nishat Anjum (Auntie) photo -->
                         <div class="photo-frame">
-                            <img src="" alt="Nishat Anjum" onerror="this.style.display='none'">
+                            <img src="" alt="Nishat Anjum">
                         </div>
                     </div>
                     <div class="couple-content">
@@ -1657,14 +1724,12 @@
 
             childrenGrid.innerHTML = data.children.map(c => `
                 <div class="child-card">
-                    <img src="" alt="${c.name}">
+                    <img src="${c.img || ''}" alt="${c.name}">
                     <div class="name">${c.name}</div>
                     ${c.relation ? `<div class="relation">${c.relation}</div>` : ''}
                     ${c.contact ? `<div class="contact-num"><span class="phone-icon">📞</span> ${c.contact}</div>` : ''}
                 </div>
             `).join('');
-
-            
 
             // Make sure children modal appears on top
             modal.style.zIndex = '2200';
@@ -2031,9 +2096,6 @@ const rootModal = document.getElementById('rootModal');
                 rootModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
 
-                // Setup image uploads inside the modal
-                
-
                 // Re-bind children click for the newly injected couple cards
                 rootModalBody.querySelectorAll('.couple-card[data-couple]').forEach(coupleCard => {
                     coupleCard.addEventListener('click', (e) => {
@@ -2048,15 +2110,12 @@ const rootModal = document.getElementById('rootModal');
 
                         childrenGrid.innerHTML = cdata.children.map(c => `
                             <div class="child-card">
-                                <img src="" alt="${c.name}">
+                                <img src="${c.img || ''}" alt="${c.name}">
                                 <div class="name">${c.name}</div>
                                 ${c.relation ? `<div class="relation">${c.relation}</div>` : ''}
                                 ${c.contact ? `<div class="contact-num"><span class="phone-icon">📞</span> ${c.contact}</div>` : ''}
                             </div>
                         `).join('');
-
-                        // Setup uploads for the newly created children cards
-                        
 
                         modal.style.zIndex = '2200';
                         modal.classList.add('active');
@@ -2082,4 +2141,3 @@ const rootModal = document.getElementById('rootModal');
     </script>
 </body>
 </html>
-
