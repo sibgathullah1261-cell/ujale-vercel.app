@@ -1,4 +1,4 @@
-<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1100,7 +1100,7 @@
                     <div class="family-card-content">
                         <h3>Rashidah</h3>
                         <p style="font-size:0.85rem; color:var(--terracotta); margin-bottom:6px;">3rd Daughter</p>
-                        <p>4 Children</p>
+                        <p>Husband: Taihab<br>3 Sons + 2 Daughters</p>
                         <div class="click-hint" style="margin-top:10px;">Click to see her family ♥</div>
                     </div>
                 </div>
@@ -1126,7 +1126,7 @@
                     <div class="family-card-content">
                         <h3>Maulana Sabar</h3>
                         <p style="font-size:0.85rem; color:var(--terracotta); margin-bottom:6px;">2nd Son</p>
-                        <p>3 Sons + 5 Daughters</p>
+                        <p>Wife: Aliya<br>3 Sons + 5 Daughters</p>
                         <div class="click-hint" style="margin-top:10px;">Click to see his family ♥</div>
                     </div>
                 </div>
@@ -1704,6 +1704,87 @@
                 children: [
                     { name: "Rayyan", relation: "", img: "https://i.ibb.co/fV7KR0Ld/IMG-20260325-WA0012-removebg-preview-removebg-preview.png" }
                 ]
+            },
+
+            // ========== MAULANA SABAR'S CHILDREN ==========
+            sadaf: {
+                title: "Sadaf & Riyaz",
+                children: [
+                    // PASTE PHOTO URL inside img: "URL_HERE"
+                    { name: "Sinah", relation: "Daughter", img: "" },
+                    { name: "Robia", relation: "Daughter", img: "" },
+                    { name: "Nisha", relation: "Daughter", img: "" },
+                    { name: "Firoz", relation: "Son", img: "" },
+                    { name: "Aninadah", relation: "Son", img: "" }
+                ]
+            },
+            sadiyan: {
+                title: "Sadiyan & Norridiin",
+                children: []
+            },
+            saniya: {
+                title: "Saniya",
+                children: []
+            },
+            summaiya: {
+                title: "Summaiya",
+                children: []
+            },
+            tubah: {
+                title: "Tubah",
+                children: []
+            },
+            rehan: {
+                title: "Rehan",
+                children: []
+            },
+            abdal: {
+                title: "Abdal",
+                children: []
+            },
+            waled: {
+                title: "Waled",
+                children: []
+            },
+
+            // ========== RASHIDAH'S CHILDREN ==========
+            sdam: {
+                title: "Sdam & Armanah",
+                children: [
+                    // PASTE PHOTO URL inside img: "URL_HERE"
+                    { name: "Ayyan", relation: "Child", img: "" }
+                ]
+            },
+            lahluh: {
+                title: "Lahluh & Norinaiyan",
+                children: [
+                    // PASTE PHOTO URL inside img: "URL_HERE"
+                    { name: "Fatimeah", relation: "Daughter", img: "" },
+                    { name: "Roziyan", relation: "Daughter", img: "" },
+                    { name: "Shariyah", relation: "Daughter", img: "" },
+                    { name: "Nomaiyadh", relation: "Daughter", img: "" },
+                    { name: "Kalam", relation: "Son", img: "" },
+                    { name: "Norian Allam", relation: "Son", img: "" }
+                ]
+            },
+            nasrullah: {
+                title: "Nasrullah",
+                children: []
+            },
+            ummati: {
+                title: "Ummati",
+                children: []
+            },
+            janatieh: {
+                title: "Janatieh & Elon",
+                children: [
+                    // PASTE PHOTO URL inside img: "URL_HERE"
+                    { name: "Rohbiah", relation: "Daughter", img: "" },
+                    { name: "Zohiaqha", relation: "Daughter", img: "" },
+                    { name: "Roomihabtant", relation: "Daughter", img: "" },
+                    { name: "Shanwanz", relation: "Son", img: "" },
+                    { name: "Niomaumullah", relation: "Son", img: "" }
+                ]
             }
         };
 
@@ -1726,14 +1807,23 @@
 
             modalTitle.textContent = data.title;
 
-            childrenGrid.innerHTML = data.children.map(c => `
-                <div class="child-card">
-                    <img src="${c.img || ''}" alt="${c.name}">
-                    <div class="name">${c.name}</div>
-                    ${c.relation ? `<div class="relation">${c.relation}</div>` : ''}
-                    ${c.contact ? `<div class="contact-num"><span class="phone-icon">📞</span> ${c.contact}</div>` : ''}
-                </div>
-            `).join('');
+            if (data.children && data.children.length > 0) {
+                childrenGrid.innerHTML = data.children.map(c => `
+                    <div class="child-card">
+                        <img src="${c.img || ''}" alt="${c.name}">
+                        <div class="name">${c.name}</div>
+                        ${c.relation ? `<div class="relation">${c.relation}</div>` : ''}
+                        ${c.contact ? `<div class="contact-num"><span class="phone-icon">📞</span> ${c.contact}</div>` : ''}
+                    </div>
+                `).join('');
+            } else {
+                childrenGrid.innerHTML = `
+                    <div style="grid-column:1/-1; text-align:center; padding:40px 20px; color:var(--brown);">
+                        <p style="font-size:1.1rem; margin-bottom:8px;">No children added yet</p>
+                        <p style="font-size:0.9rem; opacity:0.75;">You can add them later in the family data</p>
+                    </div>
+                `;
+            }
 
             // Make sure children modal appears on top
             modal.style.zIndex = '2200';
@@ -1946,56 +2036,193 @@
             },
             sabar: {
                 title: "Maulana Sabar & Family",
-                subtitle: "2nd Son of Meiyan Jii",
+                subtitle: "2nd Son of Meiyan Jii — Full Family Tree",
                 html: `
-                    <div style="text-align:center; margin-bottom:30px;">
-                        <p style="color:var(--brown); font-size:1.05rem;">3 Sons &nbsp;•&nbsp; 5 Daughters</p>
+                    <!-- Sabar & Wife -->
+                    <h3 style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--espresso); margin:10px 0 28px;">Maulana Sabar &amp; Aliya</h3>
+                    <div class="family-grid grandparents" style="max-width:700px; margin:0 auto 40px; gap:24px;">
+                        <div class="family-card" style="cursor:default;">
+                            <!-- PASTE PHOTO URL OF MAULANA SABAR BELOW -->
+                            <img src="" alt="Maulana Sabar">
+                            <div class="family-card-content" style="padding:22px 18px;">
+                                <h3 style="font-size:1.4rem;">Maulana Sabar</h3>
+                                <p style="font-size:0.9rem;">2nd Son of Meiyan Jii</p>
+                                <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                            </div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <!-- PASTE PHOTO URL OF ALIYA BELOW -->
+                            <img src="" alt="Aliya">
+                            <div class="family-card-content" style="padding:22px 18px;">
+                                <h3 style="font-size:1.4rem;">Aliya</h3>
+                                <p style="font-size:0.9rem;">Wife of Maulana Sabar</p>
+                                <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <h3 style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--espresso); margin:20px 0 20px;">Sons</h3>
-                    <div class="family-grid" style="gap:18px; margin-bottom:35px;">
-                        <div class="family-card" style="cursor:default;">
-                            <div class="family-card-content" style="padding:20px 14px;">
-                                <h3 style="font-size:1.3rem;">Rehan</h3>
-                            </div>
-                        </div>
-                        <div class="family-card" style="cursor:default;">
-                            <div class="family-card-content" style="padding:20px 14px;">
-                                <h3 style="font-size:1.3rem;">Abdal</h3>
-                            </div>
-                        </div>
-                        <div class="family-card" style="cursor:default;">
-                            <div class="family-card-content" style="padding:20px 14px;">
-                                <h3 style="font-size:1.3rem;">Waled</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3 style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--espresso); margin:10px 0 20px;">Daughters</h3>
+                    <!-- Daughters -->
+                    <h3 style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--espresso); margin:40px 0 24px;">Our Beloved Daughters &amp; Their Husbands</h3>
                     <div class="family-grid" style="gap:18px;">
-                        <div class="family-card" style="cursor:default;">
-                            <div class="family-card-content" style="padding:20px 14px;">
-                                <h3 style="font-size:1.3rem;">Sadaf</h3>
+                        <!-- ========== SADAF & RIYAZ ========== -->
+                        <div class="couple-card" data-couple="sadaf" style="cursor:pointer;">
+                            <div class="couple-photos">
+                                <!-- PASTE PHOTO URL OF SADAF BELOW -->
+                                <div class="photo-frame"><img src="" alt="Sadaf"></div>
+                                <!-- PASTE PHOTO URL OF RIYAZ BELOW -->
+                                <div class="photo-frame"><img src="" alt="Riyaz"></div>
+                            </div>
+                            <div class="couple-content">
+                                <div class="person-block">
+                                    <div class="name">Sadaf</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="person-block">
+                                    <div class="name">Riyaz</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
                             </div>
                         </div>
-                        <div class="family-card" style="cursor:default;">
-                            <div class="family-card-content" style="padding:20px 14px;">
-                                <h3 style="font-size:1.3rem;">Sadiyan</h3>
+                        <!-- ========== SADIYAN & NORRIDIIN ========== -->
+                        <div class="couple-card" data-couple="sadiyan" style="cursor:pointer;">
+                            <div class="couple-photos">
+                                <!-- PASTE PHOTO URL OF SADIYAN BELOW -->
+                                <div class="photo-frame"><img src="" alt="Sadiyan"></div>
+                                <!-- PASTE PHOTO URL OF NORRIDIIN BELOW -->
+                                <div class="photo-frame"><img src="" alt="Norridiin"></div>
+                            </div>
+                            <div class="couple-content">
+                                <div class="person-block">
+                                    <div class="name">Sadiyan</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="person-block">
+                                    <div class="name">Norridiin</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
                             </div>
                         </div>
-                        <div class="family-card" style="cursor:default;">
-                            <div class="family-card-content" style="padding:20px 14px;">
-                                <h3 style="font-size:1.3rem;">Saniya</h3>
+                        <!-- ========== SANIYA (Not Married) ========== -->
+                        <div class="couple-card" data-couple="saniya" style="cursor:pointer;">
+                            <div class="couple-photos">
+                                <!-- PASTE PHOTO URL OF SANIYA BELOW -->
+                                <div class="photo-frame"><img src="" alt="Saniya"></div>
+                                <div class="photo-frame"><img src="" alt=""></div>
+                            </div>
+                            <div class="couple-content">
+                                <div class="person-block">
+                                    <div class="name">Saniya</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="person-block">
+                                    <div class="name" style="opacity:0.55; font-size:1.05rem;">Not Married</div>
+                                </div>
+                                <div class="click-hint">Click to see option ♥</div>
                             </div>
                         </div>
-                        <div class="family-card" style="cursor:default;">
-                            <div class="family-card-content" style="padding:20px 14px;">
-                                <h3 style="font-size:1.3rem;">Summaiya</h3>
+                        <!-- ========== SUMMAIYA (Not Married) ========== -->
+                        <div class="couple-card" data-couple="summaiya" style="cursor:pointer;">
+                            <div class="couple-photos">
+                                <!-- PASTE PHOTO URL OF SUMMAIYA BELOW -->
+                                <div class="photo-frame"><img src="" alt="Summaiya"></div>
+                                <div class="photo-frame"><img src="" alt=""></div>
+                            </div>
+                            <div class="couple-content">
+                                <div class="person-block">
+                                    <div class="name">Summaiya</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="person-block">
+                                    <div class="name" style="opacity:0.55; font-size:1.05rem;">Not Married</div>
+                                </div>
+                                <div class="click-hint">Click to see option ♥</div>
                             </div>
                         </div>
-                        <div class="family-card" style="cursor:default;">
-                            <div class="family-card-content" style="padding:20px 14px;">
-                                <h3 style="font-size:1.3rem;">Tubah</h3>
+                        <!-- ========== TUBAH (Not Married) ========== -->
+                        <div class="couple-card" data-couple="tubah" style="cursor:pointer;">
+                            <div class="couple-photos">
+                                <!-- PASTE PHOTO URL OF TUBAH BELOW -->
+                                <div class="photo-frame"><img src="" alt="Tubah"></div>
+                                <div class="photo-frame"><img src="" alt=""></div>
+                            </div>
+                            <div class="couple-content">
+                                <div class="person-block">
+                                    <div class="name">Tubah</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="person-block">
+                                    <div class="name" style="opacity:0.55; font-size:1.05rem;">Not Married</div>
+                                </div>
+                                <div class="click-hint">Click to see option ♥</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sons -->
+                    <h3 style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--espresso); margin:45px 0 24px;">Our Beloved Sons</h3>
+                    <div class="family-grid" style="gap:18px;">
+                        <!-- ========== REHAN (Not Married) ========== -->
+                        <div class="couple-card" data-couple="rehan" style="cursor:pointer;">
+                            <div class="couple-photos">
+                                <!-- PASTE PHOTO URL OF REHAN BELOW -->
+                                <div class="photo-frame"><img src="" alt="Rehan"></div>
+                                <div class="photo-frame"><img src="" alt=""></div>
+                            </div>
+                            <div class="couple-content">
+                                <div class="person-block">
+                                    <div class="name">Rehan</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="person-block">
+                                    <div class="name" style="opacity:0.55; font-size:1.05rem;">Not Married</div>
+                                </div>
+                                <div class="click-hint">Click to see option ♥</div>
+                            </div>
+                        </div>
+                        <!-- ========== ABDAL (Not Married) ========== -->
+                        <div class="couple-card" data-couple="abdal" style="cursor:pointer;">
+                            <div class="couple-photos">
+                                <!-- PASTE PHOTO URL OF ABDAL BELOW -->
+                                <div class="photo-frame"><img src="" alt="Abdal"></div>
+                                <div class="photo-frame"><img src="" alt=""></div>
+                            </div>
+                            <div class="couple-content">
+                                <div class="person-block">
+                                    <div class="name">Abdal</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="person-block">
+                                    <div class="name" style="opacity:0.55; font-size:1.05rem;">Not Married</div>
+                                </div>
+                                <div class="click-hint">Click to see option ♥</div>
+                            </div>
+                        </div>
+                        <!-- ========== WALED (Not Married) ========== -->
+                        <div class="couple-card" data-couple="waled" style="cursor:pointer;">
+                            <div class="couple-photos">
+                                <!-- PASTE PHOTO URL OF WALED BELOW -->
+                                <div class="photo-frame"><img src="" alt="Waled"></div>
+                                <div class="photo-frame"><img src="" alt=""></div>
+                            </div>
+                            <div class="couple-content">
+                                <div class="person-block">
+                                    <div class="name">Waled</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="person-block">
+                                    <div class="name" style="opacity:0.55; font-size:1.05rem;">Not Married</div>
+                                </div>
+                                <div class="click-hint">Click to see option ♥</div>
                             </div>
                         </div>
                     </div>
@@ -2058,23 +2285,139 @@
             },
             rashidah: {
                 title: "Rashidah & Family",
-                subtitle: "3rd Daughter of Meiyan Jii",
+                subtitle: "3rd Daughter of Meiyan Jii — Full Family Tree",
                 html: `
-                    <div style="text-align:center; margin-bottom:30px;">
-                        <p style="color:var(--brown); font-size:1.05rem;">Her Beloved Children</p>
+                    <!-- Rashidah & Husband -->
+                    <h3 style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--espresso); margin:10px 0 28px;">Rashidah &amp; Taihab</h3>
+                    <div class="family-grid grandparents" style="max-width:700px; margin:0 auto 40px; gap:24px;">
+                        <div class="family-card" style="cursor:default;">
+                            <!-- PASTE PHOTO URL OF RASHIDAH BELOW -->
+                            <img src="" alt="Rashidah">
+                            <div class="family-card-content" style="padding:22px 18px;">
+                                <h3 style="font-size:1.4rem;">Rashidah</h3>
+                                <p style="font-size:0.9rem;">3rd Daughter of Meiyan Jii</p>
+                                <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                            </div>
+                        </div>
+                        <div class="family-card" style="cursor:default;">
+                            <!-- PASTE PHOTO URL OF TAIHAB BELOW -->
+                            <img src="" alt="Taihab">
+                            <div class="family-card-content" style="padding:22px 18px;">
+                                <h3 style="font-size:1.4rem;">Taihab</h3>
+                                <p style="font-size:0.9rem;">Husband of Rashidah</p>
+                                <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Daughters -->
+                    <h3 style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--espresso); margin:40px 0 24px;">Our Beloved Daughters &amp; Their Husbands</h3>
                     <div class="family-grid" style="gap:18px;">
-                        <div class="family-card" style="cursor:default;">
-                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Sdam</h3></div>
+                        <!-- ========== UMMATI (Not Married) ========== -->
+                        <div class="couple-card" data-couple="ummati" style="cursor:pointer;">
+                            <div class="couple-photos">
+                                <!-- PASTE PHOTO URL OF UMMATI BELOW -->
+                                <div class="photo-frame"><img src="" alt="Ummati"></div>
+                                <div class="photo-frame"><img src="" alt=""></div>
+                            </div>
+                            <div class="couple-content">
+                                <div class="person-block">
+                                    <div class="name">Ummati</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="person-block">
+                                    <div class="name" style="opacity:0.55; font-size:1.05rem;">Not Married</div>
+                                </div>
+                                <div class="click-hint">Click to see option ♥</div>
+                            </div>
                         </div>
-                        <div class="family-card" style="cursor:default;">
-                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Lahluh</h3></div>
+                        <!-- ========== JANATIEH & ELON ========== -->
+                        <div class="couple-card" data-couple="janatieh" style="cursor:pointer;">
+                            <div class="couple-photos">
+                                <!-- PASTE PHOTO URL OF JANATIEH BELOW -->
+                                <div class="photo-frame"><img src="" alt="Janatieh"></div>
+                                <!-- PASTE PHOTO URL OF ELON BELOW -->
+                                <div class="photo-frame"><img src="" alt="Elon"></div>
+                            </div>
+                            <div class="couple-content">
+                                <div class="person-block">
+                                    <div class="name">Janatieh</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="person-block">
+                                    <div class="name">Elon</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
                         </div>
-                        <div class="family-card" style="cursor:default;">
-                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Nasrullah</h3></div>
+                    </div>
+
+                    <!-- Sons -->
+                    <h3 style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--espresso); margin:45px 0 24px;">Our Beloved Sons &amp; Their Wives</h3>
+                    <div class="family-grid" style="gap:18px;">
+                        <!-- ========== SDAM & ARMANAH ========== -->
+                        <div class="couple-card" data-couple="sdam" style="cursor:pointer;">
+                            <div class="couple-photos">
+                                <!-- PASTE PHOTO URL OF SDAM BELOW -->
+                                <div class="photo-frame"><img src="" alt="Sdam"></div>
+                                <!-- PASTE PHOTO URL OF ARMANAH BELOW -->
+                                <div class="photo-frame"><img src="" alt="Armanah"></div>
+                            </div>
+                            <div class="couple-content">
+                                <div class="person-block">
+                                    <div class="name">Sdam</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="person-block">
+                                    <div class="name">Armanah</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
                         </div>
-                        <div class="family-card" style="cursor:default;">
-                            <div class="family-card-content" style="padding:20px 14px;"><h3 style="font-size:1.3rem;">Ummati</h3></div>
+                        <!-- ========== LAHLUH & NORINAIYAN ========== -->
+                        <div class="couple-card" data-couple="lahluh" style="cursor:pointer;">
+                            <div class="couple-photos">
+                                <!-- PASTE PHOTO URL OF LAHLUH BELOW -->
+                                <div class="photo-frame"><img src="" alt="Lahluh"></div>
+                                <!-- PASTE PHOTO URL OF NORINAIYAN BELOW -->
+                                <div class="photo-frame"><img src="" alt="Norinaiyan"></div>
+                            </div>
+                            <div class="couple-content">
+                                <div class="person-block">
+                                    <div class="name">Lahluh</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="person-block">
+                                    <div class="name">Norinaiyan</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="click-hint">Click to see their children ♥</div>
+                            </div>
+                        </div>
+                        <!-- ========== NASRULLAH (Not Married) ========== -->
+                        <div class="couple-card" data-couple="nasrullah" style="cursor:pointer;">
+                            <div class="couple-photos">
+                                <!-- PASTE PHOTO URL OF NASRULLAH BELOW -->
+                                <div class="photo-frame"><img src="" alt="Nasrullah"></div>
+                                <div class="photo-frame"><img src="" alt=""></div>
+                            </div>
+                            <div class="couple-content">
+                                <div class="person-block">
+                                    <div class="name">Nasrullah</div>
+                                    <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="person-block">
+                                    <div class="name" style="opacity:0.55; font-size:1.05rem;">Not Married</div>
+                                </div>
+                                <div class="click-hint">Click to see option ♥</div>
+                            </div>
                         </div>
                     </div>
                 `
@@ -2112,14 +2455,23 @@ const rootModal = document.getElementById('rootModal');
 
                         modalTitle.textContent = cdata.title;
 
-                        childrenGrid.innerHTML = cdata.children.map(c => `
-                            <div class="child-card">
-                                <img src="${c.img || ''}" alt="${c.name}">
-                                <div class="name">${c.name}</div>
-                                ${c.relation ? `<div class="relation">${c.relation}</div>` : ''}
-                                ${c.contact ? `<div class="contact-num"><span class="phone-icon">📞</span> ${c.contact}</div>` : ''}
-                            </div>
-                        `).join('');
+                        if (cdata.children && cdata.children.length > 0) {
+                            childrenGrid.innerHTML = cdata.children.map(c => `
+                                <div class="child-card">
+                                    <img src="${c.img || ''}" alt="${c.name}">
+                                    <div class="name">${c.name}</div>
+                                    ${c.relation ? `<div class="relation">${c.relation}</div>` : ''}
+                                    ${c.contact ? `<div class="contact-num"><span class="phone-icon">📞</span> ${c.contact}</div>` : ''}
+                                </div>
+                            `).join('');
+                        } else {
+                            childrenGrid.innerHTML = `
+                                <div style="grid-column:1/-1; text-align:center; padding:40px 20px; color:var(--brown);">
+                                    <p style="font-size:1.1rem; margin-bottom:8px;">No children added yet</p>
+                                    <p style="font-size:0.9rem; opacity:0.75;">You can add them later in the family data</p>
+                                </div>
+                            `;
+                        }
 
                         modal.style.zIndex = '2200';
                         modal.classList.add('active');
