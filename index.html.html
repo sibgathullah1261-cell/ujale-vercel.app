@@ -518,70 +518,27 @@
             line-height: 1.6;
         }
 
-        /* Dual portrait couple card – clean rectangular style */
-        .couple-photos {
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            padding: 18px 16px 8px;
-        }
-
-        .couple-photos .photo-frame {
-            position: relative;
-            width: 110px;
-            height: 135px;
-            border-radius: 14px;
-            overflow: hidden;
-            background: linear-gradient(145deg, #F0E6DC 0%, #E8D9CB 100%);
-            border: 1px solid rgba(199, 123, 97, 0.12);
-            box-shadow: 0 6px 18px rgba(96, 69, 54, 0.09);
-            flex-shrink: 0;
-        }
-
-        .couple-photos .photo-frame img {
-            width: 100%;
+        /* Couple cards – uniform size & layout */
+        .couple-card {
+            min-height: 220px;
             height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-            position: relative;
-            z-index: 1;
         }
 
-        .couple-card:hover .couple-photos .photo-frame img {
-            transform: scale(1.06);
-        }
-
-        /* Hide empty photo frames completely */
-        .couple-photos .photo-frame img[src=""],
-        .couple-photos .photo-frame img:not([src]) {
-            display: none;
-        }
-
-        /* When a photo-frame has no real image, hide the whole frame */
-        .couple-photos .photo-frame:has(img[src=""]),
-        .couple-photos .photo-frame:has(img:not([src])) {
-            display: none;
-        }
-
-        /* If both photos are empty, hide the entire photos section */
-        .couple-photos:not(:has(img[src]:not([src=""]))) {
-            display: none;
+        /* Hide photo area completely for uniform design */
+        .couple-photos {
+            display: none !important;
         }
 
         .couple-content {
-            padding: 28px 20px 26px;
+            padding: 26px 16px 22px;
             text-align: center;
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-        }
-
-        /* When photos are present, reduce top padding */
-        .couple-card:has(.couple-photos img[src]:not([src=""])) .couple-content {
-            padding: 12px 16px 22px;
+            gap: 0;
+            width: 100%;
         }
 
         .person-block {
@@ -589,15 +546,22 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
+            min-height: 48px;
+            justify-content: center;
         }
 
         .person-block .name {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.28rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--espresso);
-            line-height: 1.35;
-            margin-bottom: 4px;
+            line-height: 1.3;
+            margin-bottom: 3px;
+        }
+
+        .couple-card .click-hint {
+            margin-top: auto;
+            padding-top: 12px;
         }
 
         .card-divider {
@@ -620,6 +584,16 @@
             font-size: 0.65rem;
             color: var(--terracotta);
             opacity: 0.7;
+        }
+
+        /* Make family-grid stretch cards equally */
+        .family-grid {
+            align-items: stretch;
+        }
+
+        .family-grid > .couple-card,
+        .family-grid > .family-card {
+            height: 100%;
         }
 
         .contact-num {
@@ -857,6 +831,45 @@
             max-width: 180px;
         }
 
+        .child-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(58,40,28,0.12);
+            background: var(--sand);
+            border: 1px solid rgba(192, 122, 90, 0.08);
+        }
+
+        .child-placeholder {
+            width: 100%;
+            height: 180px;
+            border-radius: 16px;
+            background: linear-gradient(145deg, #F0E6DC 0%, #E8D9CB 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            opacity: 0.35;
+            border: 1px solid rgba(199, 123, 97, 0.1);
+            box-shadow: 0 8px 20px rgba(96, 69, 54, 0.06);
+        }
+
+        .child-card .name {
+            margin-top: 14px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--espresso);
+        }
+
+        .child-card .relation {
+            font-size: 0.82rem;
+            color: var(--brown);
+            margin-top: 3px;
+            letter-spacing: 0.3px;
+        }
+
         /* Better grid inside root modals */
         #rootModalBody .family-grid {
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -877,31 +890,6 @@
 
         .child-card:hover {
             transform: translateY(-8px);
-        }
-
-        .child-card img {
-            width: 100%;
-            height: 210px;
-            object-fit: cover;
-            border-radius: 16px;
-            box-shadow: 0 12px 30px rgba(58,40,28,0.12);
-            background: var(--sand);
-            border: 1px solid rgba(192, 122, 90, 0.08);
-        }
-
-        .child-card .name {
-            margin-top: 16px;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--espresso);
-        }
-
-        .child-card .relation {
-            font-size: 0.82rem;
-            color: var(--brown);
-            margin-top: 3px;
-            letter-spacing: 0.3px;
         }
 
         /* Animations */
@@ -1031,7 +1019,8 @@
         <a href="#" class="logo">I Love My Family</a>
         <ul class="nav-links">
             <li><a href="#intro">Message</a></li>
-            <li><a href="#family">Family</a></li>
+            <li><a href="#roots">Roots</a></li>
+            <li><a href="#grandparents">Grandparents</a></li>
             <li><a href="#memories">Memories</a></li>
         </ul>
     </nav>
@@ -1105,17 +1094,14 @@
         </div>
     </section>
 
-    <!-- FAMILY -->
-    <section id="family">
+    <!-- ========== FAMILY ROOTS ========== -->
+    <section id="roots" class="intro">
         <div class="container">
             <div class="section-header reveal">
-                <h2 class="section-title">Meet My Beautiful Family</h2>
+                <h2 class="section-title">Our Family Roots</h2>
                 <div class="section-line"></div>
-                <p class="section-subtitle">The roots and the branches of my heart</p>
+                <p class="section-subtitle">The beginning of our family tree</p>
             </div>
-
-            <!-- ========== FAMILY ROOTS ========== -->
-            <h3 class="subsection-title reveal">Our Family Roots</h3>
             
             <!-- Meiyan Jii & Wife -->
             <div class="family-grid grandparents reveal" style="max-width:700px; margin:0 auto 40px; gap:28px;">
@@ -1196,8 +1182,18 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <h3 class="subsection-title reveal">My Grandfather &amp; Grandmother</h3>
+    <!-- ========== GRANDPARENTS + PHOPHIS + UNCLES ========== -->
+    <section id="grandparents">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">My Grandfather &amp; Grandmother</h2>
+                <div class="section-line"></div>
+                <p class="section-subtitle">The heart of our home and the love that guides us</p>
+            </div>
+
             <div class="family-grid grandparents">
                 <div class="family-card reveal">
                     <img src="" alt="Grandfather">
@@ -1857,30 +1853,29 @@
         const closeBtn = document.getElementById('closeModal');
         const modalTitle = document.getElementById('modalTitle');
         const childrenGrid = document.getElementById('childrenGrid');
+        const rootModal = document.getElementById('rootModal');
+        const closeRootBtn = document.getElementById('closeRootModal');
+        const rootModalTitle = document.getElementById('rootModalTitle');
+        const rootModalSubtitle = document.getElementById('rootModalSubtitle');
+        const rootModalBody = document.getElementById('rootModalBody');
 
-        // Event delegation so it works for couples on main page AND inside root modal
-        document.addEventListener('click', (e) => {
-            const card = e.target.closest('.couple-card[data-couple]');
-            if (!card) return;
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            const key = card.getAttribute('data-couple');
+        function openChildrenModal(key) {
             const data = familyData[key];
             if (!data) return;
 
             modalTitle.textContent = data.title;
 
             if (data.children && data.children.length > 0) {
-                childrenGrid.innerHTML = data.children.map(c => `
+                childrenGrid.innerHTML = data.children.map(c => {
+                    const hasImg = c.img && c.img.trim() !== '';
+                    return `
                     <div class="child-card">
-                        <img src="${c.img || ''}" alt="${c.name}">
+                        ${hasImg ? `<img src="${c.img}" alt="${c.name}">` : `<div class="child-placeholder">👤</div>`}
                         <div class="name">${c.name}</div>
                         ${c.relation ? `<div class="relation">${c.relation}</div>` : ''}
                         ${c.contact ? `<div class="contact-num"><span class="phone-icon">📞</span> ${c.contact}</div>` : ''}
                     </div>
-                `).join('');
+                `}).join('');
             } else {
                 childrenGrid.innerHTML = `
                     <div style="grid-column:1/-1; text-align:center; padding:40px 20px; color:var(--brown);">
@@ -1890,29 +1885,58 @@
                 `;
             }
 
-            // Make sure children modal appears on top
             modal.style.zIndex = '2200';
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
-        });
-
-        closeBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
+        }
 
         function closeModal() {
             modal.classList.remove('active');
-            // Only restore scroll if root modal is also closed
             if (!rootModal.classList.contains('active')) {
                 document.body.style.overflow = '';
             }
         }
 
+        function closeRootModal() {
+            rootModal.classList.remove('active');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Couple cards (main page + inside root modal) — single event delegation
+        document.addEventListener('click', (e) => {
+            const card = e.target.closest('.couple-card[data-couple]');
+            if (!card) return;
+            e.preventDefault();
+            e.stopPropagation();
+            openChildrenModal(card.getAttribute('data-couple'));
+        });
+
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeModal();
+        });
+
+        closeRootBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeRootModal();
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        rootModal.addEventListener('click', (e) => {
+            if (e.target === rootModal) closeRootModal();
+        });
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                closeModal();
-                closeRootModal();
+                if (modal.classList.contains('active')) {
+                    closeModal();
+                } else if (rootModal.classList.contains('active')) {
+                    closeRootModal();
+                }
             }
         });
 
@@ -2509,12 +2533,7 @@
             }
         };
 
-const rootModal = document.getElementById('rootModal');
-        const closeRootBtn = document.getElementById('closeRootModal');
-        const rootModalTitle = document.getElementById('rootModalTitle');
-        const rootModalSubtitle = document.getElementById('rootModalSubtitle');
-        const rootModalBody = document.getElementById('rootModalBody');
-
+        // Root family branch cards (after rootData is defined)
         document.querySelectorAll('.root-card[data-root]').forEach(card => {
             card.addEventListener('click', () => {
                 const key = card.getAttribute('data-root');
@@ -2527,58 +2546,9 @@ const rootModal = document.getElementById('rootModal');
 
                 rootModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
-
-                // Re-bind children click for the newly injected couple cards
-                rootModalBody.querySelectorAll('.couple-card[data-couple]').forEach(coupleCard => {
-                    coupleCard.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        const ckey = coupleCard.getAttribute('data-couple');
-                        const cdata = familyData[ckey];
-                        if (!cdata) return;
-
-                        modalTitle.textContent = cdata.title;
-
-                        if (cdata.children && cdata.children.length > 0) {
-                            childrenGrid.innerHTML = cdata.children.map(c => `
-                                <div class="child-card">
-                                    <img src="${c.img || ''}" alt="${c.name}">
-                                    <div class="name">${c.name}</div>
-                                    ${c.relation ? `<div class="relation">${c.relation}</div>` : ''}
-                                    ${c.contact ? `<div class="contact-num"><span class="phone-icon">📞</span> ${c.contact}</div>` : ''}
-                                </div>
-                            `).join('');
-                        } else {
-                            childrenGrid.innerHTML = `
-                                <div style="grid-column:1/-1; text-align:center; padding:40px 20px; color:var(--brown);">
-                                    <p style="font-size:1.1rem; margin-bottom:8px;">No children added yet</p>
-                                    <p style="font-size:0.9rem; opacity:0.75;">You can add them later in the family data</p>
-                                </div>
-                            `;
-                        }
-
-                        modal.style.zIndex = '2200';
-                        modal.classList.add('active');
-                    });
-                });
             });
         });
 
-        function closeRootModal() {
-            rootModal.classList.remove('active');
-            // Also close children modal if open
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        closeRootBtn.addEventListener('click', closeRootModal);
-        rootModal.addEventListener('click', (e) => {
-            if (e.target === rootModal) closeRootModal();
-        });
-
-        
-
-    </script>
+</script>
 </body>
 </html>
