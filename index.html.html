@@ -1163,6 +1163,246 @@
         }
 
         
+
+        /* ========== ADMIN + CALENDAR + EMAIL REMINDERS ========== */
+        .admin-btn {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: rgba(255,255,255,0.9);
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 0.95rem;
+            transition: all 0.3s ease; margin-left: 18px;
+        }
+        .navbar.scrolled .admin-btn {
+            background: rgba(199, 123, 97, 0.1);
+            border-color: rgba(199, 123, 97, 0.25);
+            color: var(--terracotta);
+        }
+        .admin-btn:hover {
+            background: var(--terracotta);
+            border-color: var(--terracotta);
+            color: white; transform: scale(1.08);
+        }
+        .admin-btn.logged-in {
+            background: var(--terracotta);
+            border-color: var(--terracotta);
+            color: white;
+        }
+        .nav-links .admin-only { display: none; }
+        .nav-links .admin-only.visible { display: list-item; }
+
+        .admin-login-modal {
+            position: fixed; inset: 0;
+            background: rgba(42, 28, 20, 0.72);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: all 0.35s ease; padding: 20px;
+        }
+        .admin-login-modal.active { opacity: 1; visibility: visible; }
+        .admin-login-box {
+            background: var(--warm-white);
+            border-radius: 24px; padding: 42px 36px;
+            width: 100%; max-width: 400px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+            text-align: center;
+            transform: translateY(20px); transition: transform 0.35s ease;
+        }
+        .admin-login-modal.active .admin-login-box { transform: translateY(0); }
+        .admin-login-box h3 { font-size: 1.7rem; color: var(--espresso); margin-bottom: 8px; }
+        .admin-login-box p { color: var(--brown); font-size: 0.95rem; margin-bottom: 28px; font-weight: 300; }
+        .admin-login-box input {
+            width: 100%; padding: 14px 18px;
+            border: 1.5px solid rgba(199, 123, 97, 0.25);
+            border-radius: 12px; font-size: 1rem;
+            font-family: 'Outfit', sans-serif; color: var(--espresso);
+            background: var(--sand); outline: none;
+            transition: border-color 0.3s; margin-bottom: 18px;
+        }
+        .admin-login-box input:focus { border-color: var(--terracotta); }
+        .admin-login-box .login-error { color: #c45c4a; font-size: 0.88rem; margin-bottom: 14px; min-height: 20px; }
+        .admin-login-actions { display: flex; gap: 12px; justify-content: center; }
+        .admin-login-box .btn-primary {
+            padding: 13px 32px; background: var(--terracotta); color: white;
+            border: none; border-radius: 50px; font-size: 0.95rem; font-weight: 500;
+            cursor: pointer; transition: all 0.3s; font-family: 'Outfit', sans-serif;
+        }
+        .admin-login-box .btn-primary:hover { background: #b56b52; transform: translateY(-2px); }
+        .admin-login-box .btn-secondary {
+            padding: 13px 28px; background: transparent; color: var(--brown);
+            border: 1.5px solid rgba(146, 123, 107, 0.3); border-radius: 50px;
+            font-size: 0.95rem; cursor: pointer; transition: all 0.3s; font-family: 'Outfit', sans-serif;
+        }
+        .admin-login-box .btn-secondary:hover { border-color: var(--terracotta); color: var(--terracotta); }
+
+        #calendar-section { display: block; background: var(--ivory); padding: 120px 28px; }
+        .manage-events-panel { display: none; }
+        body.admin-mode .manage-events-panel { display: block; }
+        .event-delete-btn { display: none !important; }
+        body.admin-mode .event-delete-btn { display: flex !important; }
+        .admin-only-cal-note { display: none; font-size: 0.85rem; color: var(--brown); margin-top: 8px; }
+        body.admin-mode .admin-only-cal-note { display: block; }
+
+        .calendar-layout {
+            display: grid; grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px; align-items: start;
+        }
+        @media (max-width: 900px) { .calendar-layout { grid-template-columns: 1fr; } }
+
+        .calendar-card {
+            background: var(--warm-white); border-radius: 24px;
+            box-shadow: var(--shadow); border: 1px solid rgba(199, 123, 97, 0.08); overflow: hidden;
+        }
+        .calendar-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 22px 26px;
+            background: linear-gradient(135deg, #C07A5A 0%, #A86B4F 100%); color: white;
+        }
+        .calendar-header h3 { font-size: 1.45rem; font-weight: 600; }
+        .cal-nav { display: flex; gap: 10px; }
+        .cal-nav button {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.35);
+            background: rgba(255,255,255,0.12); color: white;
+            font-size: 1.1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: all 0.25s;
+        }
+        .cal-nav button:hover { background: white; color: var(--terracotta); }
+
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; padding: 12px; }
+        .cal-day-name {
+            text-align: center; font-size: 0.75rem; font-weight: 500;
+            color: var(--brown); padding: 10px 0; letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        .cal-day {
+            aspect-ratio: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            font-size: 0.92rem; color: var(--espresso);
+            border-radius: 12px; cursor: default; position: relative; transition: background 0.2s;
+        }
+        .cal-day.empty { visibility: hidden; }
+        .cal-day.today { background: rgba(199, 123, 97, 0.12); font-weight: 600; color: var(--terracotta); }
+        .cal-day.has-event { background: rgba(201, 160, 108, 0.15); font-weight: 500; }
+        .cal-day.has-event::after {
+            content: ''; width: 5px; height: 5px; background: var(--terracotta);
+            border-radius: 50%; position: absolute; bottom: 6px;
+        }
+        .cal-day.has-event.today::after { background: var(--gold); }
+
+        .events-panel {
+            background: var(--warm-white); border-radius: 24px;
+            box-shadow: var(--shadow); border: 1px solid rgba(199, 123, 97, 0.08);
+            padding: 28px 24px; max-height: 580px; overflow-y: auto;
+        }
+        .events-panel h3 { font-size: 1.45rem; margin-bottom: 6px; color: var(--espresso); }
+        .events-panel .panel-sub { font-size: 0.9rem; color: var(--brown); margin-bottom: 22px; font-weight: 300; }
+
+        .event-tabs { display: flex; gap: 8px; margin-bottom: 22px; flex-wrap: wrap; }
+        .event-tab {
+            padding: 8px 18px; border-radius: 50px; font-size: 0.85rem;
+            border: 1.5px solid rgba(199, 123, 97, 0.2); background: transparent;
+            color: var(--brown); cursor: pointer; transition: all 0.25s; font-family: 'Outfit', sans-serif;
+        }
+        .event-tab.active { background: var(--terracotta); border-color: var(--terracotta); color: white; }
+        .event-tab:hover:not(.active) { border-color: var(--terracotta); color: var(--terracotta); }
+
+        .event-item {
+            display: flex; gap: 16px; padding: 16px 0;
+            border-bottom: 1px solid rgba(199, 123, 97, 0.1); align-items: flex-start;
+        }
+        .event-item:last-child { border-bottom: none; }
+        .event-date-badge {
+            min-width: 52px; height: 52px; border-radius: 14px;
+            background: linear-gradient(145deg, #F4EBE3, #EDE0D4);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .event-date-badge .day { font-size: 1.15rem; font-weight: 600; color: var(--espresso); line-height: 1.1; }
+        .event-date-badge .month { font-size: 0.68rem; text-transform: uppercase; color: var(--terracotta); letter-spacing: 0.4px; font-weight: 500; }
+        .event-info { flex: 1; }
+        .event-info .name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--espresso); margin-bottom: 2px; }
+        .event-info .type { font-size: 0.82rem; color: var(--terracotta); font-weight: 500; margin-bottom: 3px; }
+        .event-info .relation { font-size: 0.85rem; color: var(--brown); font-weight: 300; }
+        .event-type-icon { font-size: 1.1rem; opacity: 0.7; }
+        .no-events { text-align: center; padding: 40px 20px; color: var(--brown); font-weight: 300; }
+
+        .admin-badge {
+            display: none; align-items: center; gap: 6px; font-size: 0.78rem;
+            background: rgba(199, 123, 97, 0.12); color: var(--terracotta);
+            padding: 5px 12px; border-radius: 20px; margin-left: 12px; font-weight: 500;
+        }
+        .admin-badge.visible { display: inline-flex; }
+        .logout-link {
+            display: none; color: var(--terracotta); font-size: 0.85rem;
+            cursor: pointer; margin-left: 10px; text-decoration: underline; text-underline-offset: 3px;
+        }
+        .logout-link.visible { display: inline; }
+
+        .reminder-panel {
+            grid-column: 1 / -1;
+            background: var(--warm-white);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(199, 123, 97, 0.08);
+            padding: 32px 28px;
+            margin-top: 10px;
+        }
+        .reminder-panel h3 { font-size: 1.45rem; color: var(--espresso); margin-bottom: 6px; }
+        .reminder-panel .panel-sub { font-size: 0.9rem; color: var(--brown); margin-bottom: 24px; font-weight: 300; }
+        .reminder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+        @media (max-width: 700px) { .reminder-grid { grid-template-columns: 1fr; } }
+
+        .reminder-settings label {
+            display: block; font-size: 0.88rem; color: var(--brown);
+            margin-bottom: 6px; font-weight: 400;
+        }
+        .reminder-settings input, .reminder-settings select {
+            width: 100%; padding: 12px 16px;
+            border: 1.5px solid rgba(199, 123, 97, 0.22);
+            border-radius: 12px; font-size: 0.95rem;
+            font-family: 'Outfit', sans-serif; color: var(--espresso);
+            background: var(--sand); outline: none; margin-bottom: 16px;
+            transition: border-color 0.25s;
+        }
+        .reminder-settings input:focus, .reminder-settings select:focus { border-color: var(--terracotta); }
+        .reminder-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+        .reminder-btn {
+            padding: 12px 24px; border-radius: 50px; font-size: 0.9rem;
+            font-family: 'Outfit', sans-serif; font-weight: 500;
+            cursor: pointer; transition: all 0.3s; border: none;
+        }
+        .reminder-btn.primary { background: var(--terracotta); color: white; }
+        .reminder-btn.primary:hover { background: #b56b52; transform: translateY(-2px); }
+        .reminder-btn.secondary {
+            background: transparent; color: var(--terracotta);
+            border: 1.5px solid rgba(199, 123, 97, 0.35);
+        }
+        .reminder-btn.secondary:hover { background: rgba(199, 123, 97, 0.08); }
+
+        .upcoming-preview {
+            background: var(--sand); border-radius: 16px; padding: 20px;
+            max-height: 280px; overflow-y: auto;
+        }
+        .upcoming-preview h4 {
+            font-size: 1rem; color: var(--espresso); margin-bottom: 14px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .upcoming-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px solid rgba(199, 123, 97, 0.12);
+            font-size: 0.9rem; gap: 10px;
+        }
+        .upcoming-item:last-child { border-bottom: none; }
+        .upcoming-item .u-name { font-weight: 500; color: var(--espresso); }
+        .upcoming-item .u-meta { text-align: right; }
+        .upcoming-item .u-date { color: var(--terracotta); font-size: 0.82rem; display: block; }
+        .upcoming-item .u-type { font-size: 0.78rem; color: var(--brown); }
+        .reminder-status { margin-top: 16px; font-size: 0.88rem; color: var(--brown); min-height: 22px; }
+        .reminder-status.success { color: #2e7d4f; }
+        .reminder-status.error { color: #c45c4a; }
+
     </style>
 </head>
 <body>
@@ -1174,7 +1414,9 @@
             <li><a href="#roots">Roots</a></li>
             <li><a href="#grandparents">Grandparents</a></li>
             <li><a href="#memories">Memories</a></li>
+            <li id="calendarNav"><a href="#calendar-section">Calendar</a></li>
         </ul>
+        <button class="admin-btn" id="adminBtn" title="Admin Login">🔒</button>
     </nav>
 
     <!-- ========== HERO ========== -->
@@ -1742,6 +1984,77 @@
         </div>
     </section>
 
+
+    <!-- ========== BIRTHDAY & ANNIVERSARY CALENDAR (ADMIN ONLY) ========== -->
+    <section id="calendar-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Birthday &amp; Anniversary Calendar</h2>
+                <div class="section-line"></div>
+                <p class="section-subtitle">
+                    Birthdays &amp; anniversaries of our family
+                    <span class="admin-badge" id="adminBadge">Admin Mode</span>
+                    <span class="logout-link" id="logoutLink">Logout</span>
+                </p>
+                <p class="admin-only-cal-note" style="text-align:center;">You can add or remove events below while logged in as admin.</p>
+            </div>
+
+            <div class="calendar-layout">
+                <div class="calendar-card">
+                    <div class="calendar-header">
+                        <h3 id="calMonthYear">Month Year</h3>
+                        <div class="cal-nav">
+                            <button id="prevMonth" aria-label="Previous month">‹</button>
+                            <button id="nextMonth" aria-label="Next month">›</button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                </div>
+
+                <div class="events-panel">
+                    <h3>Upcoming Events</h3>
+                    <p class="panel-sub">Birthdays &amp; Anniversaries</p>
+                    <div class="event-tabs">
+                        <button class="event-tab active" data-filter="all">All</button>
+                        <button class="event-tab" data-filter="birthday">Birthdays</button>
+                        <button class="event-tab" data-filter="anniversary">Anniversaries</button>
+                    </div>
+                    <div id="eventsList"></div>
+                </div>
+
+                <div class="reminder-panel">
+                    <h3>Email Birthday Reminders</h3>
+                    <p class="panel-sub">Get notified about upcoming birthdays &amp; anniversaries by email</p>
+                    <div class="reminder-grid">
+                        <div class="reminder-settings">
+                            <label for="reminderEmail">Your email address</label>
+                            <input type="email" id="reminderEmail" placeholder="you@example.com">
+                            <label for="reminderDays">Remind me this many days before</label>
+                            <select id="reminderDays">
+                                <option value="1">1 day before</option>
+                                <option value="3" selected>3 days before</option>
+                                <option value="7">7 days before</option>
+                                <option value="14">14 days before</option>
+                            </select>
+                            <div class="reminder-actions">
+                                <button class="reminder-btn primary" id="saveReminderSettings">Save Settings</button>
+                                <button class="reminder-btn secondary" id="composeReminderEmail">Compose Email Reminder</button>
+                                <button class="reminder-btn secondary" id="copyReminderText">Copy Reminder Text</button>
+                            </div>
+                            <div class="reminder-status" id="reminderStatus"></div>
+                        </div>
+                        <div class="upcoming-preview">
+                            <h4>Events in the next 14 days</h4>
+                            <div id="upcomingPreviewList">
+                                <div class="no-events" style="padding:20px 0;">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- THANK YOU -->
     <section class="thank-you">
         <span class="heart-big">♥</span>
@@ -1777,6 +2090,7 @@
                     <li><a href="#roots">Family Roots</a></li>
                     <li><a href="#grandparents">Grandparents</a></li>
                     <li><a href="#memories">Memories</a></li>
+                    <li><a href="#calendar-section">Calendar</a></li>
                 </ul>
             </div>
 
@@ -1842,6 +2156,21 @@
             </div>
 
             <div id="rootModalBody" style="padding: 5px 28px 40px;"></div>
+        </div>
+    </div>
+
+
+    <!-- ADMIN LOGIN MODAL -->
+    <div class="admin-login-modal" id="adminLoginModal">
+        <div class="admin-login-box">
+            <h3>Admin Access</h3>
+            <p>Enter the password to view Birthday &amp; Anniversary Calendar</p>
+            <input type="password" id="adminPassword" placeholder="Enter password" autocomplete="off">
+            <div class="login-error" id="loginError"></div>
+            <div class="admin-login-actions">
+                <button class="btn-secondary" id="cancelLogin">Cancel</button>
+                <button class="btn-primary" id="submitLogin">Login</button>
+            </div>
         </div>
     </div>
 
@@ -2617,8 +2946,8 @@
                             </div>
                         </div>
                         <div class="family-card" style="cursor:default;">
-                            <!-- PASTE PHOTO URL OF Tayyab  BELOW -->
-                            <img src="" alt="Tayyab ">
+                            <!-- PASTE PHOTO URL OF TAIHAB BELOW -->
+                            <img src="" alt="Taihab">
                             <div class="family-card-content">
                                 <h3>Taihab</h3>
                                 <div class="contact-num"><span class="phone-icon">📞</span> Unknown</div>
@@ -2762,6 +3091,254 @@
             });
         });
 
+
+        // ========== ADMIN + BIRTHDAY & ANNIVERSARY CALENDAR + EMAIL REMINDERS ==========
+        const ADMIN_PASSWORD = 'familyadmin';   // ← Change this password anytime
+
+        // ========== ADD / EDIT FAMILY DATES HERE ==========
+        const familyEvents = [
+            { name: "Maulana Shabbir Qasemi", type: "birthday", month: 3, day: 15, relation: "Grandfather" },
+            { name: "Gulshan Khatoon", type: "birthday", month: 7, day: 22, relation: "Grandmother" },
+            { name: "Aqila Khatoon", type: "birthday", month: 5, day: 10, relation: "Phophi" },
+            { name: "Nafisa Khatoon", type: "birthday", month: 11, day: 3, relation: "Phophi" },
+            { name: "MD Mahmud", type: "birthday", month: 1, day: 28, relation: "Uncle" },
+            { name: "Mahfuz Alam", type: "birthday", month: 9, day: 14, relation: "Uncle" },
+            { name: "Rayyan", type: "birthday", month: 4, day: 5, relation: "Cousin" },
+            { name: "Faiqah Ali", type: "birthday", month: 8, day: 19, relation: "Cousin" },
+            { name: "Maulana Shabbir Qasemi & Gulshan Khatoon", type: "anniversary", month: 2, day: 14, relation: "Grandparents" },
+            { name: "Aqila Khatoon & Muhammad Ashraf", type: "anniversary", month: 6, day: 20, relation: "Phophi & Husband" },
+            { name: "Nafisa Khatoon & Ikramul Hasan", type: "anniversary", month: 12, day: 8, relation: "Phophi & Husband" },
+            { name: "MD Mahmud & Zainab Khatoon", type: "anniversary", month: 10, day: 25, relation: "Uncle & Auntie" },
+        ];
+
+        const adminBtn = document.getElementById('adminBtn');
+        const adminLoginModal = document.getElementById('adminLoginModal');
+        const adminPasswordInput = document.getElementById('adminPassword');
+        const loginError = document.getElementById('loginError');
+        const submitLogin = document.getElementById('submitLogin');
+        const cancelLogin = document.getElementById('cancelLogin');
+        const calendarSection = document.getElementById('calendar-section');
+        const calendarNav = document.getElementById('calendarNav');
+        const adminBadge = document.getElementById('adminBadge');
+        const logoutLink = document.getElementById('logoutLink');
+
+        function isAdminLoggedIn() { return sessionStorage.getItem('familyAdmin') === 'true'; }
+        function setAdminLoggedIn(v) { v ? sessionStorage.setItem('familyAdmin','true') : sessionStorage.removeItem('familyAdmin'); }
+
+        function updateAdminUI() {
+            const loggedIn = isAdminLoggedIn();
+            if (loggedIn) {
+                adminBtn.classList.add('logged-in');
+                adminBtn.textContent = '🔓';
+                adminBtn.title = 'Admin Mode Active';
+                document.body.classList.add('admin-mode');
+                adminBadge.classList.add('visible');
+                logoutLink.classList.add('visible');
+                loadReminderSettings();
+            } else {
+                adminBtn.classList.remove('logged-in');
+                adminBtn.textContent = '🔒';
+                adminBtn.title = 'Admin Login';
+                document.body.classList.remove('admin-mode');
+                adminBadge.classList.remove('visible');
+                logoutLink.classList.remove('visible');
+            }
+            // Calendar is public — always render for everyone
+            renderCalendar();
+            renderEvents();
+            renderUpcomingPreview();
+        }
+
+        adminBtn.addEventListener('click', () => {
+            if (isAdminLoggedIn()) {
+                calendarSection.scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+            adminLoginModal.classList.add('active');
+            adminPasswordInput.value = '';
+            loginError.textContent = '';
+            setTimeout(() => adminPasswordInput.focus(), 100);
+        });
+        cancelLogin.addEventListener('click', () => adminLoginModal.classList.remove('active'));
+        adminLoginModal.addEventListener('click', (e) => { if (e.target === adminLoginModal) adminLoginModal.classList.remove('active'); });
+
+        function attemptLogin() {
+            if (adminPasswordInput.value.trim() === ADMIN_PASSWORD) {
+                setAdminLoggedIn(true);
+                adminLoginModal.classList.remove('active');
+                updateAdminUI();
+                setTimeout(() => calendarSection.scrollIntoView({ behavior: 'smooth' }), 200);
+            } else {
+                loginError.textContent = 'Incorrect password. Please try again.';
+                adminPasswordInput.value = '';
+                adminPasswordInput.focus();
+            }
+        }
+        submitLogin.addEventListener('click', attemptLogin);
+        adminPasswordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') attemptLogin(); });
+        logoutLink.addEventListener('click', () => {
+            setAdminLoggedIn(false);
+            updateAdminUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        let currentDate = new Date();
+        let currentFilter = 'all';
+        const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+        function getNextOccurrence(ev) {
+            const now = new Date();
+            let date = new Date(now.getFullYear(), ev.month - 1, ev.day);
+            if (date < new Date(now.getFullYear(), now.getMonth(), now.getDate())) {
+                date = new Date(now.getFullYear() + 1, ev.month - 1, ev.day);
+            }
+            return date;
+        }
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            document.getElementById('calMonthYear').textContent = monthNames[month] + ' ' + year;
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+            ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => {
+                const el = document.createElement('div');
+                el.className = 'cal-day-name';
+                el.textContent = d;
+                grid.appendChild(el);
+            });
+            for (let i = 0; i < firstDay; i++) {
+                const el = document.createElement('div');
+                el.className = 'cal-day empty';
+                grid.appendChild(el);
+            }
+            const today = new Date();
+            const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
+            for (let day = 1; day <= daysInMonth; day++) {
+                const el = document.createElement('div');
+                el.className = 'cal-day';
+                el.textContent = day;
+                if (isCurrentMonth && day === today.getDate()) el.classList.add('today');
+                if (familyEvents.some(ev => ev.month === month + 1 && ev.day === day)) el.classList.add('has-event');
+                grid.appendChild(el);
+            }
+        }
+
+        function renderEvents() {
+            const list = document.getElementById('eventsList');
+            let events = [...familyEvents];
+            if (currentFilter !== 'all') events = events.filter(e => e.type === currentFilter);
+            events.sort((a, b) => getNextOccurrence(a) - getNextOccurrence(b));
+            if (!events.length) {
+                list.innerHTML = '<div class="no-events">No events found. Add dates in the familyEvents array.</div>';
+                return;
+            }
+            list.innerHTML = events.map(ev => {
+                const next = getNextOccurrence(ev);
+                const typeLabel = ev.type === 'birthday' ? '🎂 Birthday' : '💍 Anniversary';
+                const icon = ev.type === 'birthday' ? '🎂' : '💍';
+                return '<div class="event-item"><div class="event-date-badge"><span class="day">' + next.getDate() + '</span><span class="month">' + monthNames[next.getMonth()].slice(0,3) + '</span></div><div class="event-info"><div class="name">' + ev.name + '</div><div class="type">' + typeLabel + '</div><div class="relation">' + (ev.relation||'') + '</div></div><span class="event-type-icon">' + icon + '</span></div>';
+            }).join('');
+        }
+
+        document.getElementById('prevMonth').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
+        document.getElementById('nextMonth').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
+        document.querySelectorAll('.event-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.event-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentFilter = tab.getAttribute('data-filter');
+                renderEvents();
+            });
+        });
+
+        function getEventsInNextDays(days) {
+            const now = new Date();
+            const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + days);
+            return familyEvents.map(ev => ({...ev, next: getNextOccurrence(ev)})).filter(ev => ev.next >= now && ev.next <= end).sort((a,b) => a.next - b.next);
+        }
+
+        function renderUpcomingPreview() {
+            const list = document.getElementById('upcomingPreviewList');
+            const upcoming = getEventsInNextDays(14);
+            if (!upcoming.length) {
+                list.innerHTML = '<div class="no-events" style="padding:20px 0;">No events in the next 14 days</div>';
+                return;
+            }
+            list.innerHTML = upcoming.map(ev => {
+                const typeLabel = ev.type === 'birthday' ? 'Birthday' : 'Anniversary';
+                return '<div class="upcoming-item"><span class="u-name">' + ev.name + '</span><div class="u-meta"><span class="u-date">' + ev.next.getDate() + ' ' + monthNames[ev.next.getMonth()].slice(0,3) + '</span><span class="u-type">' + typeLabel + '</span></div></div>';
+            }).join('');
+        }
+
+        function buildReminderText(days) {
+            const upcoming = getEventsInNextDays(days);
+            if (!upcoming.length) return 'No birthdays or anniversaries in the next ' + days + ' day(s).';
+            let text = 'Family Reminder – Events in the next ' + days + ' day(s):\n\n';
+            upcoming.forEach(ev => {
+                const typeLabel = ev.type === 'birthday' ? 'Birthday' : 'Anniversary';
+                const dateStr = ev.next.getDate() + ' ' + monthNames[ev.next.getMonth()] + ' ' + ev.next.getFullYear();
+                text += '• ' + ev.name + ' — ' + typeLabel + ' on ' + dateStr;
+                if (ev.relation) text += ' (' + ev.relation + ')';
+                text += '\n';
+            });
+            text += '\nWith love,\nI Love My Family';
+            return text;
+        }
+
+        function loadReminderSettings() {
+            document.getElementById('reminderEmail').value = localStorage.getItem('familyReminderEmail') || '';
+            document.getElementById('reminderDays').value = localStorage.getItem('familyReminderDays') || '3';
+        }
+
+        document.getElementById('saveReminderSettings').addEventListener('click', () => {
+            const email = document.getElementById('reminderEmail').value.trim();
+            const days = document.getElementById('reminderDays').value;
+            const status = document.getElementById('reminderStatus');
+            if (email && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+                status.textContent = 'Please enter a valid email address.';
+                status.className = 'reminder-status error';
+                return;
+            }
+            localStorage.setItem('familyReminderEmail', email);
+            localStorage.setItem('familyReminderDays', days);
+            status.textContent = 'Settings saved successfully.';
+            status.className = 'reminder-status success';
+            setTimeout(() => { status.textContent = ''; status.className = 'reminder-status'; }, 3000);
+        });
+
+        document.getElementById('composeReminderEmail').addEventListener('click', () => {
+            const email = document.getElementById('reminderEmail').value.trim() || localStorage.getItem('familyReminderEmail') || '';
+            const days = parseInt(document.getElementById('reminderDays').value || '3', 10);
+            const body = buildReminderText(days);
+            const subject = encodeURIComponent('Family Birthday & Anniversary Reminder');
+            const bodyEnc = encodeURIComponent(body);
+            window.location.href = email ? ('mailto:' + email + '?subject=' + subject + '&body=' + bodyEnc) : ('mailto:?subject=' + subject + '&body=' + bodyEnc);
+            const status = document.getElementById('reminderStatus');
+            status.textContent = 'Opening your email app with the reminder...';
+            status.className = 'reminder-status success';
+        });
+
+        document.getElementById('copyReminderText').addEventListener('click', () => {
+            const days = parseInt(document.getElementById('reminderDays').value || '3', 10);
+            const text = buildReminderText(days);
+            navigator.clipboard.writeText(text).then(() => {
+                const status = document.getElementById('reminderStatus');
+                status.textContent = 'Reminder text copied to clipboard!';
+                status.className = 'reminder-status success';
+                setTimeout(() => { status.textContent = ''; status.className = 'reminder-status'; }, 3000);
+            }).catch(() => {
+                const status = document.getElementById('reminderStatus');
+                status.textContent = 'Could not copy. Please select and copy manually.';
+                status.className = 'reminder-status error';
+            });
+        });
+
+        updateAdminUI();
+
 </script>
 </body>
 </html>
+
