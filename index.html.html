@@ -1403,7 +1403,458 @@
         .reminder-status.success { color: #2e7d4f; }
         .reminder-status.error { color: #c45c4a; }
 
-    </style>
+    
+
+        /* ========== ADMIN CONTENT EDIT ========== */
+        .admin-edit-btn {
+            display: none;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 8;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255,255,255,0.95);
+            color: var(--terracotta);
+            box-shadow: 0 4px 14px rgba(96,69,54,0.18);
+            cursor: pointer;
+            font-size: 1rem;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s;
+        }
+        body.admin-mode .admin-edit-btn { display: flex; }
+        .admin-edit-btn:hover {
+            background: var(--terracotta);
+            color: white;
+            transform: scale(1.08);
+        }
+        .family-card, .couple-card, .memory-item {
+            position: relative;
+        }
+        .child-card { position: relative; }
+        body.admin-mode .child-card .admin-edit-btn {
+            display: flex;
+            top: 8px;
+            left: 8px;
+        }
+        .content-edit-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(42, 28, 20, 0.72);
+            backdrop-filter: blur(8px);
+            z-index: 3200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.35s ease;
+            padding: 20px;
+        }
+        .content-edit-modal.active { opacity: 1; visibility: visible; }
+        .content-edit-box {
+            background: var(--warm-white);
+            border-radius: 24px;
+            padding: 36px 32px;
+            width: 100%;
+            max-width: 480px;
+            max-height: 92vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+            transform: translateY(20px);
+            transition: transform 0.35s ease;
+        }
+        .content-edit-modal.active .content-edit-box { transform: translateY(0); }
+        .content-edit-box h3 {
+            font-size: 1.55rem;
+            color: var(--espresso);
+            margin-bottom: 6px;
+        }
+        .content-edit-box .edit-sub {
+            color: var(--brown);
+            font-size: 0.9rem;
+            margin-bottom: 22px;
+            font-weight: 300;
+        }
+        .content-edit-box label {
+            display: block;
+            font-size: 0.82rem;
+            color: var(--brown);
+            margin-bottom: 6px;
+        }
+        .content-edit-box input[type="text"],
+        .content-edit-box input[type="url"],
+        .content-edit-box textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid rgba(199, 123, 97, 0.22);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: 'Outfit', sans-serif;
+            color: var(--espresso);
+            background: var(--sand);
+            outline: none;
+            margin-bottom: 14px;
+            transition: border-color 0.25s;
+        }
+        .content-edit-box input:focus,
+        .content-edit-box textarea:focus { border-color: var(--terracotta); }
+        .content-edit-box textarea { min-height: 72px; resize: vertical; }
+        .edit-preview {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 14px;
+            background: var(--sand);
+            margin-bottom: 14px;
+            display: none;
+            border: 1px solid rgba(199,123,97,0.12);
+        }
+        .edit-preview.visible { display: block; }
+        .edit-file-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        .edit-file-row input[type="file"] {
+            font-size: 0.85rem;
+            color: var(--brown);
+            max-width: 100%;
+        }
+        .edit-hint {
+            font-size: 0.78rem;
+            color: var(--brown);
+            opacity: 0.85;
+            margin: -6px 0 14px;
+            line-height: 1.45;
+        }
+        .content-edit-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        .content-edit-actions .btn-primary {
+            padding: 12px 26px;
+            background: var(--terracotta);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.92rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.25s;
+        }
+        .content-edit-actions .btn-primary:hover { background: #b56b52; }
+        .content-edit-actions .btn-secondary {
+            padding: 12px 22px;
+            background: transparent;
+            color: var(--brown);
+            border: 1.5px solid rgba(146, 123, 107, 0.3);
+            border-radius: 50px;
+            font-size: 0.92rem;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+        }
+        .content-edit-actions .btn-secondary:hover {
+            border-color: var(--terracotta);
+            color: var(--terracotta);
+        }
+        .content-edit-actions .btn-danger {
+            padding: 12px 18px;
+            background: transparent;
+            color: #c45c4a;
+            border: 1.5px solid rgba(196, 92, 74, 0.3);
+            border-radius: 50px;
+            font-size: 0.88rem;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            margin-right: auto;
+        }
+        .content-edit-actions .btn-danger:hover {
+            background: #c45c4a;
+            color: white;
+        }
+        .edit-status {
+            font-size: 0.85rem;
+            min-height: 20px;
+            margin-bottom: 8px;
+            color: var(--brown);
+        }
+        .edit-status.success { color: #2e7d4f; }
+        .edit-status.error { color: #c45c4a; }
+        .edit-section-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--espresso);
+            margin: 18px 0 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(199,123,97,0.12);
+        }
+        .edit-section-label:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+
+        /* ========== FAMILY CHAT / MESSAGE WALL ========== */
+        #chat-section { background: var(--sand); padding: 120px 28px; }
+        .chat-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 32px;
+            align-items: start;
+        }
+        @media (max-width: 900px) {
+            .chat-layout { grid-template-columns: 1fr; }
+        }
+        .chat-compose, .chat-wall, .chat-whatsapp-card {
+            background: var(--warm-white);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(199, 123, 97, 0.08);
+        }
+        .chat-whatsapp-card {
+            grid-column: 1 / -1;
+            padding: 28px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            border: none;
+        }
+        .chat-whatsapp-card .wa-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: white;
+        }
+        .chat-whatsapp-card .wa-info p {
+            font-size: 0.95rem;
+            opacity: 0.92;
+            font-weight: 300;
+            max-width: 480px;
+        }
+        .wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: white;
+            color: #128C7E;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            white-space: nowrap;
+        }
+        .wa-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 32px rgba(0,0,0,0.18);
+        }
+        .chat-compose { padding: 28px 26px; }
+        .chat-compose h3 {
+            font-size: 1.4rem;
+            color: var(--espresso);
+            margin-bottom: 6px;
+        }
+        .chat-compose .panel-sub {
+            font-size: 0.9rem;
+            color: var(--brown);
+            margin-bottom: 22px;
+            font-weight: 300;
+        }
+        .chat-compose label {
+            display: block;
+            font-size: 0.82rem;
+            color: var(--brown);
+            margin-bottom: 6px;
+        }
+        .chat-compose input,
+        .chat-compose textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid rgba(199, 123, 97, 0.22);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: 'Outfit', sans-serif;
+            color: var(--espresso);
+            background: var(--sand);
+            outline: none;
+            margin-bottom: 14px;
+            transition: border-color 0.25s;
+            resize: vertical;
+        }
+        .chat-compose input:focus,
+        .chat-compose textarea:focus { border-color: var(--terracotta); }
+        .chat-compose textarea { min-height: 110px; line-height: 1.55; }
+        .chat-compose-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .chat-char-count {
+            font-size: 0.8rem;
+            color: var(--brown);
+            opacity: 0.8;
+        }
+        .chat-send-btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: none;
+            background: var(--terracotta);
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .chat-send-btn:hover {
+            background: #b56b52;
+            transform: translateY(-2px);
+        }
+        .chat-status {
+            margin-top: 12px;
+            font-size: 0.88rem;
+            min-height: 20px;
+            color: var(--brown);
+        }
+        .chat-status.success { color: #2e7d4f; }
+        .chat-status.error { color: #c45c4a; }
+        .chat-wall {
+            padding: 28px 22px 22px;
+            max-height: 560px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-wall-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            padding: 0 6px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .chat-wall-header h3 {
+            font-size: 1.4rem;
+            color: var(--espresso);
+        }
+        .chat-wall-header .count {
+            font-size: 0.82rem;
+            color: var(--brown);
+            background: var(--sand);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        .chat-clear-btn {
+            display: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1.5px solid rgba(196, 92, 74, 0.3);
+            background: transparent;
+            color: #c45c4a;
+            font-size: 0.82rem;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        body.admin-mode .chat-clear-btn { display: inline-block; }
+        .chat-clear-btn:hover {
+            background: #c45c4a;
+            color: white;
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 6px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .chat-msg {
+            background: var(--sand);
+            border-radius: 16px;
+            padding: 16px 18px;
+            position: relative;
+            border: 1px solid rgba(199, 123, 97, 0.06);
+            animation: fadeUp 0.45s ease;
+        }
+        .chat-msg-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .chat-msg-author {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--espresso);
+        }
+        .chat-msg-time {
+            font-size: 0.75rem;
+            color: var(--brown);
+            opacity: 0.75;
+            white-space: nowrap;
+        }
+        .chat-msg-text {
+            font-size: 0.95rem;
+            color: var(--brown);
+            line-height: 1.65;
+            font-weight: 300;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .chat-msg-delete {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(196, 92, 74, 0.1);
+            color: #c45c4a;
+            cursor: pointer;
+            font-size: 0.95rem;
+            line-height: 1;
+            transition: all 0.2s;
+        }
+        body.admin-mode .chat-msg-delete { display: flex; align-items: center; justify-content: center; }
+        .chat-msg-delete:hover {
+            background: #c45c4a;
+            color: white;
+        }
+        body.admin-mode .chat-msg { padding-right: 42px; }
+        .chat-empty {
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--brown);
+            font-weight: 300;
+        }
+        .chat-empty .emoji {
+            font-size: 2.4rem;
+            display: block;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+</style>
 </head>
 <body>
 
@@ -1414,6 +1865,7 @@
             <li><a href="#roots">Roots</a></li>
             <li><a href="#grandparents">Grandparents</a></li>
             <li><a href="#memories">Memories</a></li>
+            <li><a href="#chat-section">Chat</a></li>
             <li id="calendarNav"><a href="#calendar-section">Calendar</a></li>
         </ul>
         <button class="admin-btn" id="adminBtn" title="Admin Login">🔒</button>
@@ -1986,6 +2438,59 @@
 
 
     <!-- ========== BIRTHDAY & ANNIVERSARY CALENDAR (ADMIN ONLY) ========== -->
+
+    <!-- ========== FAMILY CHAT ========== -->
+    <section id="chat-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">Family Chat</h2>
+                <div class="section-line"></div>
+                <p class="section-subtitle">Share a message of love with the family</p>
+            </div>
+
+            <div class="chat-layout">
+                <div class="chat-whatsapp-card reveal">
+                    <div class="wa-info">
+                        <h3>Live Family Group</h3>
+                        <p>For real-time chat with everyone, join our WhatsApp group — photos, voice notes, and daily updates in one place.</p>
+                    </div>
+                    <a class="wa-btn" href="https://chat.whatsapp.com/" target="_blank" rel="noopener noreferrer">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Join WhatsApp Group
+                    </a>
+                </div>
+
+                <div class="chat-compose reveal">
+                    <h3>Leave a Message</h3>
+                    <p class="panel-sub">Write something for the family wall — a prayer, a memory, or a hello.</p>
+                    <label for="chatAuthor">Your name</label>
+                    <input type="text" id="chatAuthor" placeholder="e.g. Rayyan" maxlength="40" autocomplete="name">
+                    <label for="chatMessage">Your message</label>
+                    <textarea id="chatMessage" placeholder="Assalamu Alaikum… share your love here" maxlength="500"></textarea>
+                    <div class="chat-compose-footer">
+                        <span class="chat-char-count"><span id="chatCharCount">0</span>/500</span>
+                        <button type="button" class="chat-send-btn" id="chatSendBtn">Send Message ♥</button>
+                    </div>
+                    <div class="chat-status" id="chatStatus"></div>
+                </div>
+
+                <div class="chat-wall reveal">
+                    <div class="chat-wall-header">
+                        <h3>Family Wall</h3>
+                        <span class="count" id="chatCount">0 messages</span>
+                        <button type="button" class="chat-clear-btn" id="chatClearBtn" title="Admin: clear all">Clear all</button>
+                    </div>
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-empty">
+                            <span class="emoji">💬</span>
+                            No messages yet. Be the first to say hello!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="calendar-section">
         <div class="container">
             <div class="section-header">
@@ -2090,6 +2595,7 @@
                     <li><a href="#roots">Family Roots</a></li>
                     <li><a href="#grandparents">Grandparents</a></li>
                     <li><a href="#memories">Memories</a></li>
+                    <li><a href="#chat-section">Chat</a></li>
                     <li><a href="#calendar-section">Calendar</a></li>
                 </ul>
             </div>
@@ -2159,6 +2665,22 @@
         </div>
     </div>
 
+
+
+    <!-- CONTENT EDIT MODAL (ADMIN) -->
+    <div class="content-edit-modal" id="contentEditModal">
+        <div class="content-edit-box">
+            <h3 id="contentEditTitle">Edit</h3>
+            <p class="edit-sub" id="contentEditSub">Update name and photo</p>
+            <div id="contentEditFields"></div>
+            <div class="edit-status" id="contentEditStatus"></div>
+            <div class="content-edit-actions">
+                <button type="button" class="btn-danger" id="contentEditClearImg" style="display:none;">Remove photo</button>
+                <button type="button" class="btn-secondary" id="contentEditCancel">Cancel</button>
+                <button type="button" class="btn-primary" id="contentEditSave">Save</button>
+            </div>
+        </div>
+    </div>
 
     <!-- ADMIN LOGIN MODAL -->
     <div class="admin-login-modal" id="adminLoginModal">
@@ -3092,6 +3614,490 @@
         });
 
 
+
+        // ========== ADMIN CONTENT EDIT (NAMES + IMAGES) ==========
+        const CONTENT_STORAGE_KEY = 'familyContentEdits';
+
+        function loadContentEdits() {
+            try {
+                const raw = localStorage.getItem(CONTENT_STORAGE_KEY);
+                if (raw) {
+                    const p = JSON.parse(raw);
+                    if (p && typeof p === 'object') return p;
+                }
+            } catch (e) {}
+            return {};
+        }
+
+        function saveContentEdits(data) {
+            try {
+                localStorage.setItem(CONTENT_STORAGE_KEY, JSON.stringify(data));
+            } catch (e) {
+                alert('Could not save. Image may be too large — use an image URL (e.g. from ibb.co) instead of uploading a big file.');
+            }
+        }
+
+        let contentEdits = loadContentEdits();
+        let currentEditTarget = null; // { type, id, el, childKey, childIndex }
+
+        function ensureEditIds() {
+            // Roots + grandparents family cards
+            document.querySelectorAll('#roots .family-card, #grandparents > .container > .family-grid.grandparents .family-card').forEach((card, i) => {
+                if (!card.dataset.editId) {
+                    const h = card.querySelector('h3');
+                    const slug = (h ? h.textContent : 'card').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
+                    card.dataset.editId = 'person-' + slug + '-' + i;
+                }
+            });
+            // Root branch cards
+            document.querySelectorAll('.root-card[data-root]').forEach(card => {
+                card.dataset.editId = 'root-' + card.getAttribute('data-root');
+            });
+            // Couple cards
+            document.querySelectorAll('.couple-card[data-couple]').forEach(card => {
+                // only main page couples (not inside dynamically injected root modal)
+                if (card.closest('#rootModalBody')) return;
+                card.dataset.editId = 'couple-' + card.getAttribute('data-couple');
+            });
+            // Memories
+            document.querySelectorAll('#memories .memory-item').forEach((item, i) => {
+                item.dataset.editId = 'memory-' + i;
+            });
+        }
+
+        function injectEditButtons() {
+            document.querySelectorAll('[data-edit-id]').forEach(el => {
+                if (el.querySelector(':scope > .admin-edit-btn')) return;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'admin-edit-btn';
+                btn.title = 'Edit name / photo';
+                btn.setAttribute('aria-label', 'Edit');
+                btn.innerHTML = '✎';
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openContentEditor(el);
+                });
+                el.insertBefore(btn, el.firstChild);
+            });
+        }
+
+        function applyContentEdits() {
+            ensureEditIds();
+            Object.keys(contentEdits).forEach(id => {
+                const data = contentEdits[id];
+                if (!data) return;
+                if (id.startsWith('child:')) {
+                    // applied when opening children modal
+                    return;
+                }
+                const el = document.querySelector('[data-edit-id="' + id + '"]');
+                if (!el) return;
+                applyEditToElement(el, data);
+            });
+        }
+
+        function applyEditToElement(el, data) {
+            if (el.classList.contains('family-card') || el.classList.contains('root-card')) {
+                const h3 = el.querySelector('h3');
+                const p = el.querySelector('.family-card-content > p');
+                const img = el.querySelector('img');
+                if (h3 && data.name != null) h3.textContent = data.name;
+                if (p && data.sub != null) p.textContent = data.sub;
+                if (img && data.img != null) {
+                    img.src = data.img;
+                    img.alt = data.name || img.alt || '';
+                    if (data.img) img.style.display = '';
+                    else img.removeAttribute('src');
+                }
+            } else if (el.classList.contains('couple-card')) {
+                const blocks = el.querySelectorAll('.person-block');
+                if (blocks[0]) {
+                    const n = blocks[0].querySelector('.name');
+                    const c = blocks[0].querySelector('.contact-num');
+                    if (n && data.name1 != null) n.textContent = data.name1;
+                    if (c && data.contact1 != null) {
+                        c.innerHTML = '<span class="phone-icon">📞</span> ' + escapeHtml(data.contact1);
+                        c.style.display = data.contact1 ? '' : 'none';
+                    } else if (data.contact1 === '') {
+                        if (c) c.style.display = 'none';
+                    }
+                }
+                if (blocks[1]) {
+                    const n = blocks[1].querySelector('.name');
+                    const c = blocks[1].querySelector('.contact-num');
+                    if (n && data.name2 != null) n.textContent = data.name2;
+                    if (c && data.contact2 != null) {
+                        c.innerHTML = '<span class="phone-icon">📞</span> ' + escapeHtml(data.contact2);
+                        c.style.display = data.contact2 ? '' : 'none';
+                    } else if (data.contact2 === '') {
+                        if (c) c.style.display = 'none';
+                    }
+                }
+                // optional couple photos
+                const photos = el.querySelectorAll('.couple-photos img');
+                if (photos[0] && data.img1 != null) photos[0].src = data.img1 || '';
+                if (photos[1] && data.img2 != null) photos[1].src = data.img2 || '';
+            } else if (el.classList.contains('memory-item')) {
+                const img = el.querySelector('img');
+                const cap = el.querySelector('.memory-overlay');
+                if (img && data.img != null) img.src = data.img;
+                if (cap && data.caption != null) cap.textContent = data.caption;
+            }
+        }
+
+        function openContentEditor(el) {
+            if (!isAdminLoggedIn()) return;
+            const id = el.dataset.editId;
+            if (!id) return;
+            currentEditTarget = { type: 'card', id, el };
+            const modal = document.getElementById('contentEditModal');
+            const fields = document.getElementById('contentEditFields');
+            const title = document.getElementById('contentEditTitle');
+            const sub = document.getElementById('contentEditSub');
+            const clearBtn = document.getElementById('contentEditClearImg');
+            document.getElementById('contentEditStatus').textContent = '';
+            document.getElementById('contentEditStatus').className = 'edit-status';
+            clearBtn.style.display = 'none';
+
+            const saved = contentEdits[id] || {};
+
+            if (el.classList.contains('family-card') || el.classList.contains('root-card')) {
+                title.textContent = 'Edit Person';
+                sub.textContent = 'Change name, description, and photo';
+                const h3 = el.querySelector('h3');
+                const p = el.querySelector('.family-card-content > p');
+                const img = el.querySelector('img');
+                const name = saved.name != null ? saved.name : (h3 ? h3.textContent.trim() : '');
+                const subtxt = saved.sub != null ? saved.sub : (p ? p.textContent.trim() : '');
+                const imgUrl = saved.img != null ? saved.img : (img && img.getAttribute('src') ? img.getAttribute('src') : '');
+                fields.innerHTML =
+                    '<label>Name</label><input type="text" id="editName" maxlength="80" value="' + escapeAttr(name) + '">' +
+                    '<label>Description / relation</label><input type="text" id="editSub" maxlength="120" value="' + escapeAttr(subtxt) + '">' +
+                    '<label>Photo URL</label><input type="url" id="editImgUrl" placeholder="https://… or upload below" value="' + escapeAttr(imgUrl) + '">' +
+                    '<p class="edit-hint">Tip: upload to <strong>ibb.co</strong> or Google Drive and paste the link, or choose a file (kept on this device).</p>' +
+                    '<div class="edit-file-row"><input type="file" id="editImgFile" accept="image/*"></div>' +
+                    '<img class="edit-preview' + (imgUrl ? ' visible' : '') + '" id="editPreview" src="' + escapeAttr(imgUrl) + '" alt="Preview">';
+                clearBtn.style.display = imgUrl ? 'inline-block' : 'none';
+                wireImagePreview();
+            } else if (el.classList.contains('couple-card')) {
+                title.textContent = 'Edit Couple';
+                sub.textContent = 'Update names and phone numbers';
+                const blocks = el.querySelectorAll('.person-block');
+                const n1 = blocks[0] && blocks[0].querySelector('.name');
+                const c1 = blocks[0] && blocks[0].querySelector('.contact-num');
+                const n2 = blocks[1] && blocks[1].querySelector('.name');
+                const c2 = blocks[1] && blocks[1].querySelector('.contact-num');
+                const name1 = saved.name1 != null ? saved.name1 : (n1 ? n1.textContent.trim() : '');
+                const name2 = saved.name2 != null ? saved.name2 : (n2 ? n2.textContent.trim() : '');
+                const contact1 = saved.contact1 != null ? saved.contact1 : (c1 ? c1.textContent.replace(/📞/g, '').trim() : '');
+                const contact2 = saved.contact2 != null ? saved.contact2 : (c2 ? c2.textContent.replace(/📞/g, '').trim() : '');
+                fields.innerHTML =
+                    '<div class="edit-section-label">Person 1</div>' +
+                    '<label>Name</label><input type="text" id="editName1" maxlength="80" value="' + escapeAttr(name1) + '">' +
+                    '<label>Phone (optional)</label><input type="text" id="editContact1" maxlength="40" value="' + escapeAttr(contact1) + '">' +
+                    '<div class="edit-section-label">Person 2</div>' +
+                    '<label>Name</label><input type="text" id="editName2" maxlength="80" value="' + escapeAttr(name2) + '">' +
+                    '<label>Phone (optional)</label><input type="text" id="editContact2" maxlength="40" value="' + escapeAttr(contact2) + '">';
+            } else if (el.classList.contains('memory-item')) {
+                title.textContent = 'Edit Memory';
+                sub.textContent = 'Change photo and caption';
+                const img = el.querySelector('img');
+                const cap = el.querySelector('.memory-overlay');
+                const imgUrl = saved.img != null ? saved.img : (img ? img.getAttribute('src') || '' : '');
+                const caption = saved.caption != null ? saved.caption : (cap ? cap.textContent.trim() : '');
+                fields.innerHTML =
+                    '<label>Caption</label><input type="text" id="editCaption" maxlength="100" value="' + escapeAttr(caption) + '">' +
+                    '<label>Photo URL</label><input type="url" id="editImgUrl" placeholder="https://…" value="' + escapeAttr(imgUrl) + '">' +
+                    '<p class="edit-hint">Paste an image link or upload a file from your device.</p>' +
+                    '<div class="edit-file-row"><input type="file" id="editImgFile" accept="image/*"></div>' +
+                    '<img class="edit-preview' + (imgUrl ? ' visible' : '') + '" id="editPreview" src="' + escapeAttr(imgUrl) + '" alt="Preview">';
+                clearBtn.style.display = imgUrl ? 'inline-block' : 'none';
+                wireImagePreview();
+            } else {
+                return;
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openChildEditor(coupleKey, childIndex) {
+            if (!isAdminLoggedIn()) return;
+            const data = familyData[coupleKey];
+            if (!data || !data.children || !data.children[childIndex]) return;
+            const child = data.children[childIndex];
+            const storageKey = 'child:' + coupleKey + ':' + childIndex;
+            const saved = contentEdits[storageKey] || {};
+            currentEditTarget = { type: 'child', id: storageKey, coupleKey, childIndex };
+
+            const modal = document.getElementById('contentEditModal');
+            const fields = document.getElementById('contentEditFields');
+            document.getElementById('contentEditTitle').textContent = 'Edit Child';
+            document.getElementById('contentEditSub').textContent = 'Update name and photo for this child';
+            document.getElementById('contentEditStatus').textContent = '';
+            const name = saved.name != null ? saved.name : (child.name || '');
+            const relation = saved.relation != null ? saved.relation : (child.relation || '');
+            const imgUrl = saved.img != null ? saved.img : (child.img || '');
+            fields.innerHTML =
+                '<label>Name</label><input type="text" id="editName" maxlength="80" value="' + escapeAttr(name) + '">' +
+                '<label>Relation (optional)</label><input type="text" id="editSub" maxlength="40" value="' + escapeAttr(relation) + '">' +
+                '<label>Photo URL</label><input type="url" id="editImgUrl" placeholder="https://…" value="' + escapeAttr(imgUrl) + '">' +
+                '<p class="edit-hint">Paste a photo link or upload a file.</p>' +
+                '<div class="edit-file-row"><input type="file" id="editImgFile" accept="image/*"></div>' +
+                '<img class="edit-preview' + (imgUrl ? ' visible' : '') + '" id="editPreview" src="' + escapeAttr(imgUrl) + '" alt="Preview">';
+            const clearBtn = document.getElementById('contentEditClearImg');
+            clearBtn.style.display = imgUrl ? 'inline-block' : 'none';
+            wireImagePreview();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function escapeAttr(s) {
+            return String(s || '')
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        function wireImagePreview() {
+            const urlInput = document.getElementById('editImgUrl');
+            const fileInput = document.getElementById('editImgFile');
+            const preview = document.getElementById('editPreview');
+            const clearBtn = document.getElementById('contentEditClearImg');
+            if (urlInput && preview) {
+                urlInput.addEventListener('input', () => {
+                    const v = urlInput.value.trim();
+                    if (v) {
+                        preview.src = v;
+                        preview.classList.add('visible');
+                        if (clearBtn) clearBtn.style.display = 'inline-block';
+                    } else {
+                        preview.classList.remove('visible');
+                        preview.removeAttribute('src');
+                        if (clearBtn) clearBtn.style.display = 'none';
+                    }
+                });
+            }
+            if (fileInput && preview && urlInput) {
+                fileInput.addEventListener('change', () => {
+                    const file = fileInput.files && fileInput.files[0];
+                    if (!file) return;
+                    if (file.size > 900 * 1024) {
+                        document.getElementById('contentEditStatus').textContent = 'File is large. Prefer a compressed image or paste an image URL.';
+                        document.getElementById('contentEditStatus').className = 'edit-status error';
+                    }
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        urlInput.value = reader.result;
+                        preview.src = reader.result;
+                        preview.classList.add('visible');
+                        if (clearBtn) clearBtn.style.display = 'inline-block';
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+        function closeContentEditor() {
+            document.getElementById('contentEditModal').classList.remove('active');
+            if (!document.getElementById('childrenModal').classList.contains('active') &&
+                !document.getElementById('rootModal').classList.contains('active') &&
+                !document.getElementById('adminLoginModal').classList.contains('active')) {
+                document.body.style.overflow = '';
+            }
+            currentEditTarget = null;
+        }
+
+        function saveContentEditor() {
+            if (!currentEditTarget) return;
+            const status = document.getElementById('contentEditStatus');
+            const { type, id, el, coupleKey, childIndex } = currentEditTarget;
+
+            if (type === 'child') {
+                const name = (document.getElementById('editName').value || '').trim();
+                if (!name) {
+                    status.textContent = 'Name is required.';
+                    status.className = 'edit-status error';
+                    return;
+                }
+                const relation = (document.getElementById('editSub').value || '').trim();
+                const img = (document.getElementById('editImgUrl').value || '').trim();
+                contentEdits[id] = { name, relation, img };
+                if (familyData[coupleKey] && familyData[coupleKey].children[childIndex]) {
+                    familyData[coupleKey].children[childIndex].name = name;
+                    familyData[coupleKey].children[childIndex].relation = relation;
+                    familyData[coupleKey].children[childIndex].img = img;
+                }
+                saveContentEdits(contentEdits);
+                // re-open children grid if modal open
+                if (document.getElementById('childrenModal').classList.contains('active')) {
+                    openChildrenModal(coupleKey);
+                }
+                status.textContent = 'Saved.';
+                status.className = 'edit-status success';
+                setTimeout(closeContentEditor, 400);
+                return;
+            }
+
+            if (!el) return;
+
+            if (el.classList.contains('family-card') || el.classList.contains('root-card')) {
+                const name = (document.getElementById('editName').value || '').trim();
+                if (!name) {
+                    status.textContent = 'Name is required.';
+                    status.className = 'edit-status error';
+                    return;
+                }
+                const sub = (document.getElementById('editSub').value || '').trim();
+                const img = (document.getElementById('editImgUrl').value || '').trim();
+                contentEdits[id] = { name, sub, img };
+                applyEditToElement(el, contentEdits[id]);
+            } else if (el.classList.contains('couple-card')) {
+                const name1 = (document.getElementById('editName1').value || '').trim();
+                const name2 = (document.getElementById('editName2').value || '').trim();
+                if (!name1 && !name2) {
+                    status.textContent = 'Enter at least one name.';
+                    status.className = 'edit-status error';
+                    return;
+                }
+                contentEdits[id] = {
+                    name1,
+                    name2,
+                    contact1: (document.getElementById('editContact1').value || '').trim(),
+                    contact2: (document.getElementById('editContact2').value || '').trim()
+                };
+                applyEditToElement(el, contentEdits[id]);
+                // keep familyData title roughly in sync
+                const key = el.getAttribute('data-couple');
+                if (key && familyData[key]) {
+                    familyData[key].title = (name1 + (name2 ? ' & ' + name2 : '')).trim();
+                }
+            } else if (el.classList.contains('memory-item')) {
+                const caption = (document.getElementById('editCaption').value || '').trim();
+                const img = (document.getElementById('editImgUrl').value || '').trim();
+                if (!img) {
+                    status.textContent = 'Please add a photo URL or upload an image.';
+                    status.className = 'edit-status error';
+                    return;
+                }
+                contentEdits[id] = { caption, img };
+                applyEditToElement(el, contentEdits[id]);
+            }
+
+            saveContentEdits(contentEdits);
+            status.textContent = 'Saved successfully.';
+            status.className = 'edit-status success';
+            setTimeout(closeContentEditor, 400);
+        }
+
+        function clearEditImage() {
+            const urlInput = document.getElementById('editImgUrl');
+            const preview = document.getElementById('editPreview');
+            const fileInput = document.getElementById('editImgFile');
+            if (urlInput) urlInput.value = '';
+            if (preview) {
+                preview.classList.remove('visible');
+                preview.removeAttribute('src');
+            }
+            if (fileInput) fileInput.value = '';
+            document.getElementById('contentEditClearImg').style.display = 'none';
+        }
+
+        // Apply child edits into familyData on load
+        function applyChildEditsToFamilyData() {
+            Object.keys(contentEdits).forEach(key => {
+                if (!key.startsWith('child:')) return;
+                const parts = key.split(':');
+                if (parts.length < 3) return;
+                const coupleKey = parts[1];
+                const idx = parseInt(parts[2], 10);
+                const data = contentEdits[key];
+                if (!familyData[coupleKey] || !familyData[coupleKey].children || !familyData[coupleKey].children[idx]) return;
+                if (data.name != null) familyData[coupleKey].children[idx].name = data.name;
+                if (data.relation != null) familyData[coupleKey].children[idx].relation = data.relation;
+                if (data.img != null) familyData[coupleKey].children[idx].img = data.img;
+            });
+        }
+
+        // Patch openChildrenModal to show edit buttons in admin mode
+        const _origOpenChildrenModal = typeof openChildrenModal === 'function' ? openChildrenModal : null;
+        // We'll redefine after familyData exists - hook via wrapping at init
+
+        function enhanceChildrenGridForAdmin() {
+            if (!isAdminLoggedIn()) return;
+            const grid = document.getElementById('childrenGrid');
+            if (!grid) return;
+            const cards = grid.querySelectorAll('.child-card');
+            const title = document.getElementById('modalTitle').textContent || '';
+            // find couple key from familyData by title
+            let coupleKey = null;
+            Object.keys(familyData).forEach(k => {
+                if (familyData[k].title === title) coupleKey = k;
+            });
+            if (!coupleKey) return;
+            cards.forEach((card, i) => {
+                if (card.querySelector('.admin-edit-btn')) return;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'admin-edit-btn';
+                btn.title = 'Edit child';
+                btn.innerHTML = '✎';
+                btn.style.display = 'flex';
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openChildEditor(coupleKey, i);
+                });
+                card.insertBefore(btn, card.firstChild);
+            });
+        }
+
+        // Wrap openChildrenModal when defined
+        function wrapOpenChildrenModal() {
+            if (typeof openChildrenModal !== 'function') return;
+            const original = openChildrenModal;
+            window.openChildrenModal = function(key) {
+                original(key);
+                setTimeout(enhanceChildrenGridForAdmin, 50);
+            };
+            // also replace local reference used by listeners - update event handlers use openChildrenModal from closure
+            // Re-bind couple clicks use openChildrenModal from outer scope in original script.
+            // The original const openChildrenModal can't be reassigned if const.
+            // So we enhance by MutationObserver or patch at call sites.
+        }
+
+        // Safer: observe children grid
+        const childrenGridEl = document.getElementById('childrenGrid');
+        if (childrenGridEl) {
+            const mo = new MutationObserver(() => {
+                if (isAdminLoggedIn()) enhanceChildrenGridForAdmin();
+            });
+            mo.observe(childrenGridEl, { childList: true });
+        }
+
+        document.getElementById('contentEditCancel').addEventListener('click', closeContentEditor);
+        document.getElementById('contentEditSave').addEventListener('click', saveContentEditor);
+        document.getElementById('contentEditClearImg').addEventListener('click', clearEditImage);
+        document.getElementById('contentEditModal').addEventListener('click', (e) => {
+            if (e.target.id === 'contentEditModal') closeContentEditor();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('contentEditModal').classList.contains('active')) {
+                closeContentEditor();
+            }
+        });
+
+        function initContentEditor() {
+            ensureEditIds();
+            applyChildEditsToFamilyData();
+            applyContentEdits();
+            injectEditButtons();
+        }
+
+
         // ========== ADMIN + BIRTHDAY & ANNIVERSARY CALENDAR + EMAIL REMINDERS ==========
         const ADMIN_PASSWORD = 'familyadmin';   // ← Change this password anytime
 
@@ -3135,6 +4141,8 @@
                 adminBadge.classList.add('visible');
                 logoutLink.classList.add('visible');
                 loadReminderSettings();
+                injectEditButtons();
+                enhanceChildrenGridForAdmin();
             } else {
                 adminBtn.classList.remove('logged-in');
                 adminBtn.textContent = '🔒';
@@ -3336,9 +4344,189 @@
             });
         });
 
+
+        // ========== FAMILY CHAT / MESSAGE WALL ==========
+        const CHAT_STORAGE_KEY = 'familyChatMessages';
+        const CHAT_MAX = 500;
+        const CHAT_MAX_MESSAGES = 200;
+
+        function loadChatMessages() {
+            try {
+                const raw = localStorage.getItem(CHAT_STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed)) return parsed;
+                }
+            } catch (e) {}
+            return [];
+        }
+
+        function saveChatMessages(list) {
+            try {
+                localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(list));
+            } catch (e) {}
+        }
+
+        let chatMessages = loadChatMessages();
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function formatChatTime(ts) {
+            try {
+                const d = new Date(ts);
+                if (isNaN(d.getTime())) return '';
+                const now = new Date();
+                const sameDay = d.toDateString() === now.toDateString();
+                const time = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                if (sameDay) return time;
+                return d.toLocaleDateString([], { day: 'numeric', month: 'short' }) + ' · ' + time;
+            } catch (e) { return ''; }
+        }
+
+        function setChatStatus(msg, type) {
+            const el = document.getElementById('chatStatus');
+            if (!el) return;
+            el.textContent = msg || '';
+            el.className = 'chat-status' + (type ? ' ' + type : '');
+            if (msg && type === 'success') {
+                setTimeout(() => {
+                    if (el.textContent === msg) {
+                        el.textContent = '';
+                        el.className = 'chat-status';
+                    }
+                }, 2500);
+            }
+        }
+
+        function renderChatMessages() {
+            const box = document.getElementById('chatMessages');
+            const countEl = document.getElementById('chatCount');
+            if (!box) return;
+            const n = chatMessages.length;
+            if (countEl) countEl.textContent = n + (n === 1 ? ' message' : ' messages');
+            if (!n) {
+                box.innerHTML = '<div class="chat-empty"><span class="emoji">💬</span>No messages yet. Be the first to say hello!</div>';
+                return;
+            }
+            const sorted = [...chatMessages].sort((a, b) => (b.ts || 0) - (a.ts || 0));
+            box.innerHTML = sorted.map(m => {
+                const idx = chatMessages.indexOf(m);
+                return (
+                    '<div class="chat-msg" data-chat-idx="' + idx + '">' +
+                    '<button type="button" class="chat-msg-delete" data-chat-idx="' + idx + '" title="Delete" aria-label="Delete message">×</button>' +
+                    '<div class="chat-msg-top">' +
+                    '<span class="chat-msg-author">' + escapeHtml(m.name || 'Family') + '</span>' +
+                    '<span class="chat-msg-time">' + escapeHtml(formatChatTime(m.ts)) + '</span>' +
+                    '</div>' +
+                    '<div class="chat-msg-text">' + escapeHtml(m.text || '') + '</div>' +
+                    '</div>'
+                );
+            }).join('');
+        }
+
+        function sendChatMessage() {
+            const nameEl = document.getElementById('chatAuthor');
+            const msgEl = document.getElementById('chatMessage');
+            const name = (nameEl.value || '').trim();
+            const textMsg = (msgEl.value || '').trim();
+            if (!name) {
+                setChatStatus('Please enter your name.', 'error');
+                nameEl.focus();
+                return;
+            }
+            if (!textMsg) {
+                setChatStatus('Please write a message.', 'error');
+                msgEl.focus();
+                return;
+            }
+            if (textMsg.length > CHAT_MAX) {
+                setChatStatus('Message is too long (max ' + CHAT_MAX + ' characters).', 'error');
+                return;
+            }
+            chatMessages.push({
+                id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+                name: name.slice(0, 40),
+                text: textMsg.slice(0, CHAT_MAX),
+                ts: Date.now()
+            });
+            if (chatMessages.length > CHAT_MAX_MESSAGES) {
+                chatMessages = chatMessages.slice(-CHAT_MAX_MESSAGES);
+            }
+            saveChatMessages(chatMessages);
+            try { localStorage.setItem('familyChatAuthor', name); } catch (e) {}
+            msgEl.value = '';
+            updateChatCharCount();
+            renderChatMessages();
+            setChatStatus('Message shared with the family ♥', 'success');
+        }
+
+        function deleteChatMessage(idx) {
+            if (idx < 0 || idx >= chatMessages.length) return;
+            if (!confirm('Delete this message?')) return;
+            chatMessages.splice(idx, 1);
+            saveChatMessages(chatMessages);
+            renderChatMessages();
+            setChatStatus('Message deleted.', 'success');
+        }
+
+        function clearAllChatMessages() {
+            if (!chatMessages.length) return;
+            if (!confirm('Delete ALL family wall messages? This cannot be undone.')) return;
+            chatMessages = [];
+            saveChatMessages(chatMessages);
+            renderChatMessages();
+            setChatStatus('All messages cleared.', 'success');
+        }
+
+        function updateChatCharCount() {
+            const msgEl = document.getElementById('chatMessage');
+            const count = document.getElementById('chatCharCount');
+            if (msgEl && count) count.textContent = String((msgEl.value || '').length);
+        }
+
+        (function initChat() {
+            const nameEl = document.getElementById('chatAuthor');
+            const msgEl = document.getElementById('chatMessage');
+            const sendBtn = document.getElementById('chatSendBtn');
+            const clearBtn = document.getElementById('chatClearBtn');
+            const box = document.getElementById('chatMessages');
+            if (!nameEl || !msgEl || !sendBtn) return;
+
+            try {
+                const savedName = localStorage.getItem('familyChatAuthor');
+                if (savedName) nameEl.value = savedName;
+            } catch (e) {}
+
+            msgEl.addEventListener('input', updateChatCharCount);
+            updateChatCharCount();
+            sendBtn.addEventListener('click', sendChatMessage);
+            msgEl.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    sendChatMessage();
+                }
+            });
+            if (clearBtn) clearBtn.addEventListener('click', clearAllChatMessages);
+            if (box) {
+                box.addEventListener('click', (e) => {
+                    const btn = e.target.closest('.chat-msg-delete');
+                    if (!btn) return;
+                    const idx = parseInt(btn.getAttribute('data-chat-idx'), 10);
+                    if (!Number.isNaN(idx)) deleteChatMessage(idx);
+                });
+            }
+            renderChatMessages();
+        })();
+
+
         updateAdminUI();
 
 </script>
 </body>
 </html>
-
